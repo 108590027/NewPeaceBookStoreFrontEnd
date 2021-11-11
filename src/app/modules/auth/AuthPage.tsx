@@ -45,15 +45,7 @@ export function AuthPage() {
       <div className='d-flex flex-center flex-column-auto p-10'>
         <div className='d-flex align-items-center fw-bold fs-6'>
           <a href='#' className='text-muted text-hover-primary px-2'>
-            About
-          </a>
-
-          <a href='#' className='text-muted text-hover-primary px-2'>
-            Contact
-          </a>
-
-          <a href='#' className='text-muted text-hover-primary px-2'>
-            Contact Us
+            資料庫系統 期末專題
           </a>
         </div>
       </div>

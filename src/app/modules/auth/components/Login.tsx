@@ -7,7 +7,6 @@ import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import * as auth from '../redux/AuthRedux'
 import {login} from '../redux/AuthCRUD'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -64,11 +63,11 @@ export function Login() {
     >
       {/* begin::Heading */}
       <div className='text-center mb-10'>
-        <h1 className='text-dark mb-3'>Sign In to Metronic</h1>
+        <h1 className='text-dark mb-3'>登入會員</h1>
         <div className='text-gray-400 fw-bold fs-4'>
-          New Here?{' '}
+          還沒註冊?{' '}
           <Link to='/auth/registration' className='link-primary fw-bolder'>
-            Create an Account
+            建立新帳號
           </Link>
         </div>
       </div>
@@ -80,16 +79,13 @@ export function Login() {
         </div>
       ) : (
         <div className='mb-10 bg-light-info p-8 rounded'>
-          <div className='text-info'>
-            Use account <strong>admin@demo.com</strong> and password <strong>demo</strong> to
-            continue.
-          </div>
+          <div className='text-info'>登入系統以使用所有功能！</div>
         </div>
       )}
 
       {/* begin::Form group */}
       <div className='fv-row mb-10'>
-        <label className='form-label fs-6 fw-bolder text-dark'>Email</label>
+        <label className='form-label fs-6 fw-bolder text-dark'>信箱</label>
         <input
           placeholder='Email'
           {...formik.getFieldProps('email')}
@@ -117,7 +113,7 @@ export function Login() {
         <div className='d-flex justify-content-between mt-n5'>
           <div className='d-flex flex-stack mb-2'>
             {/* begin::Label */}
-            <label className='form-label fw-bolder text-dark fs-6 mb-0'>Password</label>
+            <label className='form-label fw-bolder text-dark fs-6 mb-0'>密碼</label>
             {/* end::Label */}
             {/* begin::Link */}
             <Link
@@ -125,7 +121,7 @@ export function Login() {
               className='link-primary fs-6 fw-bolder'
               style={{marginLeft: '5px'}}
             >
-              Forgot Password ?
+              忘記密碼?
             </Link>
             {/* end::Link */}
           </div>
@@ -162,51 +158,14 @@ export function Login() {
           className='btn btn-lg btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid}
         >
-          {!loading && <span className='indicator-label'>Continue</span>}
+          {!loading && <span className='indicator-label'>登入</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
-              Please wait...
+              請稍候...
               <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
             </span>
           )}
         </button>
-
-        {/* begin::Separator */}
-        <div className='text-center text-muted text-uppercase fw-bolder mb-5'>or</div>
-        {/* end::Separator */}
-
-        {/* begin::Google link */}
-        <a href='#' className='btn btn-flex flex-center btn-light btn-lg w-100 mb-5'>
-          <img
-            alt='Logo'
-            src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-            className='h-20px me-3'
-          />
-          Continue with Google
-        </a>
-        {/* end::Google link */}
-
-        {/* begin::Google link */}
-        <a href='#' className='btn btn-flex flex-center btn-light btn-lg w-100 mb-5'>
-          <img
-            alt='Logo'
-            src={toAbsoluteUrl('/media/svg/brand-logos/facebook-4.svg')}
-            className='h-20px me-3'
-          />
-          Continue with Facebook
-        </a>
-        {/* end::Google link */}
-
-        {/* begin::Google link */}
-        <a href='#' className='btn btn-flex flex-center btn-light btn-lg w-100'>
-          <img
-            alt='Logo'
-            src={toAbsoluteUrl('/media/svg/brand-logos/apple-black.svg')}
-            className='h-20px me-3'
-          />
-          Continue with Apple
-        </a>
-        {/* end::Google link */}
       </div>
       {/* end::Action */}
     </form>

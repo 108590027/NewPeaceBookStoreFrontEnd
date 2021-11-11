@@ -27,7 +27,7 @@ export function HeaderWrapper() {
       <div
         className={clsx(
           classes.headerContainer.join(' '),
-          'd-flex align-items-stretch justify-content-between'
+          'w-100 d-flex align-items-stretch justify-content-between'
         )}
       >
         {/* begin::Aside mobile toggle */}
@@ -61,10 +61,10 @@ export function HeaderWrapper() {
         )}
 
         {/* begin::Wrapper */}
-        <div className='d-flex align-items-stretch justify-content-between flex-lg-grow-1'>
+        <div className='w-100 d-flex align-items-stretch justify-content-between flex-lg-grow-1'>
           {/* begin::Navbar */}
           {header.left === 'menu' && (
-            <div className='d-flex align-items-stretch' id='kt_header_nav'>
+            <div className='d-flex align-items-stretch w-100' id='kt_header_nav'>
               <Header />
             </div>
           )}

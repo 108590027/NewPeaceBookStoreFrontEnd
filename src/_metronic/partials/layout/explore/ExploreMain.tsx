@@ -1,8 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
 import {Toggle} from './Toggle'
-import {Demos} from './Demos'
 import {KTSVG} from '../../../helpers'
 
 export function ExploreMain() {
@@ -57,10 +55,7 @@ export function ExploreMain() {
                 <div className='d-flex flex-stack'>
                   <h3 className='mb-0'>{process.env.REACT_APP_THEME_NAME} Licenses</h3>
 
-                  <a
-                    href='https://themeforest.net/licenses/standard'
-                    className='fw-bold'
-                  >
+                  <a href='https://themeforest.net/licenses/standard' className='fw-bold'>
                     License FAQs
                   </a>
                 </div>
@@ -77,7 +72,6 @@ export function ExploreMain() {
                       <i
                         className='text-gray-400 fas fa-exclamation-circle ms-1 fs-7'
                         data-bs-toggle='popover'
-                        data-bs-custom-className='popover-dark'
                         data-bs-trigger='hover'
                         data-bs-placement='top'
                         data-bs-content='Use, by you or one client in a single end product which end users are not charged for.'
@@ -134,10 +128,7 @@ export function ExploreMain() {
                   </div>
 
                   <div className='text-nowrap'>
-                    <a
-                      href='https://keenthemes.com/contact/'
-                      className='btn btn-sm btn-success'
-                    >
+                    <a href='https://keenthemes.com/contact/' className='btn btn-sm btn-success'>
                       Contact Us
                     </a>
                   </div>
@@ -147,7 +138,6 @@ export function ExploreMain() {
               <a href={process.env.REACT_APP_PURCHASE_URL} className='btn btn-primary mb-15 w-100'>
                 Buy Now
               </a>
-              <Demos />
             </div>
             {/* end::Content */}
           </div>

@@ -27,15 +27,13 @@ export function mockAuth(mock: MockAdapter) {
   })
 
   mock.onPost(REGISTER_URL).reply(({data}) => {
-    const {email, firstname, lastname, password} = JSON.parse(data)
+    const {email, name, password} = JSON.parse(data)
 
-    if (email && firstname && lastname && password) {
+    if (email && name && password) {
       const user: UserModel = {
         id: generateUserId(),
         email,
-        firstname,
-        lastname,
-        username: `${firstname}-${lastname}`,
+        name: `${name}`,
         password,
         roles: [2], // Manager
         auth: {

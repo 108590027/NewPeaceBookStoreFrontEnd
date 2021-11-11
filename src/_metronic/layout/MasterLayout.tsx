@@ -7,14 +7,7 @@ import {ScrollTop} from './components/ScrollTop'
 import {Content} from './components/Content'
 import {MasterInit} from './MasterInit'
 import {PageDataProvider} from './core'
-import {
-  DrawerMessenger,
-  ExploreMain,
-  ActivityDrawer,
-  Main,
-  InviteUsers,
-  UpgradePlan,
-} from '../partials'
+import {DrawerMessenger, ActivityDrawer, Main, InviteUsers, UpgradePlan} from '../partials'
 
 const MasterLayout: React.FC = ({children}) => {
   return (
@@ -36,7 +29,6 @@ const MasterLayout: React.FC = ({children}) => {
 
       {/* begin:: Drawers */}
       <ActivityDrawer />
-      <ExploreMain />
       <DrawerMessenger />
       {/* end:: Drawers */}
 

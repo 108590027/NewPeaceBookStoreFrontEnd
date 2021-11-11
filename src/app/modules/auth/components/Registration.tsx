@@ -7,11 +7,9 @@ import clsx from 'clsx'
 import * as auth from '../redux/AuthRedux'
 import {register} from '../redux/AuthCRUD'
 import {Link} from 'react-router-dom'
-import {toAbsoluteUrl} from '../../../../_metronic/helpers'
 
 const initialValues = {
-  firstname: '',
-  lastname: '',
+  name: '',
   email: '',
   password: '',
   changepassword: '',
@@ -19,7 +17,7 @@ const initialValues = {
 }
 
 const registrationSchema = Yup.object().shape({
-  firstname: Yup.string()
+  name: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('First name is required'),
@@ -28,10 +26,6 @@ const registrationSchema = Yup.object().shape({
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
     .required('Email is required'),
-  lastname: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Last name is required'),
   password: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
@@ -54,7 +48,7 @@ export function Registration() {
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       setTimeout(() => {
-        register(values.email, values.firstname, values.lastname, values.password)
+        register(values.email, values.name, values.password)
           .then(({data: {accessToken}}) => {
             setLoading(false)
             dispatch(auth.actions.login(accessToken))
@@ -78,36 +72,19 @@ export function Registration() {
       {/* begin::Heading */}
       <div className='mb-10 text-center'>
         {/* begin::Title */}
-        <h1 className='text-dark mb-3'>Create an Account</h1>
+        <h1 className='text-dark mb-3'>會員註冊</h1>
         {/* end::Title */}
 
         {/* begin::Link */}
         <div className='text-gray-400 fw-bold fs-4'>
-          Already have an account?
           <Link to='/auth/login' className='link-primary fw-bolder' style={{marginLeft: '5px'}}>
-            Forgot Password ?
+            有帳號了嗎?
           </Link>
         </div>
         {/* end::Link */}
       </div>
       {/* end::Heading */}
-
-      {/* begin::Action */}
-      <button type='button' className='btn btn-light-primary fw-bolder w-100 mb-10'>
-        <img
-          alt='Logo'
-          src={toAbsoluteUrl('/media/svg/brand-logos/google-icon.svg')}
-          className='h-20px me-3'
-        />
-        Sign in with Google
-      </button>
       {/* end::Action */}
-
-      <div className='d-flex align-items-center mb-10'>
-        <div className='border-bottom border-gray-300 mw-50 w-100'></div>
-        <span className='fw-bold text-gray-400 fs-7 mx-2'>OR</span>
-        <div className='border-bottom border-gray-300 mw-50 w-100'></div>
-      </div>
 
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
@@ -117,54 +94,29 @@ export function Registration() {
 
       {/* begin::Form group Firstname */}
       <div className='row fv-row mb-7'>
-        <div className='col-xl-6'>
-          <label className='class="form-label fw-bolder text-dark fs-6'>First name</label>
-          <input
-            placeholder='First name'
-            type='text'
-            autoComplete='off'
-            {...formik.getFieldProps('firstname')}
-            className={clsx(
-              'form-control form-control-lg form-control-solid',
-              {
-                'is-invalid': formik.touched.firstname && formik.errors.firstname,
-              },
-              {
-                'is-valid': formik.touched.firstname && !formik.errors.firstname,
-              }
-            )}
-          />
-          {formik.touched.firstname && formik.errors.firstname && (
-            <div className='fv-plugins-message-container'>
-              <div className='fv-help-block'>
-                <span role='alert'>{formik.errors.firstname}</span>
-              </div>
-            </div>
-          )}
-        </div>
-        <div className='col-xl-6'>
+        <div className='col-xl-12'>
           {/* begin::Form group Lastname */}
           <div className='fv-row mb-5'>
-            <label className='form-label fw-bolder text-dark fs-6'>Last name</label>
+            <label className='form-label fw-bolder text-dark fs-6'>名稱</label>
             <input
-              placeholder='Last name'
+              placeholder='名稱'
               type='text'
               autoComplete='off'
               {...formik.getFieldProps('lastname')}
               className={clsx(
                 'form-control form-control-lg form-control-solid',
                 {
-                  'is-invalid': formik.touched.lastname && formik.errors.lastname,
+                  'is-invalid': formik.touched.name && formik.errors.name,
                 },
                 {
-                  'is-valid': formik.touched.lastname && !formik.errors.lastname,
+                  'is-valid': formik.touched.name && !formik.errors.name,
                 }
               )}
             />
-            {formik.touched.lastname && formik.errors.lastname && (
+            {formik.touched.name && formik.errors.name && (
               <div className='fv-plugins-message-container'>
                 <div className='fv-help-block'>
-                  <span role='alert'>{formik.errors.lastname}</span>
+                  <span role='alert'>{formik.errors.name}</span>
                 </div>
               </div>
             )}
@@ -176,7 +128,7 @@ export function Registration() {
 
       {/* begin::Form group Email */}
       <div className='fv-row mb-7'>
-        <label className='form-label fw-bolder text-dark fs-6'>Email</label>
+        <label className='form-label fw-bolder text-dark fs-6'>北科信箱</label>
         <input
           placeholder='Email'
           type='email'
@@ -203,11 +155,11 @@ export function Registration() {
       {/* begin::Form group Password */}
       <div className='mb-10 fv-row' data-kt-password-meter='true'>
         <div className='mb-1'>
-          <label className='form-label fw-bolder text-dark fs-6'>Password</label>
+          <label className='form-label fw-bolder text-dark fs-6'>密碼</label>
           <div className='position-relative mb-3'>
             <input
               type='password'
-              placeholder='Password'
+              placeholder='密碼'
               autoComplete='off'
               {...formik.getFieldProps('password')}
               className={clsx(
@@ -234,10 +186,10 @@ export function Registration() {
 
       {/* begin::Form group Confirm password */}
       <div className='fv-row mb-5'>
-        <label className='form-label fw-bolder text-dark fs-6'>Confirm Password</label>
+        <label className='form-label fw-bolder text-dark fs-6'>確認密碼</label>
         <input
           type='password'
-          placeholder='Password confirmation'
+          placeholder='再次輸入密碼'
           autoComplete='off'
           {...formik.getFieldProps('changepassword')}
           className={clsx(
@@ -273,11 +225,10 @@ export function Registration() {
             className='form-check-label fw-bold text-gray-700 fs-6'
             htmlFor='kt_login_toc_agree'
           >
-            I Agree the{' '}
-            <Link to='/auth/terms' className='ms-1 link-primary'>
-              terms and conditions
+            我同意遵守{' '}
+            <Link to='/auth/terms' className='ms-1 link-primary fw-bolder'>
+              使用條約
             </Link>
-            .
           </label>
           {formik.touched.acceptTerms && formik.errors.acceptTerms && (
             <div className='fv-plugins-message-container'>

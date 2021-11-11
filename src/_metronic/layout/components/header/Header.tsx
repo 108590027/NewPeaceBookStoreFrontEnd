@@ -4,12 +4,12 @@ import {MenuInner} from './MenuInner'
 const Header: FC = () => {
   return (
     <div
-      className='header-menu align-items-stretch'
+      className='header-menu align-items-stretch w-100'
       data-kt-drawer='true'
       data-kt-drawer-name='header-menu'
       data-kt-drawer-activate='{default: true, lg: false}'
       data-kt-drawer-overlay='true'
-      data-kt-drawer-width="{default:'200px', '300px': '250px'}"
+      data-kt-drawer-width="{default:'100%', '300px': '250px'}"
       data-kt-drawer-direction='end'
       data-kt-drawer-toggle='#kt_header_menu_mobile_toggle'
       data-kt-swapper='true'
