@@ -4,9 +4,13 @@ import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {Dropdown1} from '../../../_metronic/partials'
 import {useLocation} from 'react-router-dom'
+import { UserModel } from '../auth/models/UserModel'
+import { RootState } from '../../../setup'
+import { shallowEqual, useSelector } from 'react-redux'
 
 const ProfileHeader: React.FC = () => {
   const location = useLocation()
+  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -14,7 +18,7 @@ const ProfileHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-              <img src={toAbsoluteUrl('/media/avatars/150-2.jpg')} alt='Metornic' />
+              <img src={toAbsoluteUrl('/media/avatars/blank.png')} alt='Metornic' />
               <div className='position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-white h-20px w-20px'></div>
             </div>
           </div>
@@ -24,7 +28,7 @@ const ProfileHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    Max Smith
+                    {user.name}
                   </a>
                   <a href='#'>
                     <KTSVG

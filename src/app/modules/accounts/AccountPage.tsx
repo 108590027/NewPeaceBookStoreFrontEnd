@@ -7,7 +7,7 @@ import {AccountHeader} from './AccountHeader'
 
 const accountBreadCrumbs: Array<PageLink> = [
   {
-    title: 'Account',
+    title: '帳戶',
     path: '/crafted/account/overview',
     isSeparator: false,
     isActive: false,
@@ -26,11 +26,11 @@ const AccountPage: React.FC = () => {
       <AccountHeader />
       <Switch>
         <Route path='/crafted/account/overview'>
-          <PageTitle breadcrumbs={accountBreadCrumbs}>Overview</PageTitle>
+          <PageTitle breadcrumbs={accountBreadCrumbs}>個人總覽</PageTitle>
           <Overview />
         </Route>
         <Route path='/crafted/account/settings'>
-          <PageTitle breadcrumbs={accountBreadCrumbs}>Settings</PageTitle>
+          <PageTitle breadcrumbs={accountBreadCrumbs}>修改個人資訊</PageTitle>
           <Settings />
         </Route>
 

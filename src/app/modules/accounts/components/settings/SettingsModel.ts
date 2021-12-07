@@ -1,3 +1,5 @@
+import { UserModel } from "../../../auth/models/UserModel"
+
 export interface IProfileDetails {
   avatar: string
   fName: string
@@ -70,22 +72,12 @@ export interface IDeactivateAccount {
   confirm: boolean
 }
 
-export const profileDetailsInitValues: IProfileDetails = {
-  avatar: '/media/avatars/150-2.jpg',
-  fName: 'Max',
-  lName: 'Smith',
-  company: 'Keenthemes',
-  contactPhone: '044 3276 454 935',
-  companySite: 'keenthemes.com',
-  country: '',
-  language: '',
-  timeZone: '',
-  currency: '',
-  communications: {
-    email: false,
-    phone: false,
-  },
-  allowMarketing: false,
+export const profileDetailsInitValues: UserModel = {
+  id: 0,
+  name: '',
+  password: "",
+  email: "",
+  phone: "",
 }
 
 export const updateEmail: IUpdateEmail = {

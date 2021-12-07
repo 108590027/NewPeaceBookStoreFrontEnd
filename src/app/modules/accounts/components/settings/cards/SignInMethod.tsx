@@ -83,13 +83,13 @@ const SignInMethod: React.FC = () => {
         data-bs-target='#kt_account_signin_method'
       >
         <div className='card-title m-0'>
-          <h3 className='fw-bolder m-0'>Sign-in Method</h3>
+          <h3 className='fw-bolder m-0'>登入資訊</h3>
         </div>
       </div>
 
       <div id='kt_account_signin_method' className='collapse show'>
         <div className='card-body border-top p-9'>
-          <div className='d-flex flex-wrap align-items-center'>
+          {/*<div className='d-flex flex-wrap align-items-center'>
             <div id='kt_signin_email' className={' ' + (showEmailForm && 'd-none')}>
               <div className='fs-6 fw-bolder mb-1'>Email Address</div>
               <div className='fw-bold text-gray-600'>support@keenthemes.com</div>
@@ -187,11 +187,11 @@ const SignInMethod: React.FC = () => {
             </div>
           </div>
 
-          <div className='separator separator-dashed my-6'></div>
+          <div className='separator separator-dashed my-6'></div>*/}
 
           <div className='d-flex flex-wrap align-items-center mb-10'>
             <div id='kt_signin_password' className={' ' + (showPasswordForm && 'd-none')}>
-              <div className='fs-6 fw-bolder mb-1'>Password</div>
+              <div className='fs-6 fw-bolder mb-1'>密碼</div>
               <div className='fw-bold text-gray-600'>************</div>
             </div>
 
@@ -209,7 +209,7 @@ const SignInMethod: React.FC = () => {
                   <div className='col-lg-4'>
                     <div className='fv-row mb-0'>
                       <label htmlFor='currentpassword' className='form-label fs-6 fw-bolder mb-3'>
-                        Current Password
+                        目前密碼
                       </label>
                       <input
                         type='password'
@@ -228,7 +228,7 @@ const SignInMethod: React.FC = () => {
                   <div className='col-lg-4'>
                     <div className='fv-row mb-0'>
                       <label htmlFor='newpassword' className='form-label fs-6 fw-bolder mb-3'>
-                        New Password
+                        新密碼
                       </label>
                       <input
                         type='password'
@@ -247,7 +247,7 @@ const SignInMethod: React.FC = () => {
                   <div className='col-lg-4'>
                     <div className='fv-row mb-0'>
                       <label htmlFor='confirmpassword' className='form-label fs-6 fw-bolder mb-3'>
-                        Confirm New Password
+                        確認新密碼
                       </label>
                       <input
                         type='password'
@@ -265,7 +265,7 @@ const SignInMethod: React.FC = () => {
                 </div>
 
                 <div className='form-text mb-5'>
-                  Password must be at least 8 character and contain symbols
+                  密碼至少需要5個字
                 </div>
 
                 <div className='d-flex'>
@@ -274,10 +274,10 @@ const SignInMethod: React.FC = () => {
                     type='submit'
                     className='btn btn-primary me-2 px-6'
                   >
-                    {!loading2 && 'Update Password'}
+                    {!loading2 && '修改密碼'}
                     {loading2 && (
                       <span className='indicator-progress' style={{display: 'block'}}>
-                        Please wait...{' '}
+                        請稍候...{' '}
                         <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                       </span>
                     )}
@@ -290,7 +290,7 @@ const SignInMethod: React.FC = () => {
                     type='button'
                     className='btn btn-color-gray-400 btn-active-light-primary px-6'
                   >
-                    Cancel
+                    關閉
                   </button>
                 </div>
               </form>
@@ -306,32 +306,8 @@ const SignInMethod: React.FC = () => {
                 }}
                 className='btn btn-light btn-active-light-primary'
               >
-                Reset Password
+                重設密碼
               </button>
-            </div>
-          </div>
-
-          <div className='notice d-flex bg-light-primary rounded border-primary border border-dashed p-6'>
-            <KTSVG
-              path='/media/icons/duotune/general/gen048.svg'
-              className='svg-icon-2tx svg-icon-primary me-4'
-            />
-            <div className='d-flex flex-stack flex-grow-1 flex-wrap flex-md-nowrap'>
-              <div className='mb-3 mb-md-0 fw-bold'>
-                <h4 className='text-gray-800 fw-bolder'>Secure Your Account</h4>
-                <div className='fs-6 text-gray-600 pe-7'>
-                  Two-factor authentication adds an extra layer of security to your account. To log
-                  in, in addition you'll need to provide a 6 digit code
-                </div>
-              </div>
-              <a
-                href='#'
-                className='btn btn-primary px-6 align-self-center text-nowrap'
-                data-bs-toggle='modal'
-                data-bs-target='#kt_modal_two_factor_authentication'
-              >
-                Enable
-              </a>
             </div>
           </div>
         </div>
