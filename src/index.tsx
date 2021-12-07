@@ -17,7 +17,7 @@ import './_metronic/assets/sass/style.scss'
 import './_metronic/assets/sass/style.react.scss'
 const {PUBLIC_URL} = process.env
 
-/* const mock = */ _redux.mockAxios(axios)
+/* const mock = */ // _redux.mockAxios(axios)
 _redux.setupAxios(axios, store)
 
 Chart.register(...registerables)

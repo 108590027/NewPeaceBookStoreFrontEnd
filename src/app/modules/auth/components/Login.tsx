@@ -10,19 +10,19 @@ import {login} from '../redux/AuthCRUD'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
+    .email('錯誤的信箱格式')
+    .min(5, '長度過短，請輸入5字以上')
+    .max(50, '長度過長')
+    .required('請輸入信箱'),
   password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+    .min(5, '長度過短，請輸入5字以上')
+    .max(50, '長度過長')
+    .required('請輸入密碼'),
 })
 
 const initialValues = {
-  email: 'admin@demo.com',
-  password: 'demo',
+  email: '11111@y.c',
+  password: '11111',
 }
 
 /*
@@ -41,9 +41,9 @@ export function Login() {
       setLoading(true)
       setTimeout(() => {
         login(values.email, values.password)
-          .then(({data: {accessToken}}) => {
+          .then(({data: {token}}) => {
             setLoading(false)
-            dispatch(auth.actions.login(accessToken))
+            dispatch(auth.actions.login(token))
           })
           .catch(() => {
             setLoading(false)

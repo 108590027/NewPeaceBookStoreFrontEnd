@@ -106,7 +106,7 @@ const Topbar: FC = () => {
           data-kt-menu-placement='bottom-end'
           data-kt-menu-flip='bottom'
         >
-          <img src={toAbsoluteUrl('/media/avatars/150-2.jpg')} alt='NewPeaceBookStore' />
+          <img src={toAbsoluteUrl('/media/avatars/blank.png')} alt='NewPeaceBookStore' />
         </div>
         <HeaderUserMenu />
         {/* end::Toggle */}
