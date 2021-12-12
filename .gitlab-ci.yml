@@ -21,11 +21,10 @@ build-job:       # This job runs in the build stage, which runs first.
   script:
     - yarn
     - yarn build
-    - tar cvf build.tar build 
     - sudo cp -r ./build/* /npbsf/
   artifacts:
     paths:
-      - build.tar
+      - build/
   rules:
     - if: $CI_DEPLOY_FREEZE == null
   tags:
