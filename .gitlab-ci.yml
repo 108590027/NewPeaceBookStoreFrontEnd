@@ -19,10 +19,13 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   script:
-#    - npm install
-#    - npm run build
-    - pwd
-    - ls
+    - yarn
+    - yarn build
+    - tar cvf build.tar build 
+    - sudo cp -r ./build/* /npbsf/
+  artifacts:
+    paths:
+      - build.tar
   rules:
     - if: $CI_DEPLOY_FREEZE == null
   tags:
