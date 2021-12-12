@@ -23,6 +23,8 @@ build-job:       # This job runs in the build stage, which runs first.
 #    - npm run build
     - pwd
     - ls
+  rules:
+    - if: $CI_DEPLOY_FREEZE == null
   tags:
     - nginx
 
