@@ -20,11 +20,12 @@ build-job:       # This job runs in the build stage, which runs first.
   stage: build
   before_script:
     - ln -s ~/node_cache/node_modules node_modules
-    - cp ~/node_cache/npbsf/yarn.lock ./yarn.lock 
+    - cp ~/node_cache/npbsf/* .
   script:
     - yarn
-    - yarn build
     - mv ./yarn.lock ~/node_cache/npbsf/yarn.lock 
+    - mv ./package-lock.json ~/node_cache/npbsf/package-lock.json
+    - yarn build
     - rm node_modules || true
     - sudo cp -r ./build/* /npbsf/
   artifacts:
