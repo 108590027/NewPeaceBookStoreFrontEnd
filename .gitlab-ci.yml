@@ -19,11 +19,13 @@ stages:          # List of stages for jobs, and their order of execution
 build-job:       # This job runs in the build stage, which runs first.
   stage: build
   before_script:
-    - rm -rf node_modules || true
     - ln -s ~/node_cache/node_modules node_modules
+    - cp ~/node_cache/npbsf/yarn.lock ./yarn.lock 
   script:
     - yarn
     - yarn build
+    - mv ./yarn.lock ~/node_cache/npbsf/yarn.lock 
+    - rm node_modules || true
     - sudo cp -r ./build/* /npbsf/
   artifacts:
     paths:
