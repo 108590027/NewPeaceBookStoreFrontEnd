@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
 import * as Yup from 'yup'
 import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
-import * as auth from '../redux/AuthRedux'
 import loginAPI from '../API/LoginAPI'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
 
@@ -16,14 +14,14 @@ const loginSchema = Yup.object().shape({
     .max(50, '長度過長')
     .required('請輸入信箱'),
   password: Yup.string()
-    .min(5, '長度過短，請輸入5字以上')
+    .min(3, '長度過短，請輸入3字以上')
     .max(50, '長度過長')
     .required('請輸入密碼'),
 })
 
 const initialValues = {
-  email: '11111@y.c',
-  password: '11111',
+  email: 'aaa@aaa.aa',
+  password: 'aaa',
 }
 
 /*

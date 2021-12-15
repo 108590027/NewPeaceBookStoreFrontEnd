@@ -22,20 +22,6 @@ export interface IAuthState {
   auth?: AuthModel
 }
 
-export function getAuthByToken(accessToken: string) {
-  const data = JSON.parse(atob(accessToken.split('.')[1]))
-  const auth: AuthModel = {
-    accessToken: accessToken,
-    expire: data.exp,
-    user: {
-      id: data.id,
-      name: data.name,
-      email: data.email,
-    },
-  }
-  return auth
-}
-
 // SimpleMark: 管理、保存登入中使用者狀態
 export const reducer = persistReducer(
   {storage, key: 'v100-demo1-auth', whitelist: ['auth']}, // auth存到localStorage持久化保存
@@ -48,8 +34,11 @@ export const reducer = persistReducer(
 
       case actionTypes.setToken: {
         const accessToken: string = action.payload?.accessToken
-        const auth = getAuthByToken(accessToken)
-        return {auth}
+        if (!state.auth) {
+          state.auth = {accessToken: accessToken, user: undefined}
+        }
+        state.auth.accessToken = accessToken
+        return {...state}
       }
 
       case actionTypes.Logout: {

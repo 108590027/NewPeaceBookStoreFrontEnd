@@ -6,6 +6,8 @@ import * as Yup from 'yup'
 import clsx from 'clsx'
 import * as auth from '../redux/AuthRedux'
 import {Link} from 'react-router-dom'
+import registerAPI from '../API/RegisterAPI'
+import {ErrorResponse} from '../../errors/ErrorDataTypes'
 
 const initialValues = {
   name: '',
@@ -13,13 +15,15 @@ const initialValues = {
   password: '',
   changepassword: '',
   acceptTerms: false,
+  sid: '',
+  major: 0,
 }
 
 const registrationSchema = Yup.object().shape({
   name: Yup.string()
     .min(3, 'Minimum 3 symbols')
     .max(50, 'Maximum 50 symbols')
-    .required('First name is required'),
+    .required('name is required'),
   email: Yup.string()
     .email('Wrong email format')
     .min(3, 'Minimum 3 symbols')
@@ -35,28 +39,33 @@ const registrationSchema = Yup.object().shape({
       is: (val: string) => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
     }),
+  sid: Yup.string().required('請輸入學號'),
+  major: Yup.number().required('請選擇系別'),
   acceptTerms: Yup.bool().required('You must accept the terms and conditions'),
 })
 
 export function Registration() {
   const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true)
-      setTimeout(() => {
-        /*register(values.email, values.name, values.password)
-          .then(({data: {accessToken}}) => {
-            setLoading(false)
-            dispatch(auth.actions.login(accessToken))
-          })
-          .catch(() => {
-            setLoading(false)
-            setSubmitting(false)
-            setStatus('Registration process has broken')
-          })*/
+      setTimeout(async () => {
+        const result = await registerAPI(
+          values.email,
+          values.password,
+          values.name,
+          values.sid,
+          values.major
+        )
+        setLoading(false)
+        setSubmitting(false)
+        if ('user' in result) {
+          setStatus(`登入成功`)
+        } else {
+          setStatus(`${(result as ErrorResponse).message}`)
+        }
       }, 1000)
     },
   })
@@ -101,7 +110,7 @@ export function Registration() {
               placeholder='名稱'
               type='text'
               autoComplete='off'
-              {...formik.getFieldProps('lastname')}
+              {...formik.getFieldProps('name')}
               className={clsx(
                 'form-control form-control-lg form-control-solid',
                 {
@@ -205,6 +214,54 @@ export function Registration() {
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
               <span role='alert'>{formik.errors.changepassword}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>學號</label>
+        <input
+          placeholder='請輸入學號'
+          type='text'
+          {...formik.getFieldProps('sid')}
+          className={clsx(
+            'form-control form-control-lg form-control-solid',
+            {
+              'is-invalid': formik.touched.sid && formik.errors.sid,
+            },
+            {
+              'is-valid': formik.touched.sid && !formik.errors.sid,
+            }
+          )}
+        />
+        {formik.touched.sid && formik.errors.sid && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.sid}</span>
+            </div>
+          </div>
+        )}
+      </div>
+      <div className='fv-row mb-5'>
+        <label className='form-label fw-bolder text-dark fs-6'>系別</label>
+        <input
+          placeholder='請輸入系別'
+          type='number'
+          {...formik.getFieldProps('major')}
+          className={clsx(
+            'form-control form-control-lg form-control-solid',
+            {
+              'is-invalid': formik.touched.major && formik.errors.major,
+            },
+            {
+              'is-valid': formik.touched.major && !formik.errors.major,
+            }
+          )}
+        />
+        {formik.touched.major && formik.errors.major && (
+          <div className='fv-plugins-message-container'>
+            <div className='fv-help-block'>
+              <span role='alert'>{formik.errors.major}</span>
             </div>
           </div>
         )}

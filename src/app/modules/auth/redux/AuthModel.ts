@@ -1,14 +1,13 @@
 export interface AuthModel {
   accessToken: string
-  expire: number
-  user: UserModel
+  user?: UserModel
 }
 
 export interface UserModel {
   id: number
   name: string
-  // password?: string
+  role: number
   email: string
-  // permission: string
-  // verify_mail: number
+  sid: string
+  major: number
 }

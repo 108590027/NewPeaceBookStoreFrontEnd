@@ -2,12 +2,15 @@
 import {FC} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {UserModel} from '../../../../app/modules/auth/models/UserModel'
+import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {RootState} from '../../../../setup'
-import { toAbsoluteUrl } from '../../../helpers'
+import {toAbsoluteUrl} from '../../../helpers'
 
 const HeaderUserMenu: FC = () => {
-  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const user: UserModel = useSelector<RootState>(
+    ({auth}) => auth?.auth?.user,
+    shallowEqual
+  ) as UserModel
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
