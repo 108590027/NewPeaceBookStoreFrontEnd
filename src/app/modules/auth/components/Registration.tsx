@@ -5,7 +5,6 @@ import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
 import * as auth from '../redux/AuthRedux'
-import {register} from '../redux/AuthCRUD'
 import {Link} from 'react-router-dom'
 
 const initialValues = {
@@ -48,7 +47,7 @@ export function Registration() {
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       setTimeout(() => {
-        register(values.email, values.name, values.password)
+        /*register(values.email, values.name, values.password)
           .then(({data: {accessToken}}) => {
             setLoading(false)
             dispatch(auth.actions.login(accessToken))
@@ -57,7 +56,7 @@ export function Registration() {
             setLoading(false)
             setSubmitting(false)
             setStatus('Registration process has broken')
-          })
+          })*/
       }, 1000)
     },
   })

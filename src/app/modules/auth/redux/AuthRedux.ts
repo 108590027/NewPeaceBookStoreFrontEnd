@@ -1,63 +1,59 @@
 import {Action} from '@reduxjs/toolkit'
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import {put, takeLatest} from 'redux-saga/effects'
-import {UserModel} from '../models/UserModel'
-import {getUserByToken} from './AuthCRUD'
+import {AuthModel, UserModel} from './AuthModel'
 
 export interface ActionWithPayload<T> extends Action {
   payload?: T
 }
 
 export const actionTypes = {
-  Login: '[Login] Action',
+  setAuth: '[setAuth] Action',
+  setToken: '[setToken] Action',
   Logout: '[Logout] Action',
-  Register: '[Register] Action',
-  UserRequested: '[Request User] Action',
-  UserLoaded: '[Load User] Auth API',
-  SetUser: '[Set User] Action',
 }
-
+// SimpleMark: Redux預設值
 const initialAuthState: IAuthState = {
-  user: undefined,
-  accessToken: undefined,
+  auth: undefined,
 }
 
+// SimpleMark: 此Redux結構
 export interface IAuthState {
-  user?: UserModel
-  accessToken?: string
+  auth?: AuthModel
 }
 
+export function getAuthByToken(accessToken: string) {
+  const data = JSON.parse(atob(accessToken.split('.')[1]))
+  const auth: AuthModel = {
+    accessToken: accessToken,
+    expire: data.exp,
+    user: {
+      id: data.id,
+      name: data.name,
+      email: data.email,
+    },
+  }
+  return auth
+}
+
+// SimpleMark: 管理、保存登入中使用者狀態
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-auth', whitelist: ['user', 'accessToken']},
-  (state: IAuthState = initialAuthState, action: ActionWithPayload<IAuthState>) => {
+  {storage, key: 'v100-demo1-auth', whitelist: ['auth']}, // auth存到localStorage持久化保存
+  (state: IAuthState = initialAuthState, action: ActionWithPayload<any>) => {
     switch (action.type) {
-      case actionTypes.Login: {
-        const accessToken = action.payload?.accessToken
-        return {accessToken, user: undefined}
+      case actionTypes.setAuth: {
+        const auth: AuthModel = action.payload?.auth
+        return {auth}
       }
 
-      case actionTypes.Register: {
-        const accessToken = action.payload?.accessToken
-        return {accessToken, user: undefined}
+      case actionTypes.setToken: {
+        const accessToken: string = action.payload?.accessToken
+        const auth = getAuthByToken(accessToken)
+        return {auth}
       }
 
       case actionTypes.Logout: {
         return initialAuthState
-      }
-
-      case actionTypes.UserRequested: {
-        return {...state, user: undefined}
-      }
-
-      case actionTypes.UserLoaded: {
-        const user = action.payload?.user
-        return {...state, user}
-      }
-
-      case actionTypes.SetUser: {
-        const user = action.payload?.user
-        return {...state, user}
       }
 
       default:
@@ -67,30 +63,9 @@ export const reducer = persistReducer(
 )
 
 export const actions = {
-  login: (accessToken: string) => ({type: actionTypes.Login, payload: {accessToken}}),
-  register: (accessToken: string) => ({
-    type: actionTypes.Register,
-    payload: {accessToken},
-  }),
+  setAuth: (auth: AuthModel) => ({type: actionTypes.setAuth, payload: {auth}}),
+  setToken: (accessToken: string) => ({type: actionTypes.setToken, payload: {accessToken}}),
   logout: () => ({type: actionTypes.Logout}),
-  requestUser: () => ({
-    type: actionTypes.UserRequested,
-  }),
-  fulfillUser: (user: UserModel) => ({type: actionTypes.UserLoaded, payload: {user}}),
-  setUser: (user: UserModel) => ({type: actionTypes.SetUser, payload: {user}}),
 }
 
-export function* saga() {
-  yield takeLatest(actionTypes.Login, function* loginSaga() {
-    yield put(actions.requestUser())
-  })
-
-  yield takeLatest(actionTypes.Register, function* registerSaga() {
-    yield put(actions.requestUser())
-  })
-
-  yield takeLatest(actionTypes.UserRequested, function* userRequested() {
-    const {data: user} = yield getUserByToken()
-    yield put(actions.fulfillUser(user))
-  })
-}
+export function* saga() {}

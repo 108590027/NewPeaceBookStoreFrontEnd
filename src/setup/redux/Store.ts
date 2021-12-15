@@ -32,3 +32,5 @@ export const persistor = persistStore(store)
 sagaMiddleware.run(rootSaga)
 
 export default store
+
+export const dispatch = store.dispatch

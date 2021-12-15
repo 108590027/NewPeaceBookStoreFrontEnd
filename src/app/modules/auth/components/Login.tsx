@@ -6,7 +6,8 @@ import clsx from 'clsx'
 import {Link} from 'react-router-dom'
 import {useFormik} from 'formik'
 import * as auth from '../redux/AuthRedux'
-import {login} from '../redux/AuthCRUD'
+import loginAPI from '../API/LoginAPI'
+import {ErrorResponse} from '../../errors/ErrorDataTypes'
 
 const loginSchema = Yup.object().shape({
   email: Yup.string()
@@ -33,31 +34,19 @@ const initialValues = {
 
 export function Login() {
   const [loading, setLoading] = useState(false)
-  const dispatch = useDispatch()
   const formik = useFormik({
     initialValues,
     validationSchema: loginSchema,
     onSubmit: (values, {setStatus, setSubmitting}) => {
       setLoading(true)
       setTimeout(async () => {
-        try {
-          // 打登入的請求, 並等待回傳(await), 取出data這個物件(解構賦值)
-          // 若是API回傳的http code >= 400 (錯誤區), 則會直接throw error => 進到catch區塊
-          const {data} = await login(values.email, values.password)
-          setLoading(false)
-          dispatch(auth.actions.login(data.token)) // 將API回傳的token存進去redux中
-        } catch (err: any) {
-          const response = err.response // 將回傳取出
-          setLoading(false)
-          setSubmitting(false)
-          if (response) {
-            // 若是回傳存在(非為undefined) 代表Server有回應, 但是是回傳有錯誤的http code
-            const data = response.data
-            setStatus(`${response.status} - ${data.message}`)
-          } else {
-            // 不存在的話則為無法正常建立連線 => 推斷為網路有問題
-            setStatus('網路連線異常')
-          }
+        const result = await loginAPI(values.email, values.password)
+        setLoading(false)
+        setSubmitting(false)
+        if ('user' in result) {
+          setStatus(`登入成功`)
+        } else {
+          setStatus(`${(result as ErrorResponse).message}`)
         }
       }, 1000)
     },
@@ -177,6 +166,17 @@ export function Login() {
         </button>
       </div>
       {/* end::Action */}
+      {/* begin::Separator */}
+      <div className='text-center text-muted text-uppercase fw-bolder mb-5'>or</div>
+      {/* end::Separator */}
+
+      {/* begin::Google link */}
+      <Link
+        to='/auth/registration'
+        className='btn btn-flex flex-center btn-light btn-lg w-100 mb-5'
+      >
+        註冊新帳號
+      </Link>
     </form>
   )
 }
