@@ -12,6 +12,7 @@ export const actionTypes = {
   createItem: 'createItem',
   deleteItem: 'deleteItem',
   setItem: 'setItem',
+  updateItems: 'updateItems',
 }
 
 const initialItemState: ItemState = {
@@ -61,6 +62,19 @@ export const reducer = persistReducer(
         return {...state}
       }
 
+      case actionTypes.updateItems: {
+        const items: ItemModel[] = action.payload.items
+        items.forEach((item) => {
+          const Item = state.items.find((i) => i.id === item.id)
+          if (Item) {
+            state.items[state.items.indexOf(item)] = {...item}
+          } else {
+            state.items.push(item)
+          }
+        })
+        return {...state}
+      }
+
       default:
         return state
     }
@@ -80,9 +94,13 @@ export const actions = {
     type: actionTypes.deleteItem,
     payload: {id},
   }),
-  setItemItems: (item: ItemModel) => ({
+  setItem: (item: ItemModel) => ({
     type: actionTypes.setItem,
     payload: {item},
+  }),
+  updateItems: (items: ItemModel[]) => ({
+    type: actionTypes.updateItems,
+    payload: {items},
   }),
 }
 
