@@ -14,19 +14,17 @@ export const actionTypes = {
   deleteCategory: 'deleteCategory',
   setCategoryItems: 'setCategoryItems',
 }
-// SimpleMark: Redux預設值
+
 const initialCategoryState: CategoryState = {
   Categories: [],
   lastUpdate: 0,
 }
 
-// SimpleMark: 此Redux結構
 export interface CategoryState {
   Categories: CategoryModel[]
   lastUpdate: number
 }
 
-// SimpleMark: 管理、保存登入中使用者狀態
 export const reducer = persistReducer(
   {storage, key: 'v100-demo1-Category', whitelist: ['Categories']}, // Category存到localStorage持久化保存
   (state: CategoryState = initialCategoryState, action: ActionWithPayload<any>) => {
