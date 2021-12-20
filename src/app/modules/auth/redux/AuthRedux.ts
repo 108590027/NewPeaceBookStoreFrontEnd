@@ -10,16 +10,19 @@ export interface ActionWithPayload<T> extends Action {
 export const actionTypes = {
   setAuth: '[setAuth] Action',
   setToken: '[setToken] Action',
+  setUser: '[setUser] Action',
   Logout: '[Logout] Action',
 }
 // SimpleMark: Redux預設值
 const initialAuthState: IAuthState = {
   auth: undefined,
+  lastUpdate: 0,
 }
 
 // SimpleMark: 此Redux結構
 export interface IAuthState {
   auth?: AuthModel
+  lastUpdate: number
 }
 
 // SimpleMark: 管理、保存登入中使用者狀態
@@ -29,7 +32,8 @@ export const reducer = persistReducer(
     switch (action.type) {
       case actionTypes.setAuth: {
         const auth: AuthModel = action.payload?.auth
-        return {auth}
+        const lastUpdate = Date.now()
+        return {auth, lastUpdate}
       }
 
       case actionTypes.setToken: {
@@ -38,6 +42,16 @@ export const reducer = persistReducer(
           state.auth = {accessToken: accessToken, user: undefined}
         }
         state.auth.accessToken = accessToken
+        state.lastUpdate = Date.now()
+        return {...state}
+      }
+
+      case actionTypes.setUser: {
+        const user: UserModel = action.payload?.user
+        if (state.auth) {
+          state.auth.user = {...user}
+        }
+        state.lastUpdate = Date.now()
         return {...state}
       }
 
@@ -53,6 +67,7 @@ export const reducer = persistReducer(
 
 export const actions = {
   setAuth: (auth: AuthModel) => ({type: actionTypes.setAuth, payload: {auth}}),
+  setUser: (user: UserModel) => ({type: actionTypes.setUser, payload: {user}}),
   setToken: (accessToken: string) => ({type: actionTypes.setToken, payload: {accessToken}}),
   logout: () => ({type: actionTypes.Logout}),
 }

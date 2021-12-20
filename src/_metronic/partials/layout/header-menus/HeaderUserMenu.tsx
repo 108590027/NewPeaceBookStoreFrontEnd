@@ -2,15 +2,18 @@
 import {FC} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
-import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
+import getAuthAPI from '../../../../app/modules/auth/API/GetAuthAPI'
+import {AuthModel, UserModel} from '../../../../app/modules/auth/redux/AuthModel'
+import {IAuthState} from '../../../../app/modules/auth/redux/AuthRedux'
 import {RootState} from '../../../../setup'
 import {toAbsoluteUrl} from '../../../helpers'
 
 const HeaderUserMenu: FC = () => {
-  const user: UserModel = useSelector<RootState>(
-    ({auth}) => auth?.auth?.user,
-    shallowEqual
-  ) as UserModel
+  const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
+  const user: UserModel = authState?.auth?.user as UserModel
+  if (authState.lastUpdate <= Date.now() - 30000) {
+    getAuthAPI()
+  }
   return (
     <div
       className='menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg menu-state-primary fw-bold py-4 fs-6 w-275px'
