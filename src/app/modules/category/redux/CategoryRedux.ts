@@ -1,6 +1,7 @@
 import {Action} from '@reduxjs/toolkit'
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
+import {ItemModel} from '../../item/redux/ItemModel'
 import {CategoryModel} from './CategoryModel'
 
 export interface ActionWithPayload<T> extends Action {
@@ -11,6 +12,7 @@ export const actionTypes = {
   setCategories: 'setCategories',
   createCategory: 'createCategory',
   deleteCategory: 'deleteCategory',
+  setCategoryItems: 'setCategoryItems',
 }
 // SimpleMark: Redux預設值
 const initialCategoryState: CategoryState = {
@@ -50,6 +52,16 @@ export const reducer = persistReducer(
         return {...state}
       }
 
+      case actionTypes.setCategoryItems: {
+        const id: number = action.payload.id
+        const items: ItemModel[] = action.payload.items
+        const category = state.Categories.find((c) => c.id === id)
+        if (category) {
+          category.items = items
+        }
+        return {...state}
+      }
+
       default:
         return state
     }
@@ -68,6 +80,10 @@ export const actions = {
   deleteCategory: (id: number) => ({
     type: actionTypes.deleteCategory,
     payload: {id},
+  }),
+  setCategoryItems: (id: number, items: ItemModel[]) => ({
+    type: actionTypes.setCategoryItems,
+    payload: {id, items},
   }),
 }
 
