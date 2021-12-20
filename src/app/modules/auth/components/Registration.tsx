@@ -1,13 +1,15 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react'
-import {useDispatch} from 'react-redux'
+import {shallowEqual, useSelector} from 'react-redux'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import * as auth from '../redux/AuthRedux'
 import {Link} from 'react-router-dom'
 import registerAPI from '../API/RegisterAPI'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
+import getCategoriesAPI from '../../category/API/GetCategoriesAPI'
+import {RootState} from '../../../../setup'
+import {CategoryState} from '../../category/redux/CategoryRedux'
 
 const initialValues = {
   name: '',
@@ -45,6 +47,10 @@ const registrationSchema = Yup.object().shape({
 })
 
 export function Registration() {
+  const categoryState: CategoryState = useSelector<RootState>(
+    ({category}) => category,
+    shallowEqual
+  ) as CategoryState
   const [loading, setLoading] = useState(false)
   const formik = useFormik({
     initialValues,
@@ -69,6 +75,10 @@ export function Registration() {
       }, 1000)
     },
   })
+
+  if (categoryState.lastUpdate < Date.now() - 30000) {
+    getCategoriesAPI()
+  }
 
   return (
     <form

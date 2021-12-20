@@ -57,7 +57,7 @@ export const reducer = persistReducer(
         const items: ItemModel[] = action.payload.items
         const category = state.Categories.find((c) => c.id === id)
         if (category) {
-          category.items = items
+          category._items = items
         }
         return {...state}
       }
