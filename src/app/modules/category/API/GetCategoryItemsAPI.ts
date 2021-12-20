@@ -2,7 +2,6 @@ import axios from 'axios'
 import * as CategoryRedux from '../redux/CategoryRedux'
 import {ErrorResponse, NetworkErrorResponse} from '../../errors/ErrorDataTypes'
 import {dispatch} from '../../../../setup/redux/Store'
-import {CategoryModel} from '../redux/CategoryModel'
 import {ItemModel} from '../../item/redux/ItemModel'
 
 export type Response = {
