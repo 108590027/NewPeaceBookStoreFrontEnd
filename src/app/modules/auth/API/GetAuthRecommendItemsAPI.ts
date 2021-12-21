@@ -1,6 +1,4 @@
 import axios from 'axios'
-import * as AuthRedux from '../redux/AuthRedux'
-import {dispatch} from '../../../../setup/redux/Store'
 import {ErrorResponse, NetworkErrorResponse} from '../../errors/ErrorDataTypes'
 import {ItemModel} from '../../item/redux/ItemModel'
 
