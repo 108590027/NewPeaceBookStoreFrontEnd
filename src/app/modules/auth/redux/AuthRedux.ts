@@ -1,27 +1,30 @@
 import {Action} from '@reduxjs/toolkit'
 import {persistReducer} from 'redux-persist'
 import storage from 'redux-persist/lib/storage'
-import {AuthModel, UserModel} from './AuthModel'
+import {AuthModel, CommentModel, UserModel} from './AuthModel'
 
 export interface ActionWithPayload<T> extends Action {
   payload?: T
 }
 
 export const actionTypes = {
-  setAuth: '[setAuth] Action',
-  setToken: '[setToken] Action',
-  setUser: '[setUser] Action',
-  Logout: '[Logout] Action',
+  setAuth: 'setAuth',
+  setToken: 'setToken',
+  setAuthUser: 'setAuthUser',
+  setAuthComments: 'setAuthComments',
+  Logout: 'Logout',
 }
 // SimpleMark: Redux預設值
 const initialAuthState: IAuthState = {
   auth: undefined,
+  users: [],
   lastUpdate: 0,
 }
 
 // SimpleMark: 此Redux結構
 export interface IAuthState {
   auth?: AuthModel
+  users: UserModel[]
   lastUpdate: number
 }
 
@@ -32,8 +35,9 @@ export const reducer = persistReducer(
     switch (action.type) {
       case actionTypes.setAuth: {
         const auth: AuthModel = action.payload?.auth
-        const lastUpdate = Date.now()
-        return {auth, lastUpdate}
+        state.auth = auth
+        state.lastUpdate = Date.now()
+        return {...state}
       }
 
       case actionTypes.setToken: {
@@ -46,12 +50,24 @@ export const reducer = persistReducer(
         return {...state}
       }
 
-      case actionTypes.setUser: {
+      case actionTypes.setAuthUser: {
         const user: UserModel = action.payload?.user
         if (state.auth) {
           state.auth.user = {...user}
         }
         state.lastUpdate = Date.now()
+        return {...state}
+      }
+
+      case actionTypes.setAuthComments: {
+        const comments: CommentModel[] = action.payload.comments
+        if (state.auth?.user) {
+          state.auth.user.comments = comments
+          const user = state.users.find((u) => u.id === state.auth?.user?.id)
+          if (user) {
+            user.comments = comments
+          }
+        }
         return {...state}
       }
 
@@ -67,7 +83,11 @@ export const reducer = persistReducer(
 
 export const actions = {
   setAuth: (auth: AuthModel) => ({type: actionTypes.setAuth, payload: {auth}}),
-  setUser: (user: UserModel) => ({type: actionTypes.setUser, payload: {user}}),
+  setUser: (user: UserModel) => ({type: actionTypes.setAuthUser, payload: {user}}),
+  setAuthComments: (comments: CommentModel[]) => ({
+    type: actionTypes.setAuthComments,
+    payload: {comments},
+  }),
   setToken: (accessToken: string) => ({type: actionTypes.setToken, payload: {accessToken}}),
   logout: () => ({type: actionTypes.Logout}),
 }
