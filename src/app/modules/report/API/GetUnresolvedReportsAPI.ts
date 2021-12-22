@@ -9,7 +9,7 @@ export type Response = {
   data: ReportModel[]
 }
 
-export const API_URL = () => `${import.meta.env.VITE_API_URL}/auth/report/unresolves`
+export const API_URL = () => `${import.meta.env.VITE_API_URL}/report/unresolves`
 
 // 取得所有未處理的舉報資訊
 export default async function getUnresolvedReportsAPI(): Promise<ReportModel[] | ErrorResponse> {
