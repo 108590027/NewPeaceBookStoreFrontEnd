@@ -2,12 +2,11 @@ import axios from 'axios'
 import * as OrderRedux from '../redux/OrderRedux'
 import {ErrorResponse, NetworkErrorResponse} from '../../errors/ErrorDataTypes'
 import {dispatch} from '../../../../setup/redux/Store'
-import {OrderItemModel, OrderModel} from '../redux/OrderModel'
+import {OrderModel} from '../redux/OrderModel'
 
 export type Response = {
   status: number
-  order: OrderModel
-  items: OrderItemModel[]
+  data: OrderModel
 }
 
 export const API_URL = (orderId: number) => `${import.meta.env.VITE_API_URL}/auth/order/${orderId}`
@@ -18,9 +17,8 @@ export default async function getAuthOrderAPI(
 ): Promise<OrderModel | ErrorResponse> {
   try {
     const {data} = await axios.get<Response>(API_URL(orderId))
-    data.order.items = data.items
-    dispatch(OrderRedux.actions.updateOrders([data.order]))
-    return data.order
+    dispatch(OrderRedux.actions.updateOrders([data.data]))
+    return data.data
   } catch (err: any) {
     console.log(err)
     return (err.response?.data as ErrorResponse) || NetworkErrorResponse
