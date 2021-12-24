@@ -14,42 +14,42 @@ export const actionTypes = {
 }
 
 const initialOrderState: OrderState = {
-  Orders: [],
+  orders: [],
   lastUpdate: 0,
 }
 
 export interface OrderState {
-  Orders: OrderModel[]
+  orders: OrderModel[]
   lastUpdate: number
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Order', whitelist: ['Orders']}, // Order存到localStorage持久化保存
+  {storage, key: 'v100-demo1-Order', whitelist: ['orders']}, // Order存到localStorage持久化保存
   (state: OrderState = initialOrderState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setOrders: {
-        const Orders: OrderModel[] = action.payload?.Orders
+        const orders: OrderModel[] = action.payload?.orders
         const lastUpdate = Date.now()
-        return {Orders, lastUpdate}
+        return {orders, lastUpdate}
       }
 
       case actionTypes.deleteOrder: {
         const id: number = action.payload?.id
-        const Order = state.Orders.find((i) => i.id === id)
-        if (Order) {
-          state.Orders.splice(state.Orders.indexOf(Order), 1)
+        const order = state.orders.find((i) => i.id === id)
+        if (order) {
+          state.orders.splice(state.orders.indexOf(order), 1)
         }
         return {...state}
       }
 
       case actionTypes.updateOrders: {
-        const Orders: OrderModel[] = action.payload.Orders
-        Orders.forEach((o) => {
-          const order = state.Orders.find((i) => i.id === o.id)
+        const orders: OrderModel[] = action.payload.orders
+        orders.forEach((o) => {
+          const order = state.orders.find((i) => i.id === o.id)
           if (order) {
-            state.Orders[state.Orders.indexOf(order)] = {...order}
+            state.orders[state.orders.indexOf(order)] = {...order}
           } else {
-            state.Orders.push(o)
+            state.orders.push(o)
           }
         })
         return {...state}
@@ -62,17 +62,17 @@ export const reducer = persistReducer(
 )
 
 export const actions = {
-  setOrders: (Orders: OrderModel[]) => ({
+  setOrders: (orders: OrderModel[]) => ({
     type: actionTypes.setOrders,
-    payload: {Orders},
+    payload: {orders},
   }),
   deleteOrder: (id: number) => ({
     type: actionTypes.deleteOrder,
     payload: {id},
   }),
-  updateOrders: (Orders: OrderModel[]) => ({
+  updateOrders: (orders: OrderModel[]) => ({
     type: actionTypes.updateOrders,
-    payload: {Orders},
+    payload: {orders},
   }),
 }
 

@@ -12,7 +12,7 @@ export type Response = {
 export const API_URL = (reportId: number) =>
   `${import.meta.env.VITE_API_URL}/report/${reportId}/resolve`
 
-// 提交舉報
+// 處理舉報
 export default async function resolveReportAPI(
   reportId: number,
   time: number

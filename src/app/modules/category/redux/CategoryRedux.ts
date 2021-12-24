@@ -16,36 +16,36 @@ export const actionTypes = {
 }
 
 const initialCategoryState: CategoryState = {
-  Categories: [],
+  categories: [],
   lastUpdate: 0,
 }
 
 export interface CategoryState {
-  Categories: CategoryModel[]
+  categories: CategoryModel[]
   lastUpdate: number
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Category', whitelist: ['Categories']}, // Category存到localStorage持久化保存
+  {storage, key: 'v100-demo1-Category', whitelist: ['categories']}, // Category存到localStorage持久化保存
   (state: CategoryState = initialCategoryState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setCategories: {
-        const Categories: CategoryModel[] = action.payload?.Categories
+        const categories: CategoryModel[] = action.payload?.categories
         const lastUpdate = Date.now()
-        return {Categories, lastUpdate}
+        return {categories, lastUpdate}
       }
 
       case actionTypes.createCategory: {
         const Categorie: CategoryModel = action.payload?.Category
-        state.Categories.push(Categorie)
+        state.categories.push(Categorie)
         return {...state}
       }
 
       case actionTypes.deleteCategory: {
         const id: number = action.payload?.id
-        const category = state.Categories.find((c) => c.id === id)
+        const category = state.categories.find((c) => c.id === id)
         if (category) {
-          state.Categories.splice(state.Categories.indexOf(category), 1)
+          state.categories.splice(state.categories.indexOf(category), 1)
         }
         return {...state}
       }
@@ -53,7 +53,7 @@ export const reducer = persistReducer(
       case actionTypes.setCategoryItems: {
         const id: number = action.payload.id
         const items: ItemModel[] = action.payload.items
-        const category = state.Categories.find((c) => c.id === id)
+        const category = state.categories.find((c) => c.id === id)
         if (category) {
           category._items = items
         }
@@ -67,9 +67,9 @@ export const reducer = persistReducer(
 )
 
 export const actions = {
-  setCategories: (Categories: CategoryModel[]) => ({
+  setCategories: (categories: CategoryModel[]) => ({
     type: actionTypes.setCategories,
-    payload: {Categories},
+    payload: {categories},
   }),
   createCategory: (Category: CategoryModel) => ({
     type: actionTypes.createCategory,

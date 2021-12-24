@@ -53,8 +53,8 @@ export const reducer = persistReducer(
       case actionTypes.setItem: {
         const item: ItemModel = action.payload.item
         const id: number = item.id
-        const Item = state.items.find((i) => i.id === id)
-        if (Item) {
+        const oriItem = state.items.find((i) => i.id === id)
+        if (oriItem) {
           state.items[state.items.indexOf(item)] = {...item}
         } else {
           state.items.push(item)
