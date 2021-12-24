@@ -9,7 +9,7 @@ export type Response = {
 
 export const API_URL = (tagId: number) => `${import.meta.env.VITE_API_URL}/tag/${tagId}/delete`
 
-// 新增標籤
+// 刪除標籤
 export default async function deleteTagAPI(tagId: number): Promise<number | ErrorResponse> {
   try {
     const {data} = await axios.post<Response>(API_URL(tagId))
