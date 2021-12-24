@@ -1,3 +1,6 @@
+import {UserModel} from '../../auth/redux/AuthModel'
+import {ItemModel} from '../../item/redux/ItemModel'
+
 export type OrderModel = {
   id: number
   user_id: number
@@ -6,7 +9,8 @@ export type OrderModel = {
   created_at: string
   updated_at: string
 
-  items: OrderItemModel[]
+  user: UserModel
+  orderItems: OrderItemModel[]
 }
 
 export type OrderItemModel = {
@@ -17,4 +21,6 @@ export type OrderItemModel = {
   price: number
   created_at: string
   updated_at: string
+
+  item: ItemModel
 }
