@@ -19,7 +19,6 @@ export default async function getMerchantOrderAPI(
 ): Promise<OrderModel | ErrorResponse> {
   try {
     const {data} = await axios.get<Response>(API_URL(orderId))
-    data.order.items = data.items
     dispatch(OrderRedux.actions.updateOrders([data.order]))
     return data.order
   } catch (err: any) {
