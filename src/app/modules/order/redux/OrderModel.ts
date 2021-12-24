@@ -11,6 +11,7 @@ export type OrderModel = {
 
   user: UserModel
   orderItems: OrderItemModel[]
+  orderPayment: OrderPaymentModel
 }
 
 export type OrderItemModel = {
@@ -23,4 +24,14 @@ export type OrderItemModel = {
   updated_at: string
 
   item: ItemModel
+}
+
+export type OrderPaymentModel = {
+  id: number
+  order_id: number
+  status: number
+  type: string
+  code: string
+  created_at: string
+  updated_at: string
 }
