@@ -3,9 +3,6 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../../setup'
 import getMerchantCommentsAPI from '../../../auth/API/GetMerchantCommentsAPI'
 import {IAuthState} from '../../../auth/redux/AuthRedux'
-import {PhoneVerify} from './cards/PhoneVerify'
-import {ProfileDetails} from './cards/ProfileDetails'
-import {SignInMethod} from './cards/SignInMethod'
 
 export function Comments() {
   const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
@@ -15,6 +12,7 @@ export function Comments() {
     })
   }
   // TODO: 列出評論
+  console.log(authState.auth?.user?.comments)
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body border-top p-9'>

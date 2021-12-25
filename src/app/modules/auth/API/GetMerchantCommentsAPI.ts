@@ -1,7 +1,7 @@
 import axios from 'axios'
 import * as AuthRedux from '../redux/AuthRedux'
 import {ErrorResponse, NetworkErrorResponse} from '../../errors/ErrorDataTypes'
-import {CommentModel, UserModel} from '../redux/AuthModel'
+import {CommentModel} from '../redux/AuthModel'
 import store, {dispatch} from '../../../../setup/redux/Store'
 
 export type Response = {
