@@ -10,7 +10,9 @@ export interface UserModel {
   email: string
   sid: string
   major: number
+  phone?: string
 
+  phoneVerify?: PhoneVerifyModel
   comments?: CommentModel[]
 }
 
@@ -22,4 +24,13 @@ export type CommentModel = {
   message: string
   // created_at: string,
   // updated_at: string
+}
+
+export type PhoneVerifyModel = {
+  id: number
+  user_id: number
+  status: number
+  code: string
+  created_at: string
+  updated_at: string
 }
