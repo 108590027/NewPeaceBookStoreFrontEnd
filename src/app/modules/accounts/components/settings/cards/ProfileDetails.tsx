@@ -31,6 +31,7 @@ const ProfileDetails: React.FC = () => {
         const res = await editProfileAPI({name: values.name})
         if (res === 1) {
           data.name = values.name
+          setData({...data})
           dispatch(AuthRedux.actions.setUser({...data}))
         } else {
           // TODO: Failed
