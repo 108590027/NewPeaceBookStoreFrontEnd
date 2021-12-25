@@ -123,9 +123,9 @@ const AccountHeader: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/account/overview' && 'active')
+                  (location.pathname === '/account/overview' && 'active')
                 }
-                to='/crafted/account/overview'
+                to='/account/overview'
               >
                 總覽
               </Link>
@@ -134,9 +134,9 @@ const AccountHeader: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/account/settings' && 'active')
+                  (location.pathname === '/account/settings' && 'active')
                 }
-                to='/crafted/account/settings'
+                to='/account/settings'
               >
                 修改個人資訊
               </Link>
@@ -145,11 +145,22 @@ const AccountHeader: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/crafted/account/comments' && 'active')
+                  (location.pathname === '/account/comments' && 'active')
                 }
-                to='/crafted/account/comments'
+                to='/account/comments'
               >
                 評論
+              </Link>
+            </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/account/items' && 'active')
+                }
+                to='/account/items'
+              >
+                商品
               </Link>
             </li>
           </ul>

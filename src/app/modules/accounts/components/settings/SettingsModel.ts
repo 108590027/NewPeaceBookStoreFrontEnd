@@ -1,4 +1,4 @@
-import { UserModel } from "../../../auth/models/UserModel"
+import {UserModel} from '../../../auth/redux/AuthModel'
 
 export interface IProfileDetails {
   avatar: string
@@ -75,13 +75,16 @@ export interface IDeactivateAccount {
 export const profileDetailsInitValues: UserModel = {
   id: 0,
   name: '',
-  password: "",
-  email: "",
-  phone: "",
+  // password: '',
+  email: '',
+  phone: '',
+  role: 0,
+  sid: '',
+  major: 0,
 }
 
 export const updateEmail: IUpdateEmail = {
-  newEmail: 'support@keenthemes.com',
+  newEmail: 'database@ntut.edu.tw',
   confirmPassword: '',
 }
 
