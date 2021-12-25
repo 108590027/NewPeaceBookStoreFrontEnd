@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import { shallowEqual, useSelector } from 'react-redux'
+import {shallowEqual, useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
-import { RootState } from '../../../../setup'
+import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {
   ChartsWidget1,
@@ -10,10 +10,15 @@ import {
   ListsWidget5,
   TablesWidget5,
 } from '../../../../_metronic/partials/widgets'
-import { UserModel } from '../../auth/models/UserModel'
+import {UserModel} from '../../auth/redux/AuthModel'
+import * as AuthRedux from '../../auth/redux/AuthRedux'
 
 export function Overview() {
-  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const authState: AuthRedux.IAuthState = useSelector<RootState>(
+    ({auth}) => auth,
+    shallowEqual
+  ) as AuthRedux.IAuthState
+  const user: UserModel = authState.auth?.user as UserModel
   return (
     <>
       <div className='card mb-5 mb-xl-10' id='kt_profile_details_view'>
@@ -33,9 +38,7 @@ export function Overview() {
           </div>
 
           <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>
-              連絡電話
-            </label>
+            <label className='col-lg-4 fw-bold text-muted'>連絡電話</label>
 
             <div className='col-lg-8 d-flex align-items-center'>
               <span className='fw-bolder fs-6 me-2'>{user.phone}</span>
@@ -43,7 +46,6 @@ export function Overview() {
               <span className='badge badge-success'>已驗證</span>
             </div>
           </div>
-
         </div>
       </div>
 
