@@ -2,15 +2,17 @@
 import React from 'react'
 import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
-import {Dropdown1} from '../../../_metronic/partials'
 import {useLocation} from 'react-router'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from '../../../setup'
-import { UserModel } from '../auth/models/UserModel'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../setup'
+import {UserModel} from '../auth/redux/AuthModel'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
-  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const user: UserModel = useSelector<RootState>(
+    ({auth}) => auth.auth?.user,
+    shallowEqual
+  ) as UserModel
 
   return (
     <div className='card mb-5 mb-xl-10'>

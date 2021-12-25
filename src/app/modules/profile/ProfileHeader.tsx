@@ -28,7 +28,7 @@ const ProfileHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    {user.name}
+                    }
                   </a>
                   <a href='#'>
                     <KTSVG
