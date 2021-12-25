@@ -8,10 +8,10 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../../../setup'
 import editProfileAPI from '../../../../auth/API/EditProfileAPI'
 import {dispatch} from '../../../../../../setup/redux/Store'
+import {toast} from 'react-toastify'
+import {ErrorResponse} from '../../../../errors/ErrorDataTypes'
 
-const profileDetailsSchema = Yup.object().shape({
-  name: Yup.string().required('Name is required'),
-})
+const profileDetailsSchema = Yup.object().shape({})
 
 const ProfileDetails: React.FC = () => {
   const authState: AuthRedux.IAuthState = useSelector<RootState>(
@@ -30,11 +30,16 @@ const ProfileDetails: React.FC = () => {
       setTimeout(async () => {
         const res = await editProfileAPI({name: values.name})
         if (res === 1) {
+          const request: any = {}
+          if (values.name !== '') {
+            request.name = values.name
+          }
           data.name = values.name
           setData({...data})
-          dispatch(AuthRedux.actions.setUser({...data}))
+          dispatch(AuthRedux.actions.setUser({...request}))
+          toast.success('修改成功')
         } else {
-          // TODO: Failed
+          toast.error(`修改失敗: ${(res as ErrorResponse).message}`)
         }
         setLoading(false)
       }, 1000)
