@@ -53,16 +53,16 @@ const PhoneVerify: React.FC = () => {
         className='card-header border-0 cursor-pointer'
         role='button'
         data-bs-toggle='collapse'
-        data-bs-target='#kt_account_profile_details'
+        data-bs-target='#kt_phone_verify'
         aria-expanded='true'
-        aria-controls='kt_account_profile_details'
+        aria-controls='kt_phone_verify'
       >
         <div className='card-title m-0'>
           <h3 className='fw-bolder m-0'>綁定手機</h3>
         </div>
       </div>
 
-      <div id='kt_account_profile_details' className='collapse show'>
+      <div id='kt_phone_verify' className='collapse show'>
         <div className='card-body border-top p-9'>
           <div className='row mb-6'>
             <label className='col-lg-4 col-form-label fw-bold fs-6'>手機</label>

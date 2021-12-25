@@ -141,6 +141,17 @@ const AccountHeader: React.FC = () => {
                 修改個人資訊
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/crafted/account/comments' && 'active')
+                }
+                to='/crafted/account/comments'
+              >
+                評論
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

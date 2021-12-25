@@ -4,6 +4,7 @@ import {PageLink, PageTitle} from '../../../_metronic/layout/core'
 import {Overview} from './components/Overview'
 import {Settings} from './components/settings/Settings'
 import {AccountHeader} from './AccountHeader'
+import {Comments} from './components/settings/Comments'
 
 const accountBreadCrumbs: Array<PageLink> = [
   {
@@ -32,6 +33,10 @@ const AccountPage: React.FC = () => {
         <Route path='/crafted/account/settings'>
           <PageTitle breadcrumbs={accountBreadCrumbs}>修改個人資訊</PageTitle>
           <Settings />
+        </Route>
+        <Route path='/crafted/account/comments'>
+          <PageTitle breadcrumbs={accountBreadCrumbs}>評論</PageTitle>
+          <Comments />
         </Route>
 
         <Redirect from='/crafted/account' exact={true} to='/crafted/account/overview' />
