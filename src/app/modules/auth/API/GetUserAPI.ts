@@ -23,7 +23,6 @@ export default async function getUserAPI(userId: number): Promise<UserModel | Er
     return data.user
   } catch (err: any) {
     console.log(err)
-    document.location.href = '/logout'
     return (err.response?.data as ErrorResponse) || NetworkErrorResponse
   }
 }

@@ -10,7 +10,7 @@ export interface ActionWithPayload<T> extends Action {
 export const actionTypes = {
   setAuth: 'setAuth',
   setToken: 'setToken',
-  setAuthUser: 'setAuthUser',
+  setUser: 'setUser',
   setAuthComments: 'setAuthComments',
   Logout: 'Logout',
 }
@@ -50,10 +50,16 @@ export const reducer = persistReducer(
         return {...state}
       }
 
-      case actionTypes.setAuthUser: {
+      case actionTypes.setUser: {
         const user: UserModel = action.payload?.user
-        if (state.auth) {
+        if (state.auth?.user?.id === user.id) {
           state.auth.user = {...user}
+        }
+        const oriUser = state.users.find((i) => i.id === user.id)
+        if (oriUser) {
+          state.users[state.users.indexOf(oriUser)] = {...user}
+        } else {
+          state.users.push(user)
         }
         state.lastUpdate = Date.now()
         return {...state}
@@ -83,7 +89,7 @@ export const reducer = persistReducer(
 
 export const actions = {
   setAuth: (auth: AuthModel) => ({type: actionTypes.setAuth, payload: {auth}}),
-  setUser: (user: UserModel) => ({type: actionTypes.setAuthUser, payload: {user}}),
+  setUser: (user: UserModel) => ({type: actionTypes.setUser, payload: {user}}),
   setAuthComments: (comments: CommentModel[]) => ({
     type: actionTypes.setAuthComments,
     payload: {comments},

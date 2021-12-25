@@ -7,6 +7,7 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../auth/redux/AuthModel'
 import {CategoryState} from '../category/redux/CategoryRedux'
+import getUserAPI from '../auth/API/GetUserAPI'
 
 const AccountHeader: React.FC = () => {
   const location = useLocation()
@@ -19,6 +20,11 @@ const AccountHeader: React.FC = () => {
     shallowEqual
   ) as CategoryState
   const major = categoryState.categories.find((c) => c.id === user.major)
+  if (user) {
+    if (user.rate === undefined) {
+      getUserAPI(user.id)
+    }
+  }
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -84,7 +90,7 @@ const AccountHeader: React.FC = () => {
                 <div className='d-flex flex-wrap'>
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>400筆</div>
+                      <div className='fs-2 fw-bolder'>{user.totalBuyOrders || 0}筆</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>買入</div>
@@ -92,7 +98,7 @@ const AccountHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>800筆</div>
+                      <div className='fs-2 fw-bolder'>{user.totalSellOrders || 0}筆</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>賣出</div>
@@ -100,7 +106,7 @@ const AccountHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>95%</div>
+                      <div className='fs-2 fw-bolder'>{user.rate ? `${user.rate}%` : '-'}</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>評價</div>
