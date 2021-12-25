@@ -1,23 +1,25 @@
 import React, {useState} from 'react'
-import {toAbsoluteUrl} from '../../../../../../_metronic/helpers'
-import {IProfileDetails, profileDetailsInitValues as initialValues} from '../SettingsModel'
+import {profileDetailsInitValues as initialValues} from '../SettingsModel'
 import * as Yup from 'yup'
 import {useFormik} from 'formik'
-import { UserModel } from '../../../../auth/models/UserModel'
-import { shallowEqual, useSelector } from 'react-redux'
-import { RootState } from '../../../../../../setup'
+import {UserModel} from '../../../../auth/redux/AuthModel'
+import * as AuthRedux from '../../../../auth/redux/AuthRedux'
+import {shallowEqual, useSelector} from 'react-redux'
+import {RootState} from '../../../../../../setup'
+import editProfileAPI from '../../../../auth/API/EditProfileAPI'
+import {dispatch} from '../../../../../../setup/redux/Store'
 
 const profileDetailsSchema = Yup.object().shape({
   name: Yup.string().required('Name is required'),
 })
 
 const ProfileDetails: React.FC = () => {
-  const user: UserModel = useSelector<RootState>(({auth}) => auth.user, shallowEqual) as UserModel
+  const authState: AuthRedux.IAuthState = useSelector<RootState>(
+    ({auth}) => auth,
+    shallowEqual
+  ) as AuthRedux.IAuthState
+  const user: UserModel = authState.auth?.user as UserModel
   const [data, setData] = useState<UserModel>(user)
-  const updateData = (fieldsToUpdate: Partial<UserModel>): void => {
-    const updatedData = Object.assign(data, fieldsToUpdate)
-    setData(updatedData)
-  }
 
   const [loading, setLoading] = useState(false)
   const formik = useFormik<UserModel>({
@@ -25,11 +27,14 @@ const ProfileDetails: React.FC = () => {
     validationSchema: profileDetailsSchema,
     onSubmit: (values) => {
       setLoading(true)
-      setTimeout(() => {
-        values.name = data.name
-        // TODO: API
-        const updatedData = Object.assign(data, values)
-        setData(updatedData)
+      setTimeout(async () => {
+        const res = await editProfileAPI({name: values.name})
+        if (res === 1) {
+          data.name = values.name
+          dispatch(AuthRedux.actions.setUser({...data}))
+        } else {
+          // TODO: Failed
+        }
         setLoading(false)
       }, 1000)
     },

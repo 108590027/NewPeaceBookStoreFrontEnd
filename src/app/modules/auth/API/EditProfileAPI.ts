@@ -14,7 +14,7 @@ export default async function editProfileAPI(requestData: {
   major?: number
 }): Promise<number | ErrorResponse> {
   try {
-    const {data} = await axios.post<Response>(API_URL, {requestData})
+    const {data} = await axios.post<Response>(API_URL, {...requestData})
     return data.status
   } catch (err: any) {
     console.log(err)
