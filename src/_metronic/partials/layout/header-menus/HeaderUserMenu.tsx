@@ -5,12 +5,21 @@ import {Link} from 'react-router-dom'
 import getAuthAPI from '../../../../app/modules/auth/API/GetAuthAPI'
 import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {IAuthState} from '../../../../app/modules/auth/redux/AuthRedux'
+import getCategoriesAPI from '../../../../app/modules/category/API/GetCategoriesAPI'
+import {CategoryState} from '../../../../app/modules/category/redux/CategoryRedux'
 import {RootState} from '../../../../setup'
 import {toAbsoluteUrl} from '../../../helpers'
 
 const HeaderUserMenu: FC = () => {
+  const categoryState: CategoryState = useSelector<RootState>(
+    ({category}) => category,
+    shallowEqual
+  ) as CategoryState
   const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
   const user: UserModel = authState?.auth?.user as UserModel
+  if (categoryState.lastUpdate <= Date.now() - 30000) {
+    getCategoriesAPI()
+  }
   if (authState.lastUpdate <= Date.now() - 30000) {
     getAuthAPI()
   }

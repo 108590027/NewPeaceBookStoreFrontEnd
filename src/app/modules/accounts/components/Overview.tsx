@@ -39,7 +39,7 @@ export function Overview() {
 
             <div className='col-lg-8 d-flex align-items-center'>
               <span className='fw-bolder fs-6 me-2'>{user.phone}</span>
-              {user.phoneVerify?.status === 1 ? (
+              {user.phone_verify?.status === 1 ? (
                 <span className='badge badge-success'>已驗證</span>
               ) : (
                 <span className='badge badge-danger'>未驗證</span>

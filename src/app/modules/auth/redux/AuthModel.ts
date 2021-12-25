@@ -12,6 +12,10 @@ export interface UserModel {
   major: number
   phone?: string
 
+  totalBuyOrders?: number
+  totalSellOrders?: number
+  rate?: number
+
   phone_verify?: PhoneVerifyModel
   comments?: CommentModel[]
 }

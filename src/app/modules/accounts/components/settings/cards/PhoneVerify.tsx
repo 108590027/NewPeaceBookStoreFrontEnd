@@ -1,19 +1,13 @@
 import React, {useState} from 'react'
-import {profileDetailsInitValues as initialValues} from '../SettingsModel'
-import * as Yup from 'yup'
-import {useFormik} from 'formik'
 import {UserModel} from '../../../../auth/redux/AuthModel'
 import * as AuthRedux from '../../../../auth/redux/AuthRedux'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../../../setup'
-import {dispatch} from '../../../../../../setup/redux/Store'
 import {toast} from 'react-toastify'
 import {ErrorResponse} from '../../../../errors/ErrorDataTypes'
 import bindPhoneAPI from '../../../../auth/API/BindPhoneAPI'
 import getAuthAPI from '../../../../auth/API/GetAuthAPI'
 import verifyPhoneAPI from '../../../../auth/API/VerifyPhoneAPI'
-
-const profileDetailsSchema = Yup.object().shape({})
 
 const PhoneVerify: React.FC = () => {
   const authState: AuthRedux.IAuthState = useSelector<RootState>(
