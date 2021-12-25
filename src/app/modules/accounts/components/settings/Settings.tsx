@@ -1,4 +1,5 @@
 import React from 'react'
+import {PhoneVerify} from './cards/PhoneVerify'
 import {ProfileDetails} from './cards/ProfileDetails'
 import {SignInMethod} from './cards/SignInMethod'
 // import {ConnectedAccounts} from './cards/ConnectedAccounts'
@@ -11,6 +12,7 @@ export function Settings() {
     <>
       <ProfileDetails />
       <SignInMethod />
+      <PhoneVerify />
       {/*<ConnectedAccounts />
       <EmailPreferences />
       <Notifications />

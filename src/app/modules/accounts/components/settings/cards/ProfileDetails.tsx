@@ -65,7 +65,7 @@ const ProfileDetails: React.FC = () => {
         <form onSubmit={formik.handleSubmit} noValidate className='form'>
           <div className='card-body border-top p-9'>
             <div className='row mb-6'>
-              <label className='col-lg-4 col-form-label required fw-bold fs-6'>名稱</label>
+              <label className='col-lg-4 col-form-label fw-bold fs-6'>名稱</label>
 
               <div className='col-lg-8'>
                 <div className='row'>

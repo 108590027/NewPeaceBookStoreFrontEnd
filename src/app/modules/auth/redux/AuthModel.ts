@@ -12,7 +12,7 @@ export interface UserModel {
   major: number
   phone?: string
 
-  phoneVerify?: PhoneVerifyModel
+  phone_verify?: PhoneVerifyModel
   comments?: CommentModel[]
 }
 

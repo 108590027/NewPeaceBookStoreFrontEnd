@@ -1,9 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../_metronic/helpers'
 import {
   ChartsWidget1,
   TablesWidget1,
