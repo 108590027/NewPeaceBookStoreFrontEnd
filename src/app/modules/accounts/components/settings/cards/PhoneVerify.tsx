@@ -58,7 +58,7 @@ const PhoneVerify: React.FC = () => {
         aria-controls='kt_phone_verify'
       >
         <div className='card-title m-0'>
-          <h3 className='fw-bolder m-0'>綁定手機</h3>
+          <h3 className='fw-bolder m-0'>聯絡方式</h3>
         </div>
       </div>
 
@@ -106,17 +106,21 @@ const PhoneVerify: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className='card-footer d-flex justify-content-end py-6 px-9'>
-          <button type='submit' className='btn btn-primary' disabled={loading} onClick={submit}>
-            {!loading && (user.phone_verify ? '驗證' : '綁定手機')}
-            {loading && (
-              <span className='indicator-progress' style={{display: 'block'}}>
-                請稍候...{' '}
-                <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-              </span>
-            )}
-          </button>
-        </div>
+        {user.phone_verify?.status === 1 ? (
+          <></>
+        ) : (
+          <div className='card-footer d-flex justify-content-end py-6 px-9'>
+            <button type='submit' className='btn btn-primary' disabled={loading} onClick={submit}>
+              {!loading && (user.phone_verify ? '驗證' : '綁定手機')}
+              {loading && (
+                <span className='indicator-progress' style={{display: 'block'}}>
+                  請稍候...{' '}
+                  <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                </span>
+              )}
+            </button>
+          </div>
+        )}
       </div>
     </div>
   )

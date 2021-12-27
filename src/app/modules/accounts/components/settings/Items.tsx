@@ -1,30 +1,36 @@
-import React from 'react'
+import React, {useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../../setup'
 import {Card4} from '../../../../../_metronic/partials/content/cards/Card4'
 import {IAuthState} from '../../../auth/redux/AuthRedux'
+import getUserItemsAPI from '../../../item/API/GetUserItemsAPI'
 import {ItemState} from '../../../item/redux/ItemRedux'
 
 export function Items() {
   const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
   const itemState: ItemState = useSelector<RootState>(({item}) => item, shallowEqual) as ItemState
+  const [loadState, setLoadState] = useState(false)
   const items = itemState.items.filter((item) => {
     return item.owner.id === authState.auth?.user?.id
   })
-  if (items.length === 0) {
-    // TODO: 打API
+  if (authState.auth?.user) {
+    if (items.length === 0 && !loadState) {
+      setLoadState(true)
+      getUserItemsAPI(authState.auth.user.id)
+    }
   }
-  // TODO: 列出商品
-  console.log(items)
   return (
     <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
-      <div className='col-12 col-sm-6 col-md-4'>
-        <Card4
-          icon='/media/svg/files/folder-document.svg'
-          title='Customers'
-          description='3 files'
-        />
-      </div>
+      {items.map((item) => (
+        <div className='col-12 col-sm-6 col-md-4' key={item.id}>
+          <Card4
+            icon={item.images[0] ? item.images[0].photo : '/media/svg/files/folder-document.svg'}
+            title={item.name}
+            description={`$${item.price}`}
+            isBase64Image={item.images[0]?.photo !== undefined}
+          />
+        </div>
+      ))}
     </div>
   )
 }
