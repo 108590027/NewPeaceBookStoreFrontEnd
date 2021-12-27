@@ -4,8 +4,12 @@ import {AsideMenuItem} from './AsideMenuItem'
 import {CategoryState} from '../../../../app/modules/category/redux/CategoryRedux'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
+import {IAuthState} from '../../../../app/modules/auth/redux/AuthRedux'
 
 export function AsideMenuMain() {
+  const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
+  const user = authState.auth?.user
+  const isAdmin = (user?.role || 0) >= 1
   const categoryState: CategoryState = useSelector<RootState>(
     ({category}) => category,
     shallowEqual
@@ -18,6 +22,33 @@ export function AsideMenuMain() {
         title={'首頁'}
         fontIcon='bi-app-indicator'
       />
+      {isAdmin && (
+        <>
+          <div className='menu-item'>
+            <div className='menu-content pt-8 pb-2'>
+              <span className='menu-section text-muted text-uppercase fs-8 ls-1'>系統管理</span>
+            </div>
+          </div>
+          <AsideMenuItem
+            to={`/admin/category`}
+            icon='/media/icons/duotune/art/art002.svg'
+            title={'管理分類'}
+            fontIcon='bi-app-indicator'
+          />
+          <AsideMenuItem
+            to={`/admin/category`}
+            icon='/media/icons/duotune/art/art002.svg'
+            title={'管理會員'}
+            fontIcon='bi-app-indicator'
+          />
+          <AsideMenuItem
+            to={`/admin/category`}
+            icon='/media/icons/duotune/art/art002.svg'
+            title={'管理標籤'}
+            fontIcon='bi-app-indicator'
+          />
+        </>
+      )}
       <div className='menu-item'>
         <div className='menu-content pt-8 pb-2'>
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>分類</span>
