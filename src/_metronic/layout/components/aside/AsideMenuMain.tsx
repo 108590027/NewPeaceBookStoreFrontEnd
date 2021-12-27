@@ -28,7 +28,7 @@ export function AsideMenuMain() {
           return (
             <AsideMenuItem
               key={`category-${category.id}`}
-              to='/dashboard'
+              to={`/category/${category.id}`}
               icon='/media/icons/duotune/art/art002.svg'
               title={category.name}
               fontIcon='bi-app-indicator'
