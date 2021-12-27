@@ -1,5 +1,8 @@
 import clsx from 'clsx'
 import React, {FC} from 'react'
+import {shallowEqual, useSelector} from 'react-redux'
+import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
+import {RootState} from '../../../../setup'
 import {KTSVG, toAbsoluteUrl} from '../../../helpers'
 import {HeaderNotificationsMenu, HeaderUserMenu, QuickLinks} from '../../../partials'
 import {useLayout} from '../../core'
@@ -11,6 +14,10 @@ const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
 
 const Topbar: FC = () => {
   const {config} = useLayout()
+  const user: UserModel = useSelector<RootState>(
+    ({auth}) => auth.auth?.user,
+    shallowEqual
+  ) as UserModel
 
   return (
     <div className='d-flex align-items-stretch flex-shrink-0'>
@@ -106,7 +113,9 @@ const Topbar: FC = () => {
           data-kt-menu-placement='bottom-end'
           data-kt-menu-flip='bottom'
         >
-          <img src={toAbsoluteUrl('/media/avatars/blank.png')} alt='NewPeaceBookStore' />
+          <span className='symbol-label bg-light-danger text-danger fs-1 fw-bolder'>
+            {user?.name[0]}
+          </span>
         </div>
         <HeaderUserMenu />
         {/* end::Toggle */}

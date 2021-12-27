@@ -32,7 +32,9 @@ const AccountHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-              <img src={toAbsoluteUrl('/media/avatars/blank.png')} alt='Metronic' />
+              <span className='symbol-label bg-light-danger text-danger fs-1 fw-bolder'>
+                {user?.name[0]}
+              </span>
             </div>
           </div>
 
