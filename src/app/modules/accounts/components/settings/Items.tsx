@@ -22,7 +22,7 @@ export function Items() {
   return (
     <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
       {items.map((item) => (
-        <div className='col-12 col-sm-6 col-md-4' key={item.id}>
+        <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
           <Card4
             icon={
               item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'

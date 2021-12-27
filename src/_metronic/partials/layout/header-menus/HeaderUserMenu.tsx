@@ -8,7 +8,6 @@ import {IAuthState} from '../../../../app/modules/auth/redux/AuthRedux'
 import getCategoriesAPI from '../../../../app/modules/category/API/GetCategoriesAPI'
 import {CategoryState} from '../../../../app/modules/category/redux/CategoryRedux'
 import {RootState} from '../../../../setup'
-import {toAbsoluteUrl} from '../../../helpers'
 
 const HeaderUserMenu: FC = () => {
   const categoryState: CategoryState = useSelector<RootState>(
@@ -31,7 +30,7 @@ const HeaderUserMenu: FC = () => {
       <div className='menu-item px-3'>
         <div className='menu-content d-flex align-items-center px-3'>
           <div className='symbol symbol-50px me-5'>
-            <span className='symbol-label bg-light-danger text-danger fs-1 fw-bolder'>
+            <span className='symbol-label bg-light-danger fs-1 text-danger fw-bolder'>
               {user?.name[0]}
             </span>
           </div>

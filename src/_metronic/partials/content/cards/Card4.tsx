@@ -20,7 +20,7 @@ const Card4: FC<Props> = ({icon, title, description, isBase64Image}) => {
               alt=''
             />
           </div>
-          <div className='fs-3 fw-bolder mb-2'>{title}</div>
+          <div className='fs-3 fw-bolder mb-2 text-primary'>{title}</div>
         </a>
         <div className='fs-5 fw-bold text-gray-400 mt-auto'>{description}</div>
       </div>

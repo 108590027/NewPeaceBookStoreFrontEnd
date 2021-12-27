@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
+import {KTSVG} from '../../../_metronic/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {shallowEqual, useSelector} from 'react-redux'
@@ -32,7 +32,10 @@ const AccountHeader: React.FC = () => {
         <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
           <div className='me-7 mb-4'>
             <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-              <span className='symbol-label bg-light-danger text-danger fs-1 fw-bolder'>
+              <span
+                className='symbol-label bg-light-danger text-danger fw-bolder'
+                style={{fontSize: '3rem'}}
+              >
                 {user?.name[0]}
               </span>
             </div>

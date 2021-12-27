@@ -3,7 +3,7 @@ import React, {FC} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {RootState} from '../../../../setup'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import {KTSVG} from '../../../helpers'
 import {HeaderNotificationsMenu, HeaderUserMenu, QuickLinks} from '../../../partials'
 import {useLayout} from '../../core'
 
