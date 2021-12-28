@@ -36,7 +36,7 @@ export function AsideMenuMain() {
             fontIcon='bi-app-indicator'
           />
           <AsideMenuItem
-            to={`/admin/category`}
+            to={`/admin/users`}
             icon='/media/icons/duotune/art/art002.svg'
             title={'管理會員'}
             fontIcon='bi-app-indicator'
