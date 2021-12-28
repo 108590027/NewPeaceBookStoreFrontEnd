@@ -35,6 +35,10 @@ const AdminUsersPage: FC = () => {
     if ('id' in result) {
       toast.success(`新增成功！`)
       document.getElementById('createModalCancel')?.click()
+      setCreateEmail('')
+      setCreateName('')
+      setCreatePassword('')
+      setCreateSid('')
     } else {
       toast.error(`發生錯誤：${result.message}`)
     }
