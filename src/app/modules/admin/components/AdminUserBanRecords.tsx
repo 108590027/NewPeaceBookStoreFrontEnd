@@ -1,6 +1,8 @@
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
 import {BanRecordModel, UserModel} from '../../auth/redux/AuthModel'
+import {ErrorResponse} from '../../errors/ErrorDataTypes'
+import deleteBanRecordAPI from '../API/DeleteBanRecordAPI'
 import getUserBanRecordsAPI from '../API/GetUserBanRecordsAPI'
 
 interface Props {
@@ -10,7 +12,19 @@ interface Props {
 const AdminUserBanRecords: FC<Props> = ({user}) => {
   const [records, setRecords] = useState([] as BanRecordModel[])
   const [init, setInit] = useState(false)
-  const removeRecord = async (id: number) => {}
+  const removeRecord = async (id: number) => {
+    const data = await deleteBanRecordAPI(id)
+    if ('message' in (data as any)) {
+      toast.error(`刪除失敗：${(data as ErrorResponse).message}`)
+    } else {
+      const record = records.find((r) => r.id === data)
+      if (record) {
+        records.splice(records.indexOf(record), 1)
+        setRecords([...records])
+        toast.success('刪除成功！')
+      }
+    }
+  }
 
   if (!init) {
     if (user) {
