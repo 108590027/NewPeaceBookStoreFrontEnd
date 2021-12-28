@@ -1,9 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {Link, match, Redirect, Route, Switch, useLocation} from 'react-router-dom'
-import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {PageTitle} from '../../../../_metronic/layout/core'

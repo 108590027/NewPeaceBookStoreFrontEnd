@@ -38,3 +38,12 @@ export type PhoneVerifyModel = {
   created_at: string
   updated_at: string
 }
+
+export type BanRecordModel = {
+  id: number
+  user_id: number
+  reason: string
+  duration: string
+  created_at: string
+  updated_at: string
+}
