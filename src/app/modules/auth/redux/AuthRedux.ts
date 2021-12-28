@@ -11,6 +11,7 @@ export const actionTypes = {
   setAuth: 'setAuth',
   setToken: 'setToken',
   setUser: 'setUser',
+  setUsers: 'setUsers',
   setAuthComments: 'setAuthComments',
   Logout: 'Logout',
 }
@@ -65,6 +66,22 @@ export const reducer = persistReducer(
         return {...state}
       }
 
+      case actionTypes.setUsers: {
+        const users: UserModel[] = action.payload?.users
+        users.forEach((user) => {
+          if (state.auth?.user?.id === user.id) {
+            state.auth.user = {...user}
+          }
+          const oriUser = state.users.find((i) => i.id === user.id)
+          if (oriUser) {
+            state.users[state.users.indexOf(oriUser)] = {...user}
+          } else {
+            state.users.push(user)
+          }
+        })
+        return {...state}
+      }
+
       case actionTypes.setAuthComments: {
         const comments: CommentModel[] = action.payload.comments
         if (state.auth?.user) {
@@ -90,6 +107,7 @@ export const reducer = persistReducer(
 export const actions = {
   setAuth: (auth: AuthModel) => ({type: actionTypes.setAuth, payload: {auth}}),
   setUser: (user: UserModel) => ({type: actionTypes.setUser, payload: {user}}),
+  setUsers: (users: UserModel[]) => ({type: actionTypes.setUsers, payload: {users}}),
   setAuthComments: (comments: CommentModel[]) => ({
     type: actionTypes.setAuthComments,
     payload: {comments},
