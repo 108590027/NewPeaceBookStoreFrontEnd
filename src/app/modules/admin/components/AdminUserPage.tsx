@@ -8,6 +8,7 @@ import {PageTitle} from '../../../../_metronic/layout/core'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import {CategoryState} from '../../category/redux/CategoryRedux'
+import AdminUserBanRecords from './AdminUserBanRecords'
 import {AdminUserEditProfile} from './AdminUserEditProfile'
 
 interface Props {
@@ -156,7 +157,7 @@ const AdminUserPage: FC<Props> = (props) => {
 
       <Switch>
         <Route path='/admin/user/:id/bannedRecord'>
-          <div>44</div>
+          <AdminUserBanRecords user={user} />
         </Route>
         <Route path='/admin/user/:id'>
           <AdminUserEditProfile user={user} />
