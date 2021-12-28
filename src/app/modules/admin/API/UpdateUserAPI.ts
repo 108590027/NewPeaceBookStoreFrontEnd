@@ -13,18 +13,10 @@ export const API_URL = (userId: number) => `${import.meta.env.VITE_API_URL}/admi
 
 export default async function updateUserAPI(
   userId: number,
-  name: string,
-  password: string,
-  role: number,
-  major: number
+  data: {name: string; password?: string; role: number; major: number}
 ): Promise<UserModel | ErrorResponse> {
   try {
-    const {data: res} = await axios.post<Response>(API_URL(userId), {
-      name,
-      password,
-      role,
-      major,
-    })
+    const {data: res} = await axios.post<Response>(API_URL(userId), data)
     dispatch(AuthRedux.actions.setUser(res.data))
     return res.data
   } catch (err: any) {

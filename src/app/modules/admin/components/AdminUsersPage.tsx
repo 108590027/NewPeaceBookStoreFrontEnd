@@ -95,7 +95,7 @@ const AdminUsersPage: FC = () => {
                       )}
                     </td>
                     <td>
-                      <Link className='btn btn-primary btn-sm' to={''}>
+                      <Link className='btn btn-primary btn-sm' to={`/admin/user/${user.id}`}>
                         <i className='bi bi-file-text fs-5'></i>詳細
                       </Link>
                     </td>

@@ -13,12 +13,14 @@ export function PrivateRoutes() {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const CategoryPage = lazy(() => import('../modules/category/components/CategoryPage'))
   const AdminUsersPage = lazy(() => import('../modules/admin/components/AdminUsersPage'))
+  const AdminUserPage = lazy(() => import('../modules/admin/components/AdminUserPage'))
 
   return (
     <Suspense fallback={<FallbackView />}>
       <Switch>
         <Route path='/dashboard' component={DashboardWrapper} />
         <Route path='/admin/users' component={AdminUsersPage} />
+        <Route path='/admin/user/:id' component={AdminUserPage} />
 
         <Route path='/category/:id' component={CategoryPage} />
 
