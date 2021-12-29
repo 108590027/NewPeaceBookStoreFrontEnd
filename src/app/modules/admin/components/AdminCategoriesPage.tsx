@@ -1,13 +1,13 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {useSelector} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {PageTitle} from '../../../../_metronic/layout/core'
 import createCategoryAPI from '../../category/API/CreateCategoryAPI'
 import deleteCategoryAPI from '../../category/API/DeleteCategoryAPI'
+import updateCategoryAPI from '../../category/API/UpdateCategoryAPI'
 import {CategoryState} from '../../category/redux/CategoryRedux'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
 import getUsersAPI from '../API/GetUsersAPI'
@@ -27,6 +27,15 @@ const AdminCategoriesPage: FC = () => {
       setUpdateName(category.name)
       setUpdateIsDepartment(category.is_department)
       new Modal('#updateModal').show()
+    }
+  }
+  const updateCategory = async () => {
+    const category = await updateCategoryAPI(updateId, updateName, updateIsDepartment)
+    if ('id' in category) {
+      document.getElementById('updateModalCancel')?.click()
+      toast.success('修改成功')
+    } else {
+      toast.success(`修改失敗：${category.message}`)
     }
   }
   const createCategory = async () => {
@@ -158,6 +167,66 @@ const AdminCategoriesPage: FC = () => {
                 </button>
                 <button type='button' className='btn btn-primary' onClick={createCategory}>
                   建立
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className='modal fade' tabIndex={-1} id='updateModal'>
+          <div className='modal-dialog'>
+            <div className='modal-content'>
+              <div className='modal-header'>
+                <h5 className='modal-title'>修改分類</h5>
+                <div
+                  className='btn btn-icon btn-sm btn-active-light-primary ms-2'
+                  data-bs-dismiss='modal'
+                  aria-label='Close'
+                >
+                  <KTSVG
+                    path='/media/icons/duotune/arrows/arr061.svg'
+                    className='svg-icon svg-icon-2x'
+                  />
+                </div>
+              </div>
+              <div className='modal-body'>
+                <div className='row'>
+                  <div className='col-12 mt-4'>
+                    <label className='form-check-label' htmlFor={`updateName`}>
+                      名稱
+                    </label>
+                    <input
+                      id='updateName'
+                      value={updateName}
+                      type='text'
+                      className='form-control mt-1'
+                      onChange={(e) => setUpdateName(e.target.value)}
+                    ></input>
+                  </div>
+                  <div className='col-12 mt-4'>
+                    <label className='form-check-label' htmlFor={`updateIsDepartment`}>
+                      科系分類
+                    </label>
+                    <input
+                      id='updateIsDepartment'
+                      checked={updateIsDepartment}
+                      type='checkbox'
+                      className='form-check-input mx-4'
+                      onChange={(e) => setUpdateIsDepartment(e.target.checked)}
+                    ></input>
+                  </div>
+                </div>
+              </div>
+              <div className='modal-footer'>
+                <button
+                  id='updateModalCancel'
+                  type='button'
+                  className='btn btn-light'
+                  data-bs-dismiss='modal'
+                >
+                  取消
+                </button>
+                <button type='button' className='btn btn-primary' onClick={updateCategory}>
+                  修改
                 </button>
               </div>
             </div>

@@ -13,6 +13,7 @@ export const actionTypes = {
   createCategory: 'createCategory',
   deleteCategory: 'deleteCategory',
   setCategoryItems: 'setCategoryItems',
+  updateCategory: 'updateCategory',
 }
 
 const initialCategoryState: CategoryState = {
@@ -38,6 +39,18 @@ export const reducer = persistReducer(
       case actionTypes.createCategory: {
         const Categorie: CategoryModel = action.payload?.Category
         state.categories.push(Categorie)
+        return {...state}
+      }
+
+      case actionTypes.updateCategory: {
+        const category: CategoryModel = action.payload?.Category
+        const oriCategory = state.categories.find((c) => c.id === category.id)
+        if (oriCategory) {
+          const index = state.categories.indexOf(oriCategory)
+          state.categories[index] = {...category}
+        } else {
+          state.categories.push(category)
+        }
         return {...state}
       }
 
@@ -73,6 +86,10 @@ export const actions = {
   }),
   createCategory: (Category: CategoryModel) => ({
     type: actionTypes.createCategory,
+    payload: {Category},
+  }),
+  updateCategory: (Category: CategoryModel) => ({
+    type: actionTypes.updateCategory,
     payload: {Category},
   }),
   deleteCategory: (id: number) => ({
