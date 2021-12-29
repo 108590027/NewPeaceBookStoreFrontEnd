@@ -6,6 +6,7 @@ import * as category from '../../app/modules/category/redux/CategoryRedux'
 import * as order from '../../app/modules/order/redux/OrderRedux'
 import * as item from '../../app/modules/item/redux/ItemRedux'
 import * as report from '../../app/modules/report/redux/ReportRedux'
+import * as tag from '../../app/modules/tag/redux/TagRedux'
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
@@ -13,6 +14,7 @@ export const rootReducer = combineReducers({
   order: order.reducer,
   item: item.reducer,
   report: report.reducer,
+  tag: tag.reducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>
