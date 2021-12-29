@@ -30,7 +30,7 @@ export function AsideMenuMain() {
             </div>
           </div>
           <AsideMenuItem
-            to={`/admin/category`}
+            to={`/admin/categories`}
             icon='/media/icons/duotune/art/art002.svg'
             title={'管理分類'}
             fontIcon='bi-app-indicator'

@@ -11,7 +11,7 @@ export type Response = {
 
 export const API_URL = `${import.meta.env.VITE_API_URL}/category/create`
 
-export default async function createCategoriesAPI(
+export default async function createCategoryAPI(
   name: string,
   is_department: boolean
 ): Promise<CategoryModel | ErrorResponse> {
