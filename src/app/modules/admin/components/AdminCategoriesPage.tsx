@@ -7,7 +7,9 @@ import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
 import {PageTitle} from '../../../../_metronic/layout/core'
 import createCategoryAPI from '../../category/API/CreateCategoryAPI'
+import deleteCategoryAPI from '../../category/API/DeleteCategoryAPI'
 import {CategoryState} from '../../category/redux/CategoryRedux'
+import {ErrorResponse} from '../../errors/ErrorDataTypes'
 import getUsersAPI from '../API/GetUsersAPI'
 
 const AdminCategoriesPage: FC = () => {
@@ -15,8 +17,18 @@ const AdminCategoriesPage: FC = () => {
   const [load, setLoad] = useState(false)
   const [createName, setCreateName] = useState('')
   const [createIsDepartment, setCreateIsDepartment] = useState(false)
+  const [updateId, setUpdateId] = useState(0)
   const [updateName, setUpdateName] = useState('')
   const [updateIsDepartment, setUpdateIsDepartment] = useState(false)
+  const openUpdateModal = (id: number) => {
+    setUpdateId(id)
+    const category = categoryState.categories.find((c) => c.id === id)
+    if (category) {
+      setUpdateName(category.name)
+      setUpdateIsDepartment(category.is_department)
+      new Modal('#updateModal').show()
+    }
+  }
   const createCategory = async () => {
     if (createName === '') {
       toast.error('請輸入名稱！')
@@ -29,6 +41,14 @@ const AdminCategoriesPage: FC = () => {
       setCreateName('')
     } else {
       toast.error(`發生錯誤：${result.message}`)
+    }
+  }
+  const removeCategory = async (id: number) => {
+    const status = await deleteCategoryAPI(id)
+    if (status + '' === '1') {
+      toast.success('刪除成功')
+    } else {
+      toast.success(`刪除失敗：${(status as ErrorResponse).message}`)
     }
   }
   if (!load) {
@@ -59,14 +79,23 @@ const AdminCategoriesPage: FC = () => {
                 </tr>
               </thead>
               <tbody>
-                {categoryState.categories.map((user) => (
-                  <tr key={user.id}>
-                    <td>{user.id}</td>
-                    <td className='fw-bolder'>{user.name}</td>
+                {categoryState.categories.map((category) => (
+                  <tr key={category.id}>
+                    <td>{category.id}</td>
+                    <td className='fw-bolder'>{category.name}</td>
                     <td>
-                      <Link className='btn btn-primary btn-sm' to={`/admin/user/${user.id}`}>
-                        <i className='bi bi-file-text fs-5'></i>詳細
-                      </Link>
+                      <button
+                        className='btn btn-primary btn-sm mx-2'
+                        onClick={() => openUpdateModal(category.id)}
+                      >
+                        <i className='bi bi-pencil-square fs-5'></i>修改
+                      </button>
+                      <button
+                        className='btn btn-danger btn-sm mx-2'
+                        onClick={() => removeCategory(category.id)}
+                      >
+                        <i className='bi bi-trash-fill fs-5'></i>刪除
+                      </button>
                     </td>
                   </tr>
                 ))}
