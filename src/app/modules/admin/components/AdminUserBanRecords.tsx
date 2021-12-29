@@ -14,15 +14,15 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
   const [init, setInit] = useState(false)
   const removeRecord = async (id: number) => {
     const data = await deleteBanRecordAPI(id)
-    if ('message' in (data as any)) {
-      toast.error(`刪除失敗：${(data as ErrorResponse).message}`)
-    } else {
-      const record = records.find((r) => r.id === data)
+    if (`${data}` === `${id}`) {
+      const record = records.find((r) => `${r.id}` === `${data}`)
       if (record) {
         records.splice(records.indexOf(record), 1)
         setRecords([...records])
         toast.success('刪除成功！')
       }
+    } else {
+      toast.error(`刪除失敗：${(data as ErrorResponse).message}`)
     }
   }
 
