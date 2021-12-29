@@ -7,7 +7,7 @@ export type Response = {
 }
 
 export const API_URL = (recordId: number) =>
-  `${import.meta.env.VITE_API_URL}/admin/user/banRecord/${recordId}/delete`
+  `${import.meta.env.VITE_API_URL}/admin/ban_record/${recordId}/delete`
 
 export default async function deleteBanRecordAPI(
   recordId: number

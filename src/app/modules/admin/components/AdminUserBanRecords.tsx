@@ -1,7 +1,11 @@
+import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
+import {KTSVG} from '../../../../_metronic/helpers'
+import {toInputDate} from '../../../utils/DateUtil'
 import {BanRecordModel, UserModel} from '../../auth/redux/AuthModel'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
+import createBanRecordAPI from '../API/CreateBanRecordAPI'
 import deleteBanRecordAPI from '../API/DeleteBanRecordAPI'
 import getUserBanRecordsAPI from '../API/GetUserBanRecordsAPI'
 
@@ -12,6 +16,8 @@ interface Props {
 const AdminUserBanRecords: FC<Props> = ({user}) => {
   const [records, setRecords] = useState([] as BanRecordModel[])
   const [init, setInit] = useState(false)
+  const [createReason, setCreateReason] = useState('違反會員規定')
+  const [createDuration, setCreateDuration] = useState(toInputDate(Date.now()))
   const removeRecord = async (id: number) => {
     const data = await deleteBanRecordAPI(id)
     if (`${data}` === `${id}`) {
@@ -23,6 +29,22 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
       }
     } else {
       toast.error(`刪除失敗：${(data as ErrorResponse).message}`)
+    }
+  }
+  const ban = async () => {
+    if (user) {
+      const data = await createBanRecordAPI(
+        user.id,
+        createReason,
+        Math.trunc(new Date(createDuration).getTime() / 1000)
+      )
+      if ('id' in data) {
+        setRecords([data, ...records])
+        document.getElementById('createModalCancel')?.click()
+        toast.success('建立成功。')
+      } else {
+        toast.error(`建立失敗：${data.message}`)
+      }
     }
   }
 
@@ -50,7 +72,14 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
                 <tr className='fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200'>
                   <th>禁止時間</th>
                   <th>理由</th>
-                  <th></th>
+                  <th>
+                    <button
+                      className='btn btn-success btn-sm'
+                      onClick={(e) => new Modal('#createModal').show()}
+                    >
+                      建立紀錄
+                    </button>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -70,6 +99,67 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
                 ))}
               </tbody>
             </table>
+          </div>
+        </div>
+      </div>
+      <div className='modal fade' tabIndex={-1} id='createModal'>
+        <div className='modal-dialog'>
+          <div className='modal-content'>
+            <div className='modal-header'>
+              <h5 className='modal-title'>封禁會員</h5>
+              <div
+                className='btn btn-icon btn-sm btn-active-light-primary ms-2'
+                data-bs-dismiss='modal'
+                aria-label='Close'
+              >
+                <KTSVG
+                  path='/media/icons/duotune/arrows/arr061.svg'
+                  className='svg-icon svg-icon-2x'
+                />
+              </div>
+            </div>
+            <div className='modal-body'>
+              <div className='row'>
+                <div className='col-12 mt-4'>
+                  <label className='form-check-label' htmlFor={`createReason`}>
+                    原因
+                  </label>
+                  <input
+                    id='createReason'
+                    value={createReason}
+                    className='form-control mt-1'
+                    onChange={(e) => setCreateReason(e.target.value)}
+                  ></input>
+                </div>
+              </div>
+              <div className='row'>
+                <div className='col-12 mt-4'>
+                  <label className='form-check-label' htmlFor={`createDuration`}>
+                    到期時間
+                  </label>
+                  <input
+                    id='createDuration'
+                    value={createDuration}
+                    type='datetime-local'
+                    className='form-control mt-1'
+                    onChange={(e) => setCreateDuration(e.target.value)}
+                  ></input>
+                </div>
+              </div>
+            </div>
+            <div className='modal-footer'>
+              <button
+                id='createModalCancel'
+                type='button'
+                className='btn btn-light'
+                data-bs-dismiss='modal'
+              >
+                取消
+              </button>
+              <button type='button' className='btn btn-primary' onClick={ban}>
+                建立
+              </button>
+            </div>
           </div>
         </div>
       </div>
