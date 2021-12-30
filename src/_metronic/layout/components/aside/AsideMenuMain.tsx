@@ -47,6 +47,12 @@ export function AsideMenuMain() {
             title={'管理標籤'}
             fontIcon='bi-app-indicator'
           />
+          <AsideMenuItem
+            to={`/admin/reports`}
+            icon='/media/icons/duotune/art/art002.svg'
+            title={'管理舉報'}
+            fontIcon='bi-app-indicator'
+          />
         </>
       )}
       <div className='menu-item'>

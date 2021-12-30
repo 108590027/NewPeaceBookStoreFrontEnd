@@ -43,7 +43,7 @@ export const reducer = persistReducer(
       }
 
       case actionTypes.updateReports: {
-        const reports: ReportModel[] = action.payload.Reports
+        const reports: ReportModel[] = action.payload.reports
         reports.forEach((o) => {
           const report = state.reports.find((i) => i.id === o.id)
           if (report) {

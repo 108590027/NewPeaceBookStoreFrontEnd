@@ -13,6 +13,7 @@ export function PrivateRoutes() {
   const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
   const CategoryPage = lazy(() => import('../modules/category/components/CategoryPage'))
   const AdminTagsPage = lazy(() => import('../modules/admin/components/AdminTagsPage'))
+  const AdminReportsPage = lazy(() => import('../modules/admin/components/AdminReportsPage'))
   const AdminCategoriesPage = lazy(() => import('../modules/admin/components/AdminCategoriesPage'))
   const AdminUsersPage = lazy(() => import('../modules/admin/components/AdminUsersPage'))
   const AdminUserPage = lazy(() => import('../modules/admin/components/AdminUserPage'))
@@ -23,6 +24,7 @@ export function PrivateRoutes() {
         <Route path='/dashboard' component={DashboardWrapper} />
         <Route path='/admin/tags' component={AdminTagsPage} />
         <Route path='/admin/categories' component={AdminCategoriesPage} />
+        <Route path='/admin/reports' component={AdminReportsPage} />
         <Route path='/admin/users' component={AdminUsersPage} />
         <Route path='/admin/user/:id' component={AdminUserPage} />
 
