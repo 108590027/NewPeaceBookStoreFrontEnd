@@ -7,6 +7,7 @@ import {ErrorResponse} from '../../errors/ErrorDataTypes'
 import createTagAPI from '../../tag/API/CreateTagAPI'
 import deleteTagAPI from '../../tag/API/DeleteTagAPI'
 import searchTagsAPI from '../../tag/API/SearchTagsAPI'
+import updateTagAPI from '../../tag/API/UpdateTagAPI'
 import {TagModel} from '../../tag/redux/TagModel'
 
 const AdminTagsPage: FC = () => {
@@ -24,13 +25,21 @@ const AdminTagsPage: FC = () => {
     }
   }
   const updateTag = async () => {
-    /*const tag = await updateCategoryAPI(updateId, updateName)
+    const tag = await updateTagAPI(updateId, updateName)
     if ('id' in tag) {
+      const oriTag = tags.find((t) => t.id === tag.id)
+      if (oriTag) {
+        const index = tags.indexOf(oriTag)
+        if (index >= 0) {
+          tags[index] = {...tag}
+          setTags([...tags])
+        }
+      }
       document.getElementById('updateModalCancel')?.click()
       toast.success('修改成功')
     } else {
-      toast.success(`修改失敗：${tag.message}`)
-    }*/
+      toast.error(`修改失敗：${tag.message}`)
+    }
   }
   const createTag = async () => {
     if (createName === '') {
@@ -65,6 +74,10 @@ const AdminTagsPage: FC = () => {
     }
   }
   const search = async () => {
+    if (searchName === '') {
+      toast.warn('請輸入關鍵字！')
+      return
+    }
     const data = await searchTagsAPI(searchName)
     if ('message' in data) {
       toast.error(`查詢失敗：${data.message}`)
@@ -90,7 +103,7 @@ const AdminTagsPage: FC = () => {
                   value={searchName}
                   onChange={(e) => setSearchName(e.target.value)}
                 />
-                <button className='btn btn-primary btn-lg' onClick={search}>
+                <button className='btn btn-primary w-100 mt-3' onClick={search}>
                   搜尋
                 </button>
               </div>
