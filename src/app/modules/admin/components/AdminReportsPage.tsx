@@ -1,16 +1,26 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
+import {Link} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
-import {PageTitle} from '../../../../_metronic/layout/core'
+import {PageLink, PageTitle} from '../../../../_metronic/layout/core'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import getResolvedReportsAPI from '../../report/API/GetResolvedReportsAPI'
 import getUnresolvedReportsAPI from '../../report/API/GetUnresolvedReportsAPI'
 import resolveReportAPI from '../../report/API/ResolveReportAPI'
 import {ReportState} from '../../report/redux/ReportRedux'
+
+const BreadCrumbs: Array<PageLink> = [
+  {
+    title: '舉報系統管理',
+    path: '/admin/reports',
+    isSeparator: false,
+    isActive: false,
+  },
+]
 
 const AdminReportsPage: FC = () => {
   const userState: IAuthState = useSelector((state: RootState) => state.auth)
@@ -60,7 +70,7 @@ const AdminReportsPage: FC = () => {
 
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{`舉報系統管理`}</PageTitle>
+      <PageTitle breadcrumbs={BreadCrumbs}>{`所有舉報`}</PageTitle>
 
       <div className='col-12'>
         <div className={`card card-xxl-stretch mb-5 mb-xxl-8 table-responsive`}>
@@ -81,10 +91,14 @@ const AdminReportsPage: FC = () => {
                   <tr key={report.id}>
                     <td>{report.id}</td>
                     <td className='fw-bolder'>
-                      {getUser(report.victim)?.name || `UserID:${report.victim}`}
+                      <Link to={`/admin/user/${report.victim}`}>
+                        {getUser(report.victim)?.name || `UserID:${report.victim}`}
+                      </Link>
                     </td>
                     <td className='fw-bolder'>
-                      {getUser(report.reporter)?.name || `UserID:${report.reporter}`}
+                      <Link to={`/admin/user/${report.reporter}`}>
+                        {getUser(report.reporter)?.name || `UserID:${report.reporter}`}
+                      </Link>
                     </td>
                     <td className='fw-bolder'>{report.reason}</td>
                     <td className='fw-bolder'>{report.detail}</td>

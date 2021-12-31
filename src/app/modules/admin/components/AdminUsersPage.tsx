@@ -51,7 +51,7 @@ const AdminUsersPage: FC = () => {
 
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{`會員管理`}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{`會員列表`}</PageTitle>
 
       <div className='col-12'>
         <div className={`card card-xxl-stretch mb-5 mb-xxl-8 table-responsive`}>

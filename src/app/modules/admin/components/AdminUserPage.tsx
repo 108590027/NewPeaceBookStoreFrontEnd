@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 import {Link, match, Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../../_metronic/helpers'
-import {PageTitle} from '../../../../_metronic/layout/core'
+import {PageLink, PageTitle} from '../../../../_metronic/layout/core'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import {CategoryState} from '../../category/redux/CategoryRedux'
@@ -28,11 +28,21 @@ const AdminUserPage: FC<Props> = (props) => {
     getUserAPI(parseInt(props.match.params.id))
   }
   const user = userState.users.find((u) => u.id === parseInt(props.match.params.id))
+  const BreadCrumbs: Array<PageLink> = [
+    {
+      title: '會員列表',
+      path: '/admin/users',
+      isSeparator: false,
+      isActive: false,
+    },
+  ]
   const major = categoryState.categories.find((c) => c.id === (user?.major || 1))
 
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{`會員管理`}</PageTitle>
+      <PageTitle breadcrumbs={BreadCrumbs}>{`會員管理－${
+        user?.name || `UserID:${props.match.params.id}`
+      }`}</PageTitle>
 
       <div className='card mb-5 mb-xl-10'>
         <div className='card-body pt-9 pb-0'>
