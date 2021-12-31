@@ -48,20 +48,6 @@ const AccountHeader: React.FC = () => {
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
                     {user.name}
                   </a>
-                  <a href='#'>
-                    <KTSVG
-                      path='/media/icons/duotune/general/gen026.svg'
-                      className='svg-icon-1 svg-icon-primary'
-                    />
-                  </a>
-                  <a
-                    href='#'
-                    className='btn btn-sm btn-light-success fw-bolder ms-2 fs-8 py-1 px-3'
-                    data-bs-toggle='modal'
-                    data-bs-target='#kt_modal_upgrade_plan'
-                  >
-                    Upgrade to Pro
-                  </a>
                 </div>
 
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
