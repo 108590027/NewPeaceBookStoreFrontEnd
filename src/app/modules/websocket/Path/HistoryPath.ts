@@ -13,10 +13,10 @@ export default class HistoryPath extends Path {
   /**
    * {
    *    created_at: "2021-12-17T04:39:44.000000Z",
+   *    to_user: 2,
    *    from_user: 3,
    *    id: 1,
-   *    message: "aaaaaaaa",
-   *    to_user: 2
+   *    message: "aaaaaaaa"
    * }
    */
   public recieveHandle(res: any) {
