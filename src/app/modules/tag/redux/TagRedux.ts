@@ -47,7 +47,7 @@ export const reducer = persistReducer(
         tags.forEach((o) => {
           const tag = state.tags.find((i) => i.id === o.id)
           if (tag) {
-            state.tags[state.tags.indexOf(tag)] = {...tag}
+            state.tags[state.tags.indexOf(tag)] = {...o}
           } else {
             state.tags.push(o)
           }

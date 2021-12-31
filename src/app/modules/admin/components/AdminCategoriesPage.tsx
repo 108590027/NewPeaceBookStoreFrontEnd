@@ -35,7 +35,7 @@ const AdminCategoriesPage: FC = () => {
       document.getElementById('updateModalCancel')?.click()
       toast.success('修改成功')
     } else {
-      toast.success(`修改失敗：${category.message}`)
+      toast.error(`修改失敗：${category.message}`)
     }
   }
   const createCategory = async () => {
@@ -57,7 +57,7 @@ const AdminCategoriesPage: FC = () => {
     if (status + '' === '1') {
       toast.success('刪除成功')
     } else {
-      toast.success(`刪除失敗：${(status as ErrorResponse).message}`)
+      toast.error(`刪除失敗：${(status as ErrorResponse).message}`)
     }
   }
   if (!load) {

@@ -47,11 +47,12 @@ export const reducer = persistReducer(
         reports.forEach((o) => {
           const report = state.reports.find((i) => i.id === o.id)
           if (report) {
-            state.reports[state.reports.indexOf(report)] = {...report}
+            state.reports[state.reports.indexOf(report)] = {...o}
           } else {
             state.reports.push(o)
           }
         })
+        state.lastUpdate = Date.now()
         return {...state}
       }
 

@@ -47,7 +47,7 @@ export const reducer = persistReducer(
         orders.forEach((o) => {
           const order = state.orders.find((i) => i.id === o.id)
           if (order) {
-            state.orders[state.orders.indexOf(order)] = {...order}
+            state.orders[state.orders.indexOf(order)] = {...o}
           } else {
             state.orders.push(o)
           }
