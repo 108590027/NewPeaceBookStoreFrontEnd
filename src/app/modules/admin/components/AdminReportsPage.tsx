@@ -21,7 +21,6 @@ const AdminReportsPage: FC = () => {
   const resolveReport = async () => {
     const data = await resolveReportAPI(resolveId, resolveTime)
     if ('id' in data) {
-      console.log(reportState.reports.find((r) => resolveId === r.id))
       toast.success('回報成功')
     } else {
       toast.error(`回報失敗${data.message}`)
