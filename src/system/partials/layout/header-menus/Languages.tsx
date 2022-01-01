@@ -2,7 +2,6 @@
 import clsx from 'clsx'
 import {FC} from 'react'
 import {toAbsoluteUrl} from '../../../helpers'
-import {useLang, setLanguage} from '../../../i18n/Metronici18n'
 
 const languages = [
   {
@@ -63,19 +62,13 @@ const Languages: FC = () => {
 
       <div className='menu-sub menu-sub-dropdown w-175px py-4'>
         {languages.map((l) => (
-          <div
-            className='menu-item px-3'
-            key={l.lang}
-            onClick={() => {
-              setLanguage(l.lang)
-            }}
-          >
+          <div className='menu-item px-3' key={l.lang}>
             <a
               href='#'
               className={clsx('menu-link d-flex px-5', {active: l.lang === currentLanguage?.lang})}
             >
               <span className='symbol symbol-20px me-4'>
-                <img className='rounded-1' src={l.flag} alt='metronic' />
+                <img className='rounded-1' src={l.flag} alt='' />
               </span>
               {l.name}
             </a>

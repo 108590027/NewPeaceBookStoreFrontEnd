@@ -113,7 +113,7 @@ const HeaderNotificationsMenu: FC = () => (
           <div className='text-center px-4'>
             <img
               className='mw-100 mh-200px'
-              alt='metronic'
+              alt='illustrations'
               src={toAbsoluteUrl('/media/illustrations/sketchy-1/1.png')}
             />
           </div>

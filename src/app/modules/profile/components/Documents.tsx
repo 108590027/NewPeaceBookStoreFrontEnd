@@ -71,7 +71,7 @@ export function Documents() {
           />
         </div>
         <div className='col-12 col-sm-12 col-xl'>
-          <Card4 icon='/media/svg/files/ai.svg' title='Metronic Logo' description='5 days ago' />
+          <Card4 icon='/media/svg/files/ai.svg' title='Logo' description='5 days ago' />
         </div>
         <div className='col-12 col-sm-12 col-xl'>
           <Card4 icon='/media/svg/files/sql.svg' title='Orders backup' description='1 week ago' />
