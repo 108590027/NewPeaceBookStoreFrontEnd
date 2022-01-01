@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {KTSVG} from '../../../../../_metronic/helpers'
+import {KTSVG} from '../../../../../system/helpers'
 import {Link} from 'react-router-dom'
 
 const Step5: FC = () => {

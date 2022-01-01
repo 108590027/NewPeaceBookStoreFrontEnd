@@ -13,8 +13,8 @@ import {Chart, registerables} from 'chart.js'
 
 // Apps
 import {App} from './app/App'
-import './_metronic/assets/sass/style.scss'
-import './_metronic/assets/sass/style.react.scss'
+import './system/assets/sass/style.scss'
+import './system/assets/sass/style.react.scss'
 import 'react-toastify/dist/ReactToastify.css'
 const {PUBLIC_URL} = import.meta.env
 

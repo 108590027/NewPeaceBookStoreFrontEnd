@@ -1,6 +1,6 @@
 import {FC, useRef, useEffect, useState} from 'react'
 import {shallowEqual, useSelector, connect, useDispatch, ConnectedProps} from 'react-redux'
-import {LayoutSplashScreen} from '../../../../_metronic/layout/core'
+import {LayoutSplashScreen} from '../../../../system/layout/core'
 import * as auth from './AuthRedux'
 import {RootState} from '../../../../setup'
 

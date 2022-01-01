@@ -1,8 +1,8 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../_metronic/helpers'
+import {KTSVG, toAbsoluteUrl} from '../../../system/helpers'
 import {Link} from 'react-router-dom'
-import {Dropdown1} from '../../../_metronic/partials'
+import {Dropdown1} from '../../../system/partials'
 import {useLocation} from 'react-router-dom'
 import {UserModel} from '../auth/redux/AuthModel'
 import {RootState} from '../../../setup'

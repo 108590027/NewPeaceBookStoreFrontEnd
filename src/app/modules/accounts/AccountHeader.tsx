@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG} from '../../../_metronic/helpers'
+import {KTSVG} from '../../../system/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {shallowEqual, useSelector} from 'react-redux'

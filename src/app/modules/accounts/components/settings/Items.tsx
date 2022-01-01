@@ -1,7 +1,7 @@
 import React, {useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../../setup'
-import {Card4} from '../../../../../_metronic/partials/content/cards/Card4'
+import {Card4} from '../../../../../system/partials/content/cards/Card4'
 import {IAuthState} from '../../../auth/redux/AuthRedux'
 import getUserItemsAPI from '../../../item/API/GetUserItemsAPI'
 import {ItemState} from '../../../item/redux/ItemRedux'

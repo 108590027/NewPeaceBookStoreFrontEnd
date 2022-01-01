@@ -6,7 +6,7 @@ import {
   TablesWidget1,
   ListsWidget5,
   TablesWidget5,
-} from '../../../../_metronic/partials/widgets'
+} from '../../../../system/partials/widgets'
 import {UserModel} from '../../auth/redux/AuthModel'
 import * as AuthRedux from '../../auth/redux/AuthRedux'
 

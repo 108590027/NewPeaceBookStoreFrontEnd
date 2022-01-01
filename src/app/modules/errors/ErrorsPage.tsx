@@ -3,7 +3,7 @@ import React from 'react'
 import {Redirect, Route, Switch, useHistory} from 'react-router-dom'
 import {Error500} from './components/Error500'
 import {Error404} from './components/Error404'
-import {toAbsoluteUrl} from '../../../_metronic/helpers'
+import {toAbsoluteUrl} from '../../../system/helpers'
 
 const ErrorsPage: React.FC = () => {
   const history = useHistory()

@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {useState} from 'react'
-import {KTSVG, toAbsoluteUrl} from '../../../../../../_metronic/helpers'
+import {KTSVG, toAbsoluteUrl} from '../../../../../../system/helpers'
 import {IConnectedAccounts, connectedAccounts} from '../SettingsModel'
 
 const ConnectedAccounts: React.FC = () => {

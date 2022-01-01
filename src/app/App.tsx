@@ -1,6 +1,6 @@
 import React, {Suspense} from 'react'
 import {BrowserRouter} from 'react-router-dom'
-import {LayoutProvider, LayoutSplashScreen} from '../_metronic/layout/core'
+import {LayoutProvider, LayoutSplashScreen} from '../system/layout/core'
 import AuthInit from './modules/auth/redux/AuthInit'
 import {Routes} from './routing/Routes'
 

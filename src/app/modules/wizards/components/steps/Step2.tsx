@@ -1,5 +1,5 @@
 import React, {FC} from 'react'
-import {KTSVG} from '../../../../../_metronic/helpers'
+import {KTSVG} from '../../../../../system/helpers'
 import {Field, ErrorMessage} from 'formik'
 
 const Step2: FC = () => {

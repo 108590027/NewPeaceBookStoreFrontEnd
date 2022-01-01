@@ -1,6 +1,6 @@
 import React from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
-import {PageLink, PageTitle} from '../../../_metronic/layout/core'
+import {PageLink, PageTitle} from '../../../system/layout/core'
 import {Vertical} from './components/Vertical'
 import {Horizontal} from './components/Horizontal'
 

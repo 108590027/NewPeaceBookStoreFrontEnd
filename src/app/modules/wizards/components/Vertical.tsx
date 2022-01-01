@@ -1,11 +1,11 @@
 import React, {FC, useEffect, useRef, useState} from 'react'
-import {KTSVG} from '../../../../_metronic/helpers'
+import {KTSVG} from '../../../../system/helpers'
 import {Step1} from './steps/Step1'
 import {Step2} from './steps/Step2'
 import {Step3} from './steps/Step3'
 import {Step4} from './steps/Step4'
 import {Step5} from './steps/Step5'
-import {StepperComponent} from '../../../../_metronic/assets/ts/components'
+import {StepperComponent} from '../../../../system/assets/ts/components'
 import {Formik, Form, FormikValues} from 'formik'
 import {ICreateAccount, createAccountSchemas, inits} from './CreateAccountWizardHelper'
 

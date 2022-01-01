@@ -1,7 +1,7 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../_metronic/helpers'
+import {KTSVG} from '../../../../system/helpers'
 import {toInputDate} from '../../../utils/DateUtil'
 import {BanRecordModel, UserModel} from '../../auth/redux/AuthModel'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
