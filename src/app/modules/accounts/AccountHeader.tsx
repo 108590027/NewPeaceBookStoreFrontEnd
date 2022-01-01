@@ -153,6 +153,17 @@ const AccountHeader: React.FC = () => {
                 商品
               </Link>
             </li>
+            <li className='nav-item'>
+              <Link
+                className={
+                  `nav-link text-active-primary me-6 ` +
+                  (location.pathname === '/account/orders' && 'active')
+                }
+                to='/account/orders'
+              >
+                訂單記錄
+              </Link>
+            </li>
           </ul>
         </div>
       </div>

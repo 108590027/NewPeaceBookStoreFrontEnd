@@ -56,9 +56,9 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className='menu-item px-5'>
-        <a href='#' className='menu-link px-5'>
+        <Link to='/account/orders' className='menu-link px-5'>
           <span className='menu-text'>歷史訂單</span>
-        </a>
+        </Link>
       </div>
 
       <div className='separator my-2'></div>
