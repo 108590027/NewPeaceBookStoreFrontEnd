@@ -181,14 +181,13 @@ const AdminUsersPage: FC = () => {
                       value={createMajor}
                       onChange={(e) => setCreateMajor(parseInt(e.target.value))}
                     >
-                      {categoryState.categories.map((category) =>
-                        category.is_department ? (
-                          <option key={category.id} value={category.id}>
-                            {category.name}
-                          </option>
-                        ) : (
-                          <></>
-                        )
+                      {categoryState.categories.map(
+                        (category) =>
+                          category.is_department ?? (
+                            <option key={category.id} value={category.id}>
+                              {category.name}
+                            </option>
+                          )
                       )}
                     </select>
                   </div>

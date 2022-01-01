@@ -60,7 +60,7 @@ export function AsideMenuMain() {
           <span className='menu-section text-muted text-uppercase fs-8 ls-1'>分類</span>
         </div>
       </div>
-      {categoryState.categories.map((category) => {
+      {categoryState.categories.map((category, i) => {
         if (category.is_department) {
           return (
             <AsideMenuItem
@@ -72,7 +72,7 @@ export function AsideMenuMain() {
             />
           )
         }
-        return <></>
+        return <span key={i}></span>
       })}
     </>
   )
