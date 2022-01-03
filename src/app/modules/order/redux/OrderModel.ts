@@ -4,13 +4,15 @@ import {ItemModel} from '../../item/redux/ItemModel'
 export type OrderModel = {
   id: number
   user_id: number
+  merchant_id: number
   status: number
   total_price: number
   created_at: string
   updated_at: string
 
   user: UserModel
-  orderItems: OrderItemModel[]
+  merchant: UserModel
+  order_items: OrderItemModel[]
   orderPayment: OrderPaymentModel
 }
 
