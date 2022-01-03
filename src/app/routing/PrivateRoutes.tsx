@@ -18,6 +18,7 @@ export function PrivateRoutes() {
   const AdminCategoriesPage = lazy(() => import('../modules/admin/components/AdminCategoriesPage'))
   const AdminUsersPage = lazy(() => import('../modules/admin/components/AdminUsersPage'))
   const AdminUserPage = lazy(() => import('../modules/admin/components/AdminUserPage'))
+  const NewArrivalPage = lazy(() => import('../modules/item/NewArrivalPage'))
 
   return (
     <Suspense fallback={<FallbackView />}>
@@ -33,6 +34,8 @@ export function PrivateRoutes() {
 
         <Route path='/account/order/:id' component={OrderDetail} />
         <Route path='/account' component={AccountPage} />
+
+        <Route path='/item/newarrival' component={NewArrivalPage} />
 
         <Route path='/builder' component={BuilderPageWrapper} />
         <Route path='/crafted/pages/profile' component={ProfilePage} />

@@ -22,6 +22,12 @@ export function AsideMenuMain() {
         title={'首頁'}
         fontIcon='bi-app-indicator'
       />
+      <AsideMenuItem
+        to={`/item/newarrival`}
+        icon='/media/icons/duotune/art/art002.svg'
+        title={'商品上架'}
+        fontIcon='bi-app-indicator'
+      />
       {isAdmin && (
         <>
           <div className='menu-item'>
