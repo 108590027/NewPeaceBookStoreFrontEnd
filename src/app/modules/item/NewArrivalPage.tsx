@@ -1,21 +1,11 @@
-import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
-import {useSelector} from 'react-redux'
-import {toast} from 'react-toastify'
-import {RootState} from '../../../setup'
-import {KTSVG} from '../../../system/helpers'
 import {PageTitle} from '../../../system/layout/core'
-import {ErrorResponse} from '../errors/ErrorDataTypes'
-import getUsersAPI from '../admin/API/GetUsersAPI'
 
 const NewArrivalPage: FC = () => {
-  const numberStyle = {mozAppearance: 'textfield'}
   return (
     <>
-      <h1>商品上架頁！</h1>
-      <p>
-        <hr></hr>
-      </p>
+      <PageTitle breadcrumbs={[]}>{`商品上架`}</PageTitle>
+
       <div className='mx-auto row g-6 g-xl-9 mb-6 mb-xl-9 col-9'>
         <form>
           <p>
@@ -44,7 +34,17 @@ const NewArrivalPage: FC = () => {
           </p>
           <p>
             <label htmlFor='price'>商品價格：</label>
-            <input type='number' name='price' id='priceInput' className='form-control mt-1'></input>
+            <input
+              type='number'
+              name='price'
+              id='priceInput'
+              className='form-control mt-1'
+              style={{
+                appearance: 'textfield',
+                MozAppearance: 'textfield',
+                WebkitAppearance: 'textfield',
+              }}
+            ></input>
           </p>
           <p>
             <label htmlFor='tag'>標籤(以逗點分隔(暫定?)&最多100字元)：</label>
