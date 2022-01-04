@@ -50,64 +50,62 @@ const OrderDetail: FC<Props> = (props: Props) => {
                   </div>
                 </div>
                 <div className='card-body pt-0'>
-                  <div className='table-responsive'>
-                    <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
-                      <tbody className='fw-bold text-gray-600'>
-                        <tr>
-                          <td className=''>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/files/fil002.svg'
-                                  className='svg-icon-4 me-1'
-                                />
-                              </span>
-                              下訂日期
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>
-                            {toSlimDateString(new Date(orderData.created_at))}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/communication/com006.svg'
-                                  className='svg-icon-4 me-1'
-                                />
-                              </span>
-                              狀態
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>
-                            {orderData.status === 2 ? (
-                              <span className='badge badge-info'>已完成</span>
-                            ) : orderData.status === 1 ? (
-                              <span className='badge badge-success'>已付款</span>
-                            ) : (
-                              <span className='badge badge-danger'>已下單</span>
-                            )}
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/finance/fin008.svg'
-                                  className='svg-icon-4 me-1'
-                                />
-                              </span>
-                              總金額
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>${orderData.total_price}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                  <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
+                    <tbody className='fw-bold text-gray-600'>
+                      <tr>
+                        <td className=''>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/files/fil002.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            下訂日期
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>
+                          {toSlimDateString(new Date(orderData.created_at))}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/communication/com006.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            狀態
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>
+                          {orderData.status === 2 ? (
+                            <span className='badge badge-info'>已完成</span>
+                          ) : orderData.status === 1 ? (
+                            <span className='badge badge-success'>已付款</span>
+                          ) : (
+                            <span className='badge badge-danger'>已下單</span>
+                          )}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/finance/fin008.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            總金額
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>${orderData.total_price}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div className='card card-flush py-4 flex-row-fluid'>
@@ -117,76 +115,74 @@ const OrderDetail: FC<Props> = (props: Props) => {
                   </div>
                 </div>
                 <div className='card-body pt-0'>
-                  <div className='table-responsive'>
-                    <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
-                      <tbody className='fw-bold text-gray-600'>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/communication/com006.svg'
-                                  className='svg-icon-4 me-1'
+                  <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
+                    <tbody className='fw-bold text-gray-600'>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/communication/com006.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            名稱
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>
+                          <div className='d-flex align-items-center'>
+                            <Link to='#' className='text-gray-600 text-hover-primary'>
+                              {orderData.user?.name}
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/communication/com011.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            信箱
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>
+                          <a
+                            href='../../demo1/dist/apps/user-management/users/view.html'
+                            className='text-gray-600 text-hover-primary'
+                          >
+                            {orderData.user?.email}
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='24'
+                                height='24'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                              >
+                                <path
+                                  d='M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z'
+                                  fill='black'
                                 />
-                              </span>
-                              名稱
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>
-                            <div className='d-flex align-items-center'>
-                              <Link to='#' className='text-gray-600 text-hover-primary'>
-                                {orderData.user?.name}
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/communication/com011.svg'
-                                  className='svg-icon-4 me-1'
-                                />
-                              </span>
-                              信箱
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>
-                            <a
-                              href='../../demo1/dist/apps/user-management/users/view.html'
-                              className='text-gray-600 text-hover-primary'
-                            >
-                              {orderData.user?.email}
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <svg
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  width='24'
-                                  height='24'
-                                  viewBox='0 0 24 24'
-                                  fill='none'
-                                >
-                                  <path
-                                    d='M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z'
-                                    fill='black'
-                                  />
-                                  <path opacity='0.3' d='M19 4H5V20H19V4Z' fill='black' />
-                                </svg>
-                              </span>
-                              手機
-                            </div>
-                          </td>
-                          <td className='fw-bolder'>{orderData.user?.phone}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                                <path opacity='0.3' d='M19 4H5V20H19V4Z' fill='black' />
+                              </svg>
+                            </span>
+                            手機
+                          </div>
+                        </td>
+                        <td className='fw-bolder'>{orderData.user?.phone}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
               <div className='card card-flush py-4 flex-row-fluid'>
@@ -196,76 +192,74 @@ const OrderDetail: FC<Props> = (props: Props) => {
                   </div>
                 </div>
                 <div className='card-body pt-0'>
-                  <div className='table-responsive'>
-                    <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
-                      <tbody className='fw-bold text-gray-600'>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/communication/com006.svg'
-                                  className='svg-icon-4 me-1'
+                  <table className='table align-middle table-row-bordered mb-0 fs-6 gy-5 min-w-300px'>
+                    <tbody className='fw-bold text-gray-600'>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/communication/com006.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            名稱
+                          </div>
+                        </td>
+                        <td className='fw-bolder '>
+                          <div className='d-flex align-items-center'>
+                            <Link to='#' className='text-gray-600 text-hover-primary'>
+                              {orderData.merchant?.name}
+                            </Link>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <KTSVG
+                                path='/media/icons/duotune/communication/com011.svg'
+                                className='svg-icon-4 me-1'
+                              />
+                            </span>
+                            信箱
+                          </div>
+                        </td>
+                        <td className='fw-bolder '>
+                          <a
+                            href='../../demo1/dist/apps/user-management/users/view.html'
+                            className='text-gray-600 text-hover-primary'
+                          >
+                            {orderData.merchant?.email}
+                          </a>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td className='text-muted'>
+                          <div className='d-flex align-items-center'>
+                            <span className='svg-icon svg-icon-2 me-2'>
+                              <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='24'
+                                height='24'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                              >
+                                <path
+                                  d='M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z'
+                                  fill='black'
                                 />
-                              </span>
-                              名稱
-                            </div>
-                          </td>
-                          <td className='fw-bolder '>
-                            <div className='d-flex align-items-center'>
-                              <Link to='#' className='text-gray-600 text-hover-primary'>
-                                {orderData.merchant?.name}
-                              </Link>
-                            </div>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <KTSVG
-                                  path='/media/icons/duotune/communication/com011.svg'
-                                  className='svg-icon-4 me-1'
-                                />
-                              </span>
-                              信箱
-                            </div>
-                          </td>
-                          <td className='fw-bolder '>
-                            <a
-                              href='../../demo1/dist/apps/user-management/users/view.html'
-                              className='text-gray-600 text-hover-primary'
-                            >
-                              {orderData.merchant?.email}
-                            </a>
-                          </td>
-                        </tr>
-                        <tr>
-                          <td className='text-muted'>
-                            <div className='d-flex align-items-center'>
-                              <span className='svg-icon svg-icon-2 me-2'>
-                                <svg
-                                  xmlns='http://www.w3.org/2000/svg'
-                                  width='24'
-                                  height='24'
-                                  viewBox='0 0 24 24'
-                                  fill='none'
-                                >
-                                  <path
-                                    d='M5 20H19V21C19 21.6 18.6 22 18 22H6C5.4 22 5 21.6 5 21V20ZM19 3C19 2.4 18.6 2 18 2H6C5.4 2 5 2.4 5 3V4H19V3Z'
-                                    fill='black'
-                                  />
-                                  <path opacity='0.3' d='M19 4H5V20H19V4Z' fill='black' />
-                                </svg>
-                              </span>
-                              手機
-                            </div>
-                          </td>
-                          <td className='fw-bolder '>{orderData.merchant?.phone}</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
+                                <path opacity='0.3' d='M19 4H5V20H19V4Z' fill='black' />
+                              </svg>
+                            </span>
+                            手機
+                          </div>
+                        </td>
+                        <td className='fw-bolder '>{orderData.merchant?.phone}</td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
               </div>
             </div>
