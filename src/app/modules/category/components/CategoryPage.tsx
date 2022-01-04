@@ -44,6 +44,7 @@ const CategoryPage: FC<Props> = (props) => {
               title={item.name}
               description={`$${item.price}`}
               isBase64Image={item.images[0]?.photo !== undefined}
+              id={item.id}
             />
           </div>
         ))}
