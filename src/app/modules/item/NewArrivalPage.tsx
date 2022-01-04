@@ -17,7 +17,7 @@ const NewArrivalPage: FC = () => {
       <form>
         <p>
           <label htmlFor='upload'>上傳圖片：</label>
-          <input type='button' name='upload' value='選擇檔案' id='uploadBtn'></input>
+          <input type='file' name='upload' id='uploadBtn' accept='image/*' multiple></input>
         </p>
         <p>
           <label htmlFor='title'>商品名稱：</label>
