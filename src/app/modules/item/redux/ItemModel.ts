@@ -9,6 +9,7 @@ export type ItemModel = {
   ISBN: string
   price: number
   quantity: number
+  description: string
   created_at: string
   updated_at: string
 

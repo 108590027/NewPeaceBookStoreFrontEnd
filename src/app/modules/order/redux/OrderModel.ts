@@ -1,4 +1,4 @@
-import {UserModel} from '../../auth/redux/AuthModel'
+import {CommentModel, UserModel} from '../../auth/redux/AuthModel'
 import {ItemModel} from '../../item/redux/ItemModel'
 
 export type OrderModel = {
@@ -13,6 +13,7 @@ export type OrderModel = {
   user: UserModel
   merchant: UserModel
   order_items: OrderItemModel[]
+  comment: CommentModel
   orderPayment: OrderPaymentModel
 }
 

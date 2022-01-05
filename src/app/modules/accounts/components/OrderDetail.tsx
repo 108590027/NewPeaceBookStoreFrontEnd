@@ -5,6 +5,7 @@ import {toast} from 'react-toastify'
 import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
 import {toSlimDateString} from '../../../utils/DateUtil'
+import postCommentAPI from '../../comment/API/PostCommentAPI'
 import getAuthOrderAPI from '../../order/API/GetAuthOrderAPI'
 import {OrderModel} from '../../order/redux/OrderModel'
 
@@ -24,7 +25,25 @@ const BreadCrumbs: Array<PageLink> = [
 
 const OrderDetail: FC<Props> = (props: Props) => {
   const [orderId, setOrderId] = useState(0)
+  const [currentRate, setCurrentRate] = useState(5)
+  const [commentMessage, setCommentMessage] = useState('')
   const [orderData, setOrderData] = useState({} as OrderModel)
+  const postComment = async () => {
+    if (orderData.status !== 2 || orderData.comment !== null) {
+      return
+    }
+    if (commentMessage === '') {
+      toast.warn('請輸入評論！')
+      return
+    }
+    const result = await postCommentAPI(orderId, currentRate, commentMessage)
+    if ('id' in result) {
+      setOrderData(result)
+      toast.success(`發布成功！`)
+    } else {
+      toast.error(`發布失敗：${result.message}`)
+    }
+  }
   if (orderId !== parseInt(props.match.params.id)) {
     setOrderId(parseInt(props.match.params.id))
     ;(async () => {
@@ -39,8 +58,8 @@ const OrderDetail: FC<Props> = (props: Props) => {
   return (
     <>
       <PageTitle breadcrumbs={BreadCrumbs}>{`訂單資訊`}</PageTitle>
-      <div className='post d-flex flex-column-fluid' id='kt_post'>
-        <div id='kt_content_container' className='container-xxl'>
+      <div className='post d-flex flex-column-fluid'>
+        <div className='container-xxl'>
           <div className='d-flex flex-column gap-7 gap-lg-10'>
             <div className='d-flex flex-column flex-xl-row gap-7 gap-lg-10'>
               <div className='card card-flush py-4 flex-row-fluid'>
@@ -263,7 +282,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                 </div>
               </div>
             </div>
-            <div className=' fade show active'>
+            <div className='fade show active'>
               <div className='d-flex flex-column gap-7 gap-lg-10'>
                 <div className='card card-flush py-4 flex-row-fluid overflow-hidden'>
                   <div className='card-header'>
@@ -328,6 +347,121 @@ const OrderDetail: FC<Props> = (props: Props) => {
                 </div>
               </div>
             </div>
+            {orderData.comment && orderData.comment !== null ? (
+              <div className='fade show active'>
+                <div className='d-flex flex-column gap-7 gap-lg-10'>
+                  <div className='card card-flush py-4 flex-row-fluid overflow-hidden'>
+                    <div className='card-header'>
+                      <div className='card-title'>
+                        <h2>你的評論</h2>
+                      </div>
+                    </div>
+                    <div className='card-body pt-0'>
+                      <table className='table align-middle table-row-dashed fs-6 gy-5 mb-0'>
+                        <thead>
+                          <tr className='text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0'>
+                            <th className='min-w-70px'></th>
+                            <th className='min-w-175px '></th>
+                          </tr>
+                        </thead>
+                        <tbody className='fw-bold text-gray-600'>
+                          <tr>
+                            <td className='fw-bolder'>評分</td>
+                            <td className='rating justify-content-start'>
+                              {[1, 2, 3, 4, 5].map((rate) => (
+                                <div
+                                  className={`rating-label ${
+                                    (orderData.comment?.rate || 0) >= rate ? 'checked' : ''
+                                  }`}
+                                >
+                                  <span className='svg-icon svg-icon-2 me-2'>
+                                    <KTSVG
+                                      path='/media/icons/duotune/general/gen029.svg'
+                                      className='svg-icon-1 me-1'
+                                    />
+                                  </span>
+                                </div>
+                              ))}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bolder'>評論</td>
+                            <td>{orderData.comment?.message}</td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
+            {orderData.comment === null && orderData.status === 2 ? (
+              <div className='fade show active'>
+                <div className='d-flex flex-column gap-7 gap-lg-10'>
+                  <div className='card card-flush py-4 flex-row-fluid overflow-hidden'>
+                    <div className='card-header'>
+                      <div className='card-title'>
+                        <h2>撰寫評論</h2>
+                      </div>
+                    </div>
+                    <div className='card-body pt-0'>
+                      <table className='table align-middle table-row-dashed fs-6 gy-5 mb-0'>
+                        <thead>
+                          <tr className='text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0'>
+                            <th className='min-w-70px'></th>
+                            <th className='min-w-175px '></th>
+                          </tr>
+                        </thead>
+                        <tbody className='fw-bold text-gray-600'>
+                          <tr>
+                            <td className='fw-bolder'>評分</td>
+                            <td className='rating justify-content-start'>
+                              {[1, 2, 3, 4, 5].map((rate) => (
+                                <div
+                                  className={`rating-label ${currentRate >= rate ? 'checked' : ''}`}
+                                >
+                                  <span className='svg-icon svg-icon-2 me-2'>
+                                    <a role='tab' onClick={(e) => setCurrentRate(rate)}>
+                                      <KTSVG
+                                        path='/media/icons/duotune/general/gen029.svg'
+                                        className='svg-icon-1 me-1'
+                                      />
+                                    </a>
+                                  </span>
+                                </div>
+                              ))}
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bolder'>評論</td>
+                            <td>
+                              <textarea
+                                rows={10}
+                                className='form-control'
+                                value={commentMessage}
+                                onChange={(e) => setCommentMessage(e.target.value)}
+                              ></textarea>
+                            </td>
+                          </tr>
+                          <tr>
+                            <td className='fw-bolder'></td>
+                            <td className='fw-bolder '>
+                              <button className='btn btn-primary float-end' onClick={postComment}>
+                                送出
+                              </button>
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            ) : (
+              <></>
+            )}
           </div>
         </div>
       </div>
