@@ -4,7 +4,6 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
-import {UserModel} from '../../auth/redux/AuthModel'
 import {Link} from 'react-router-dom'
 import registerAPI from '../API/RegisterAPI'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
@@ -23,21 +22,18 @@ const initialValues = {
 }
 
 const registrationSchema = Yup.object().shape({
-  name: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('name is required'),
+  name: Yup.string().min(3, '最少要 3 個字').max(50, '最多不超過 50 個字').required('請輸入名字'),
   email: Yup.string()
-    .email('Wrong email format')
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Email is required'),
+    .email('格式不符合。請確認後重新輸入。')
+    .min(3, '最少要 3 個字')
+    .max(50, '最多不超過 50 個字')
+    .required('請輸入信箱'),
   password: Yup.string()
-    .min(3, 'Minimum 3 symbols')
-    .max(50, 'Maximum 50 symbols')
-    .required('Password is required'),
+    .min(3, '最少要 3 個字')
+    .max(50, '最多不超過 50 個字')
+    .required('請輸入密碼'),
   changepassword: Yup.string()
-    .required('Password confirmation is required')
+    .required('請輸入密碼確認')
     .when('password', {
       is: (val: string) => (val && val.length > 0 ? true : false),
       then: Yup.string().oneOf([Yup.ref('password')], "Password and Confirm Password didn't match"),
@@ -315,7 +311,7 @@ export function Registration() {
           className='btn btn-lg btn-primary w-100 mb-5'
           disabled={formik.isSubmitting || !formik.isValid || !formik.values.acceptTerms}
         >
-          {!loading && <span className='indicator-label'>Submit</span>}
+          {!loading && <span className='indicator-label'>註冊</span>}
           {loading && (
             <span className='indicator-progress' style={{display: 'block'}}>
               Please wait...{' '}
@@ -329,7 +325,7 @@ export function Registration() {
             id='kt_login_signup_form_cancel_button'
             className='btn btn-lg btn-light-primary w-100 mb-5'
           >
-            Cancel
+            回到登入頁面
           </button>
         </Link>
       </div>
