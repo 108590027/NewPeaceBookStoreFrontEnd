@@ -36,7 +36,10 @@ const AdminUserPage: FC<Props> = (props) => {
       isActive: false,
     },
   ]
-  const major = categoryState.categories.find((c) => c.id === (user?.major || 1))
+  const major = categoryState.categories.find((c) => c.id === (user?.major ? user.major : 1))
+  if (user) {
+    console.log(user)
+  }
 
   return (
     <>
@@ -65,13 +68,15 @@ const AdminUserPage: FC<Props> = (props) => {
                     <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
                       {user?.name}
                     </a>
-                    {user?.phone_verify ?? (
+                    {user?.phone_verify !== null ? (
                       <a href='#'>
                         <KTSVG
                           path='/media/icons/duotune/general/gen026.svg'
                           className='svg-icon-1 svg-icon-primary'
                         />
                       </a>
+                    ) : (
+                      <></>
                     )}
                   </div>
 
@@ -105,7 +110,9 @@ const AdminUserPage: FC<Props> = (props) => {
                   <div className='d-flex flex-wrap'>
                     <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                       <div className='d-flex align-items-center'>
-                        <div className='fs-2 fw-bolder'>{user?.totalBuyOrders || 0}筆</div>
+                        <div className='fs-2 fw-bolder'>
+                          {user?.totalBuyOrders ? user.totalBuyOrders : 0}筆
+                        </div>
                       </div>
 
                       <div className='fw-bold fs-6 text-gray-400'>買入</div>
@@ -113,7 +120,9 @@ const AdminUserPage: FC<Props> = (props) => {
 
                     <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                       <div className='d-flex align-items-center'>
-                        <div className='fs-2 fw-bolder'>{user?.totalSellOrders || 0}筆</div>
+                        <div className='fs-2 fw-bolder'>
+                          {user?.totalSellOrders ? user.totalSellOrders : 0}筆
+                        </div>
                       </div>
 
                       <div className='fw-bold fs-6 text-gray-400'>賣出</div>
