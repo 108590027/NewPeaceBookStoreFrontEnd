@@ -36,6 +36,7 @@ export default class ChatPath extends Path {
    * }
    */
   public recieveHandle(res: Response) {
+    console.log(res)
     const {auth} = store.getState()
     const user = auth.users.find((u) => u.id === res.fromId)
     if (user) {

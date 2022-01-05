@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
+import ChatPath from '../../../../app/modules/websocket/Path/ChatPath'
 import LoginPath from '../../../../app/modules/websocket/Path/LoginPath'
 import WebSocketHandler from '../../../../app/modules/websocket/WebSocketHandler'
 import {RootState} from '../../../../setup'
@@ -14,6 +15,7 @@ export function MenuInner() {
   if (!load) {
     setLoad(true)
     WebSocketHandler.connect(false, () => {
+      new ChatPath(0, '')
       new LoginPath().send()
     })
   }

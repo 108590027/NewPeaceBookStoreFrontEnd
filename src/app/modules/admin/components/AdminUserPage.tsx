@@ -37,9 +37,6 @@ const AdminUserPage: FC<Props> = (props) => {
     },
   ]
   const major = categoryState.categories.find((c) => c.id === (user?.major ? user.major : 1))
-  if (user) {
-    console.log(user)
-  }
 
   return (
     <>
