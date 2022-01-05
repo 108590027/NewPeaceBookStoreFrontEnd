@@ -5,7 +5,6 @@ import {RootState} from '../../../../setup'
 import {ItemState} from '../../item/redux/ItemRedux'
 import {CartState, actions} from '../redux/CartRedux'
 import getItemAPI from '../API/GetItemsAPI'
-import {UserModel} from '../../auth/redux/AuthModel'
 
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
@@ -13,10 +12,10 @@ const ShoppingCartPage: FC = () => {
   const [load, setLoad] = useState(false)
   const [currentId, setCurrentId] = useState(0)
 
-  const user: UserModel = useSelector<RootState>(
-    ({auth}) => auth.auth?.user,
-    shallowEqual
-  ) as UserModel
+  const getUserName = (itemId: number) => {
+    let item = itemState.items.find((item) => item.id === itemId)
+    return item?.owner.name
+  }
 
   const getInfo = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
@@ -42,7 +41,8 @@ const ShoppingCartPage: FC = () => {
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
       <div className='col-12'>
-        <h5>{`賣家名稱：${user?.name}`}</h5>
+        {/* 因為目前沒辦法加東西進購物車，所以先暫時直接指定某個item id */}
+        <h5>賣家名稱：{getUserName(CartState.Carts[0]?.itemId || 1) || '目前沒有任何商品！'}</h5>
         <div className='card card-xxl-stretch mb-5 mb-xxl-8'>
           <div className='table-responsive'>
             <table className='table table-hover table-rounded table-striped gy-4 gs-7 text-center align-middle'>
