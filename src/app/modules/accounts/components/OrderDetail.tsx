@@ -347,7 +347,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                 </div>
               </div>
             </div>
-            {orderData.comment !== null ? (
+            {orderData.comment && orderData.comment !== null ? (
               <div className='fade show active'>
                 <div className='d-flex flex-column gap-7 gap-lg-10'>
                   <div className='card card-flush py-4 flex-row-fluid overflow-hidden'>
@@ -371,7 +371,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                               {[1, 2, 3, 4, 5].map((rate) => (
                                 <div
                                   className={`rating-label ${
-                                    orderData.comment.rate >= rate ? 'checked' : ''
+                                    (orderData.comment?.rate || 0) >= rate ? 'checked' : ''
                                   }`}
                                 >
                                   <span className='svg-icon svg-icon-2 me-2'>
@@ -386,7 +386,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                           </tr>
                           <tr>
                             <td className='fw-bolder'>評論</td>
-                            <td>{orderData.comment.message}</td>
+                            <td>{orderData.comment?.message}</td>
                           </tr>
                         </tbody>
                       </table>

@@ -31,6 +31,7 @@ const NewArrivalPage: FC = () => {
   }
   const {getRootProps, getInputProps} = useDropzone({onDrop})
   const [load, setLoad] = useState(false)
+  const [onSubmit, setOnSubmit] = useState(false)
   const [images, setImages] = useState([] as string[])
   const [createName, setCreateName] = useState('')
   const [createDescription, setCreateDescription] = useState('')
@@ -64,6 +65,12 @@ const NewArrivalPage: FC = () => {
       return tagNames
     }
   }
+  const createItem = () => {
+    setOnSubmit(true)
+    setTimeout(() => {
+      setOnSubmit(false)
+    }, 500)
+  }
 
   if (!load) {
     setLoad(true)
@@ -72,23 +79,10 @@ const NewArrivalPage: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`商品上架`}</PageTitle>
-      <div
-        className='content d-flex flex-column flex-column-fluid'
-        id='kt_content'
-        data-select2-id='select2-data-kt_content'
-      >
-        {/* begin::Post */}
-        <div
-          className='post d-flex flex-column-fluid'
-          id='kt_post'
-          data-select2-id='select2-data-kt_post'
-        >
+      <div className='content d-flex flex-column flex-column-fluid'>
+        <div className='post d-flex flex-column-fluid'>
           {/* begin::Container */}
-          <div
-            id='kt_content_container'
-            className='container-xxl'
-            data-select2-id='select2-data-kt_content_container'
-          >
+          <div className='container-xxl'>
             <div className='d-flex flex-column gap-7 gap-lg-10'>
               <div
                 data-kt-swapper='true'
@@ -200,26 +194,35 @@ const NewArrivalPage: FC = () => {
                   </div>
                   <div className='mb-10 fv-row'>
                     <label className='form-label d-block'>商品標籤</label>
-                    {tags.map((tag, i) => (
-                      <SearchInput
-                        state={tag}
-                        setState={(msg: string) => setTag(i, msg)}
-                        apiFunc={(msg: string) => searchExistTag(msg)}
-                      />
-                    ))}
+                    <div className='row'>
+                      {tags.map((tag, i) => (
+                        <div className='col-xl-3 col-lg-4 col-md-6 col-12' key={i}>
+                          <SearchInput
+                            state={tag}
+                            setState={(msg: string) => setTag(i, msg)}
+                            apiFunc={(msg: string) => searchExistTag(msg)}
+                          />
+                        </div>
+                      ))}
+                      <div className='col-xl-3 col-lg-4 col-md-6 col-12'>
+                        <button className='w-100 btn btn-primary' onClick={() => addTag()}>
+                          添加標籤
+                        </button>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
               <div className='d-flex justify-content-end'>
-                <a href='../dashboard' id='add_product_cancel' className='btn btn-light me-5'>
-                  返回
-                </a>
-                <button type='submit' id='add_product_submit' className='btn btn-primary'>
-                  <span className='indicator-label'>建立商品</span>
-                  <span className='indicator-progress'>
-                    Please wait...
-                    <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                  </span>
+                <button className='btn btn-primary' disabled={onSubmit} onClick={createItem}>
+                  {onSubmit ? (
+                    <span className='indicator-label'>
+                      請稍候
+                      <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+                    </span>
+                  ) : (
+                    <span className='indicator-label'>建立商品</span>
+                  )}
                 </button>
               </div>
             </div>
