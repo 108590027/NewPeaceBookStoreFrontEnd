@@ -1,5 +1,5 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, {FC, Fragment} from 'react'
+import React, {FC, Fragment, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useLocation} from 'react-router-dom'
 import {RootState} from '../../../../setup'
@@ -16,6 +16,7 @@ const Chat: FC = () => {
   const userState: IAuthState = useSelector((state: RootState) => state.auth)
   const chatState: ChatState = useSelector((state: RootState) => state.chat)
   const currentChatId: number = parseInt(location.hash.replace('#', ''))
+  const [searchName, setSearchName] = useState('')
   const chatData = chatState.chats.find((c) => c.userId === currentChatId)
 
   if (chatData?.messages.length === 0) {
@@ -45,7 +46,9 @@ const Chat: FC = () => {
                 type='text'
                 className='form-control form-control-solid px-15'
                 name='search'
-                placeholder='Search by username or email...'
+                value={searchName}
+                onChange={(e) => setSearchName(e.target.value)}
+                placeholder='搜尋使用者名稱'
               />
             </form>
           </div>
@@ -62,7 +65,7 @@ const Chat: FC = () => {
             >
               {chatState.chats.map((chat, i) => {
                 const user = getUser(chat.userId)
-                if (user) {
+                if (user && (searchName === '' || user.name.includes(searchName))) {
                   return (
                     <Fragment key={`Fragment-${chat.userId}`}>
                       <div className='d-flex flex-stack py-4' key={`chat-${chat.userId}`}>

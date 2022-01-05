@@ -72,7 +72,9 @@ const ChatInner: FC<Props> = ({auth, user, messages}) => {
                   {message.fromId === user.id ? (
                     <>
                       <div className='symbol  symbol-35px symbol-circle '>
-                        <img alt='Pic' src={toAbsoluteUrl(`/media/avatars/150-2.jpg`)} />
+                        <span className='symbol-label symbol-circle bg-light-danger text-danger fs-3 fw-bolder'>
+                          {user.name[0]}
+                        </span>
                       </div>
                       <div className='ms-3'>
                         <a
@@ -100,7 +102,9 @@ const ChatInner: FC<Props> = ({auth, user, messages}) => {
                         </a>
                       </div>
                       <div className='symbol  symbol-35px symbol-circle '>
-                        <img alt='Pic' src={toAbsoluteUrl(`/media/avatars/150-2.jpg`)} />
+                        <span className='symbol-label symbol-circle bg-light-danger text-danger fs-3 fw-bolder'>
+                          {auth.name[0]}
+                        </span>
                       </div>
                     </>
                   )}
