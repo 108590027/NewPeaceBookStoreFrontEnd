@@ -62,14 +62,15 @@ const ItemPage: FC<Props> = (props) => {
           </div>
         </div>
       </div>
-      <div className='row g-5 gx-xxl-8'>
-        <div className=' card-rounded mb-5 mb-xl-10 col-xxl-4'>
-          <div className='text-center shadow mw-100'>
+      <div className='row gy-5 g-xl-8'>
+        <div className='col-xxl-4 '>
+          <div className='card  mb-5 mb-xl-10 text-center mw-100'>
             {item?.images.map((image, i) => (
               <img src={image.photo} alt='' />
             ))}
           </div>
         </div>
+
         <div className='card mb-5 mb-xl-10 col-xxl-8'>
           <div className='card-header cursor-pointer'>
             <div className='card-title m-0'>
