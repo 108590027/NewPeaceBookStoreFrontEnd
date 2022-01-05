@@ -24,6 +24,7 @@ export function Items() {
       {items.map((item) => (
         <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
           <Card4
+            id={item.id}
             icon={
               item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'
             }
