@@ -65,3 +65,16 @@ export function toTimeString(date: Date): string {
     .toString()
     .padStart(2, '0')}`
 }
+
+export function getTimeElapsedString(time: number): string {
+  const elapsed = Date.now() - time
+  if (elapsed < 60 * 1000) {
+    return '剛剛'
+  } else if (elapsed < 60 * 60 * 1000) {
+    return `${Math.trunc(elapsed / 60 / 1000)}分鐘前`
+  } else if (elapsed < 24 * 60 * 60 * 1000) {
+    return `${Math.trunc(elapsed / 60 / 60 / 1000)}小時前`
+  } else {
+    return `${Math.trunc(elapsed / 24 / 60 / 60 / 1000)}天前`
+  }
+}

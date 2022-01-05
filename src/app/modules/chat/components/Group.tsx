@@ -3,7 +3,7 @@ import React, {FC} from 'react'
 import {useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
 import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
-import {Dropdown1, ChatInner} from '../../../../system/partials'
+import {Dropdown1} from '../../../../system/partials'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import {ChatState} from '../redux/ChatRedux'
@@ -147,8 +147,6 @@ const Group: FC = () => {
               </div>
             </div>
           </div>
-
-          <ChatInner />
         </div>
       </div>
     </div>

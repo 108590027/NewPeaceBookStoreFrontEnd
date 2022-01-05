@@ -30,7 +30,6 @@ export default class HistoryPath extends Path {
       to_user: number
       created_at: string
     }[] = res.messages
-    console.log(userId, messages)
     dispatch(ChatRedux.actions.initMessages(userId, messages))
   }
 }

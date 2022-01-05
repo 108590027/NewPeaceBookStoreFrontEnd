@@ -3,9 +3,10 @@ import React, {FC, Fragment} from 'react'
 import {useSelector} from 'react-redux'
 import {useLocation} from 'react-router-dom'
 import {RootState} from '../../../../setup'
-import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
-import {Dropdown1, ChatInner} from '../../../../system/partials'
+import {KTSVG} from '../../../../system/helpers'
+import {ChatInner} from '../../../../system/partials'
 import getUserAPI from '../../auth/API/GetUserAPI'
+import {UserModel} from '../../auth/redux/AuthModel'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import HistoryPath from '../../websocket/Path/HistoryPath'
 import {ChatState} from '../redux/ChatRedux'
@@ -99,7 +100,15 @@ const Chat: FC = () => {
 
       <div className='flex-lg-row-fluid ms-lg-7 ms-xl-10'>
         <div className='card' id='kt_chat_messenger'>
-          {!isNaN(currentChatId) ? <ChatInner /> : <></>}
+          {!isNaN(currentChatId) && getUser(currentChatId) && chatData !== undefined ? (
+            <ChatInner
+              messages={chatData.messages}
+              auth={userState.auth?.user as UserModel}
+              user={getUser(currentChatId) as UserModel}
+            />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
