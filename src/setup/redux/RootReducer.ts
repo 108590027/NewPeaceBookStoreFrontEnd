@@ -8,6 +8,7 @@ import * as item from '../../app/modules/item/redux/ItemRedux'
 import * as cart from '../../app/modules/item/redux/CartRedux'
 import * as report from '../../app/modules/report/redux/ReportRedux'
 import * as tag from '../../app/modules/tag/redux/TagRedux'
+import * as chat from '../../app/modules/chat/redux/ChatRedux'
 
 export const rootReducer = combineReducers({
   auth: auth.reducer,
@@ -17,6 +18,7 @@ export const rootReducer = combineReducers({
   cart: cart.reducer,
   report: report.reducer,
   tag: tag.reducer,
+  chat: chat.reducer,
 })
 
 export type RootState = ReturnType<typeof rootReducer>

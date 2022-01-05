@@ -1,9 +1,25 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {FC} from 'react'
+import {useSelector} from 'react-redux'
+import {RootState} from '../../../../setup'
 import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
 import {Dropdown1, ChatInner} from '../../../../system/partials'
+import getUserAPI from '../../auth/API/GetUserAPI'
+import {IAuthState} from '../../auth/redux/AuthRedux'
+import {ChatState} from '../redux/ChatRedux'
 
 const Private: FC = () => {
+  const userState: IAuthState = useSelector((state: RootState) => state.auth)
+  const chatState: ChatState = useSelector((state: RootState) => state.chat)
+
+  const getUser = (userId: number) => {
+    const user = userState.users.find((u) => u.id === userId)
+    if (!user) {
+      getUserAPI(userId)
+    }
+    return user
+  }
+
   return (
     <div className='d-flex flex-column flex-lg-row'>
       <div className='flex-column flex-lg-row-auto w-100 w-lg-300px w-xl-400px mb-10 mb-lg-0'>
@@ -34,229 +50,40 @@ const Private: FC = () => {
               data-kt-scroll-wrappers='#kt_content, #kt_chat_contacts_body'
               data-kt-scroll-offset='0px'
             >
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <span className='symbol-label bg-light-danger text-danger fs-6 fw-bolder'>
-                      M
-                    </span>
-                  </div>
+              {chatState.chats.map((chat) => {
+                const user = getUser(chat.userId)
+                if (user) {
+                  return (
+                    <>
+                      <div className='d-flex flex-stack py-4'>
+                        <div className='d-flex align-items-center'>
+                          <div className='symbol symbol-45px symbol-circle'>
+                            <span className='symbol-label bg-light-danger text-danger fs-6 fw-bolder'>
+                              E
+                            </span>
+                            <div className='symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2'></div>
+                          </div>
 
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Melody Macy
-                    </a>
-                    <div className='fw-bold text-gray-400'>melody@altbox.com</div>
-                  </div>
-                </div>
+                          <div className='ms-5'>
+                            <a
+                              href='#'
+                              className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'
+                            >
+                              Emma Bold
+                            </a>
+                            <div className='fw-bold text-gray-400'>emma@intenso.com</div>
+                          </div>
+                        </div>
 
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>5 hrs</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-2.jpg')} />
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Max Smith
-                    </a>
-                    <div className='fw-bold text-gray-400'>max@kt.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-4.jpg')} />
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Sean Bean
-                    </a>
-                    <div className='fw-bold text-gray-400'>sean@dellito.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-15.jpg')} />
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Brian Cox
-                    </a>
-                    <div className='fw-bold text-gray-400'>brian@exchange.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <span className='symbol-label bg-light-warning text-warning fs-6 fw-bolder'>
-                      M
-                    </span>
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Mikaela Collins
-                    </a>
-                    <div className='fw-bold text-gray-400'>mikaela@pexcom.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>1 day</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-8.jpg')} />
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Francis Mitcham
-                    </a>
-                    <div className='fw-bold text-gray-400'>f.mitcham@kpmg.com.au</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>5 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <span className='symbol-label bg-light-danger text-danger fs-6 fw-bolder'>
-                      O
-                    </span>
-                    <div className='symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2'></div>
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Olivia Wild
-                    </a>
-                    <div className='fw-bold text-gray-400'>olivia@corpmail.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>1 week</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <span className='symbol-label bg-light-primary text-primary fs-6 fw-bolder'>
-                      N
-                    </span>
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Neil Owen
-                    </a>
-                    <div className='fw-bold text-gray-400'>owen.neil@gmail.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>20 hrs</span>
-                  <span className='badge badge-sm badge-circle badge-light-success'>6</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-6.jpg')} />
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Dan Wilson
-                    </a>
-                    <div className='fw-bold text-gray-400'>dam@consilting.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>2 weeks</span>
-                  <span className='badge badge-sm badge-circle badge-light-warning'>9</span>
-                </div>
-              </div>
-
-              <div className='separator separator-dashed d-none'></div>
-
-              <div className='d-flex flex-stack py-4'>
-                <div className='d-flex align-items-center'>
-                  <div className='symbol symbol-45px symbol-circle'>
-                    <span className='symbol-label bg-light-danger text-danger fs-6 fw-bolder'>
-                      E
-                    </span>
-                    <div className='symbol-badge bg-success start-100 top-100 border-4 h-15px w-15px ms-n2 mt-n2'></div>
-                  </div>
-
-                  <div className='ms-5'>
-                    <a href='#' className='fs-5 fw-bolder text-gray-900 text-hover-primary mb-2'>
-                      Emma Bold
-                    </a>
-                    <div className='fw-bold text-gray-400'>emma@intenso.com</div>
-                  </div>
-                </div>
-
-                <div className='d-flex flex-column align-items-end ms-2'>
-                  <span className='text-muted fs-7 mb-1'>1 day</span>
-                </div>
-              </div>
+                        <div className='d-flex flex-column align-items-end ms-2'>
+                          <span className='text-muted fs-7 mb-1'>1 day</span>
+                        </div>
+                      </div>
+                      <div className='separator separator-dashed d-none'></div>
+                    </>
+                  )
+                }
+              })}
             </div>
           </div>
         </div>
@@ -266,19 +93,43 @@ const Private: FC = () => {
         <div className='card' id='kt_chat_messenger'>
           <div className='card-header' id='kt_chat_messenger_header'>
             <div className='card-title'>
-              <div className='symbol-group symbol-hover'></div>
-              <div className='d-flex justify-content-center flex-column me-3'>
+              <div className='symbol-group symbol-hover'>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-4.jpg')} />
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-15.jpg')} />
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <span className='symbol-label bg-light-warning text-warning 40px'>M</span>
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-8.jpg')} />
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <span className='symbol-label bg-light-danger text-danger 40px'>O</span>
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <span className='symbol-label bg-light-primary text-primary 40px'>N</span>
+                </div>
+                <div className='symbol symbol-35px symbol-circle'>
+                  <img alt='Pic' src={toAbsoluteUrl('/media/avatars/150-6.jpg')} />
+                </div>
                 <a
                   href='#'
-                  className='fs-4 fw-bolder text-gray-900 text-hover-primary me-1 mb-2 lh-1'
+                  className='symbol symbol-35px symbol-circle'
+                  // data-bs-toggle='modal'
+                  // data-bs-target='#kt_modal_view_users'
                 >
-                  Brian Cox
+                  <span
+                    className='symbol-label fs-8 fw-bolder'
+                    data-bs-toggle='tooltip'
+                    data-bs-trigger='hover'
+                    title='View more users'
+                  >
+                    +42
+                  </span>
                 </a>
-
-                <div className='mb-0 lh-1'>
-                  <span className='badge badge-success badge-circle w-10px h-10px me-1'></span>
-                  <span className='fs-7 fw-bold text-gray-400'>Active</span>
-                </div>
               </div>
             </div>
 
@@ -296,6 +147,7 @@ const Private: FC = () => {
               </div>
             </div>
           </div>
+
           <ChatInner />
         </div>
       </div>
