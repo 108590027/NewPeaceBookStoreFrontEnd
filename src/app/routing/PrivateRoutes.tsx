@@ -20,6 +20,7 @@ export function PrivateRoutes() {
   const AdminUserPage = lazy(() => import('../modules/admin/components/AdminUserPage'))
   const NewArrivalPage = lazy(() => import('../modules/item/NewArrivalPage'))
   const ItemPage = lazy(() => import('../modules/item/components/ItemPage'))
+  const ShoppingCartPage = lazy(() => import('../modules/item/components/ShoppingCartPage'))
 
   return (
     <Suspense fallback={<FallbackView />}>
@@ -36,6 +37,7 @@ export function PrivateRoutes() {
         <Route path='/account/order/:id' component={OrderDetail} />
         <Route path='/account' component={AccountPage} />
 
+        <Route path='/item/shoppingcart' component={ShoppingCartPage} />
         <Route path='/item/newarrival' component={NewArrivalPage} />
         <Route path='/item/:id' component={ItemPage} />
 
