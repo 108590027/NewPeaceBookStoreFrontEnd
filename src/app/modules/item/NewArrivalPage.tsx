@@ -99,7 +99,7 @@ const NewArrivalPage: FC = () => {
               <div className='card card-flush py-4'>
                 <div className='card-header'>
                   <div className='card-title'>
-                    <h2>商品圖片</h2>
+                    <h2 className='required'>商品圖片</h2>
                   </div>
                 </div>
                 <div className='card-body pt-0'>
@@ -175,11 +175,14 @@ const NewArrivalPage: FC = () => {
                       className='form-control mb-2'
                       placeholder='簡介'
                       value={createDescription}
+                      style={{
+                        resize: 'none',
+                      }}
                       onChange={(e) => setCreateDescription(e.target.value)}
                     />
                   </div>
                   <div className='mb-10 fv-row'>
-                    <label className='form-label'>商品類(系)別</label>
+                    <label className='required form-label'>商品類(系)別</label>
                     <select
                       className='form-select mb-2'
                       data-control='select2'
@@ -199,7 +202,7 @@ const NewArrivalPage: FC = () => {
                     </select>
                   </div>
                   <div className='mb-10 fv-row'>
-                    <label className='form-label d-block'>商品標籤</label>
+                    <label className='required form-label d-block'>商品標籤</label>
                     {tags.map((tag, i) => (
                       <SearchInput
                         state={tag}
@@ -211,7 +214,7 @@ const NewArrivalPage: FC = () => {
                 </div>
               </div>
               <div className='d-flex justify-content-end'>
-                <a href='../dashboard' id='add_product_cancel' className='btn btn-light me-5'>
+                <a href='/dashboard' id='add_product_cancel' className='btn btn-light me-5'>
                   返回
                 </a>
                 <button type='submit' id='add_product_submit' className='btn btn-primary'>
