@@ -44,14 +44,12 @@ export const reducer = persistReducer(
       case actionTypes.updateCartItem: {
         const itemId: number = action.payload?.itemId
         const quantity: number = action.payload?.quantity
-        state.Carts.forEach((i) => {
-          const item = state.Carts.find((i) => i.itemId === itemId)
-          if (item) {
-            state.Carts[state.Carts.indexOf(item)] = {itemId, quantity}
-          } else {
-            state.Carts.push({itemId, quantity})
-          }
-        })
+        const item = state.Carts.find((i) => i.itemId === itemId)
+        if (item) {
+          state.Carts[state.Carts.indexOf(item)] = {itemId, quantity}
+        } else {
+          state.Carts.push({itemId, quantity})
+        }
         return {...state}
       }
 
