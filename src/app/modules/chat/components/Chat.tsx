@@ -21,8 +21,6 @@ const Chat: FC = () => {
     new HistoryPath(currentChatId).send()
   }
 
-  console.log(chatData)
-
   const getUser = (userId: number) => {
     const user = userState.users.find((u) => u.id === userId)
     if (!user) {
