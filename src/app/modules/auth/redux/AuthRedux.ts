@@ -58,10 +58,9 @@ export const reducer = persistReducer(
         }
         const oriUser = state.users.find((i) => i.id === user.id)
         if (oriUser) {
-          state.users[state.users.indexOf(oriUser)] = {...user}
-        } else {
-          state.users.push(user)
+          state.users.splice(state.users.indexOf(oriUser), 1)
         }
+        state.users.push(user)
         state.lastUpdate = Date.now()
         return {...state}
       }

@@ -67,8 +67,8 @@ export default class WebSocketHandler {
   }
 
   public static recieveHandler(data: any) {
-    if (WebSocketHandler.invokeFunctions.has(data.event)) {
-      WebSocketHandler.invokeFunctions.get(data.event)(data)
+    if (WebSocketHandler.invokeFunctions.has(data.type)) {
+      WebSocketHandler.invokeFunctions.get(data.type)(data)
     }
   }
 }

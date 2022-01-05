@@ -17,10 +17,7 @@ const Card4: FC<Props> = ({icon, title, description, isBase64Image, id}) => {
       <div className='card-body d-flex justify-content-center text-center flex-column p-8'>
         <Link to={`/item/${id}`} className='text-gray-800 text-hover-primary d-flex flex-column'>
           <div className='symbol symbol-200px mb-6'>
-            <img
-              src={isBase64Image ? `data:image/jpeg;base64,${icon}` : toAbsoluteUrl(icon)}
-              alt=''
-            />
+            <img src={isBase64Image ? `${icon}` : toAbsoluteUrl(icon)} alt='' />
           </div>
           <div className='fs-3 fw-bolder mb-2 text-primary'>{title}</div>
         </Link>
