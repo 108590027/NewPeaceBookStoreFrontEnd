@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import {useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {RootState} from '../../../setup'
 import {PageTitle} from '../../../system/layout/core'
 import SearchInput from '../../utils/SearchInput'
@@ -214,9 +215,9 @@ const NewArrivalPage: FC = () => {
                 </div>
               </div>
               <div className='d-flex justify-content-end'>
-                <a href='/dashboard' id='add_product_cancel' className='btn btn-light me-5'>
+                <Link to={'/dashboard'} id='add_product_cancel' className='btn btn-light me-5'>
                   返回
-                </a>
+                </Link>
                 <button type='submit' id='add_product_submit' className='btn btn-primary'>
                   <span className='indicator-label'>建立商品</span>
                   <span className='indicator-progress'>
