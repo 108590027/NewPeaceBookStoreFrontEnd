@@ -3,8 +3,10 @@ import {useDropzone} from 'react-dropzone'
 import {useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {PageTitle} from '../../../system/layout/core'
+import SearchInput from '../../utils/SearchInput'
 import getCategoriesAPI from '../category/API/GetCategoriesAPI'
 import {CategoryState} from '../category/redux/CategoryRedux'
+import searchTagsAPI from '../tag/API/SearchTagsAPI'
 
 const NewArrivalPage: FC = () => {
   const categoryState: CategoryState = useSelector((state: RootState) => state.category)
@@ -34,9 +36,33 @@ const NewArrivalPage: FC = () => {
   const [createDescription, setCreateDescription] = useState('')
   const [createPrice, setCreatePrice] = useState(0)
   const [createDepartment, setCreateDepartment] = useState(0)
+  const [tags, setTags] = useState([''] as string[])
   const removeImage = (index: number) => {
     images.splice(index, 1)
     setImages([...images])
+  }
+  const setTag = (i: number, name: string) => {
+    tags[i] = name
+    setTags([...tags])
+  }
+  const addTag = () => {
+    tags.push('')
+    setTags([...tags])
+  }
+  const searchExistTag = async (name: string): Promise<string[]> => {
+    if (name === '') {
+      return []
+    }
+    const tags = await searchTagsAPI(name)
+    const tagNames: string[] = []
+    if ('message' in tags) {
+      return tagNames
+    } else {
+      tags.forEach((tag) => {
+        tagNames.push(tag.name)
+      })
+      return tagNames
+    }
   }
 
   if (!load) {
@@ -171,25 +197,19 @@ const NewArrivalPage: FC = () => {
                         )
                       )}
                     </select>
-                    <div className='text-muted fs-7 mb-7'>Add product to a category.</div>
                   </div>
-                  {/* end::Product Category */}
-                  {/* begin::Product Tag */}
                   <div className='mb-10 fv-row'>
                     <label className='form-label d-block'>商品標籤</label>
-                    <input
-                      id='add_product_tags'
-                      name='add_product_tags'
-                      placeholder='Add tags to a product'
-                      className='form-control mb-2'
-                      value=''
-                    />
+                    {tags.map((tag, i) => (
+                      <SearchInput
+                        state={tag}
+                        setState={(msg: string) => setTag(i, msg)}
+                        apiFunc={(msg: string) => searchExistTag(msg)}
+                      />
+                    ))}
                   </div>
-                  {/* end::Product Tag */}
                 </div>
               </div>
-              {/* end::Product */}
-              {/* begin:: Button */}
               <div className='d-flex justify-content-end'>
                 <a href='../dashboard' id='add_product_cancel' className='btn btn-light me-5'>
                   返回
