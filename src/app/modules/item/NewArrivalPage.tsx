@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import {useSelector} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../setup'
 import {PageTitle} from '../../../system/layout/core'
@@ -11,6 +12,7 @@ import searchTagsAPI from '../tag/API/SearchTagsAPI'
 import createItemAPI from './API/CreateItemAPI'
 
 const NewArrivalPage: FC = () => {
+  const history = useHistory()
   const categoryState: CategoryState = useSelector((state: RootState) => state.category)
   const onDrop = (acceptedFiles: any[]) => {
     const preImages: string[] = []
@@ -96,6 +98,7 @@ const NewArrivalPage: FC = () => {
       )
       if ('id' in result) {
         toast.success('建立成功！')
+        history.push(`/item/${result.id}`)
       } else {
         toast.error(`建立失敗：${result.message}`)
       }
@@ -105,7 +108,12 @@ const NewArrivalPage: FC = () => {
 
   if (!load) {
     setLoad(true)
-    getCategoriesAPI()
+    ;(async () => {
+      const categories = await getCategoriesAPI()
+      if (!('message' in categories)) {
+        setCreateDepartment(categories[0].id)
+      }
+    })()
   }
   return (
     <>
@@ -229,9 +237,9 @@ const NewArrivalPage: FC = () => {
                   value={createDepartment}
                   onChange={(e) => setCreateDepartment(parseInt(e.target.value))}
                 >
-                  {categoryState.categories.map((category) =>
+                  {categoryState.categories.map((category, i) =>
                     category.is_department ? (
-                      <option key={category.id} value={category.id}>
+                      <option key={`category${i}`} value={category.id}>
                         {category.name}
                       </option>
                     ) : (
