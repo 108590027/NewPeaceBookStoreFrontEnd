@@ -2,10 +2,22 @@ import React, {FC, useState} from 'react'
 import { useHistory } from 'react-router-dom';
 import SearchInput from '../../../../app/utils/SearchInput'
 import getItemByKeyword from '../../../../app/modules/item/API/GetItemsByKeywordAPI'
+import ChatPath from '../../../../app/modules/websocket/Path/ChatPath'
+import LoginPath from '../../../../app/modules/websocket/Path/LoginPath'
+import WebSocketHandler from '../../../../app/modules/websocket/WebSocketHandler'
 
 export const MenuInner: FC = () => {
   const history = useHistory();
+  const [load, setLoad] = useState(false)
   const [keywordPredicts, setKeywordPredicts] = useState([''] as string[])
+  if (!load) {
+    setLoad(true)
+    WebSocketHandler.connect(false, () => {
+      new ChatPath(0, '')
+      new LoginPath().send()
+    })
+  }
+  
   const searchKeyword = async (keyword: string): Promise<string[]> => {
     if (keyword === '') {
       return []
@@ -28,6 +40,7 @@ export const MenuInner: FC = () => {
   const search = (keyword: string) => {
     history.push(`/item/search/${keyword}`);
   }
+
   return (
     <>
       <div style={{width: '100%'}}>

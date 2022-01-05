@@ -1,4 +1,6 @@
+import {dispatch} from '../../../../setup/redux/Store'
 import Path from '../Path'
+import * as ChatRedux from '../../chat/redux/ChatRedux'
 
 export default class HistoryPath extends Path {
   type: string = 'history'
@@ -28,6 +30,6 @@ export default class HistoryPath extends Path {
       to_user: number
       created_at: string
     }[] = res.messages
-    console.log(userId, messages)
+    dispatch(ChatRedux.actions.initMessages(userId, messages))
   }
 }

@@ -9,7 +9,13 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import 'swiper/css'
 import {KTSVG} from '../../../../system/helpers'
 import {Link} from 'react-router-dom'
+import SwiperCore, {Navigation} from 'swiper'
+import * as CartRedux from '../redux/CartRedux'
+import {toast} from 'react-toastify'
+import {dispatch} from '../../../../setup/redux/Store'
 
+// install Swiper modules
+SwiperCore.use([Navigation])
 const BreadCrumbs: Array<PageLink> = [
   {
     title: '商品頁面',
@@ -21,11 +27,13 @@ const BreadCrumbs: Array<PageLink> = [
 interface Props {
   match: match<{id: string}>
 }
+
 const ItemPage: FC<Props> = (props) => {
   const [load, setLoad] = useState(false)
   const [currentId, setCurrentId] = useState(0)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const item = itemState.items.find((item) => item.id === currentId)
+  const [itemCount, setItemCount] = useState(0)
   if (parseInt(props.match.params.id) !== currentId) {
     // 當route的分類ID變動時，必須進行更新
     setLoad(false)
@@ -35,49 +43,55 @@ const ItemPage: FC<Props> = (props) => {
     setLoad(true)
     getItemAPI(currentId)
   }
+  const addToCart = async () => {
+    if (itemCount === 0) {
+      toast.warn('請選擇商品數量')
+      return
+    }
+
+    dispatch(CartRedux.actions.updateCartItem(item?.id as number, itemCount))
+    toast.success('已加入購物車')
+  }
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`${item?.name}`}</PageTitle>
       <div className='card mb-5 mb-xl-10'>
-        <div className='card-body pt-9 pb-0'>
-          <div className='d-flex flex-wrap flex-sm-nowrap mb-3'>
-            <div className='me-7 mb-4'>
-              <div className='symbol symbol-100px symbol-lg-160px symbol-fixed position-relative'>
-                <span
-                  className='symbol-label bg-light-danger text-danger fw-bolder'
-                  style={{fontSize: '3rem'}}
-                >
-                  {item?.name[0]}
-                </span>
-              </div>
-            </div>
+        <div className='card-header cursor-pointer'>
+          <div className='card-title m-0'>
+            <h3 className='fw-bolder m-0'>{item?.name}</h3>
+          </div>
+        </div>
+      </div>
+      <div className='row gy-5 g-xl-8'>
+        <div className='col-xxl-4 '>
+          <div className='card  mb-5 mb-xl-10 text-center mw-100'>
+            {item?.images.map((image, i) => (
+              <img src={image.photo} alt='' />
+            ))}
+          </div>
+        </div>
 
-            <div className='flex-grow-1'>
-              <div className='d-flex justify-content-between align-items-start flex-wrap mb-2'>
-                <div className='d-flex flex-column'>
-                  <div className='d-flex align-items-center mb-2'>
-                    <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                      {item?.name}
-                    </a>
-                  </div>
-                </div>
-              </div>
-
-              <div className='d-flex flex-wrap flex-stack'>
-                <div className='d-flex flex-column flex-grow-1 pe-8'>
-                  <div className='d-flex flex-wrap'>
-                    <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
-                      <div className='d-flex align-items-center'>
-                        <div className='fs-2 fw-bolder'>{item?.quantity || 0}個</div>
-                      </div>
-
-                      <div className='fw-bold fs-6 text-gray-400'>數量</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+        <div className='card mb-5 mb-xl-10 col-xxl-8'>
+          <div className='card-header cursor-pointer'>
+            <div className='card-title m-0'>
+              <h1 className='fw-bolder m-0'>{item?.name}</h1>
             </div>
           </div>
+          <div className='card-body border-top p-9'>
+            <h1 className='text-danger mb-3'>${item?.price}</h1>
+          </div>
+          <div className='card-body border-top p-9 row'>
+            <h3 className='col-lg-4'>數量</h3>
+            <input
+              type='number'
+              className='form-control form-control-solid col-lg-8'
+              value={itemCount}
+              onChange={(e) => setItemCount(parseInt(e.target.value))}
+            />
+          </div>
+          <button className='btn btn-lg btn-primary w-100 mb-5' onClick={() => addToCart()}>
+            加入購物車
+          </button>
         </div>
       </div>
       <div className='card mb-5 mb-xl-10'>

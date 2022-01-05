@@ -11,7 +11,7 @@ export function PrivateRoutes() {
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
   const OrderDetail = lazy(() => import('../modules/accounts/components/OrderDetail'))
   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
-  const ChatPage = lazy(() => import('../modules/apps/chat/ChatPage'))
+  const ChatPage = lazy(() => import('../modules/chat/ChatPage'))
   const CategoryPage = lazy(() => import('../modules/category/components/CategoryPage'))
   const AdminTagsPage = lazy(() => import('../modules/admin/components/AdminTagsPage'))
   const AdminReportsPage = lazy(() => import('../modules/admin/components/AdminReportsPage'))
@@ -47,7 +47,7 @@ export function PrivateRoutes() {
         <Route path='/crafted/pages/profile' component={ProfilePage} />
         <Route path='/crafted/pages/wizards' component={WizardsPage} />
         <Route path='/crafted/widgets' component={WidgetsPage} />
-        <Route path='/apps/chat' component={ChatPage} />
+        <Route path='/chat' component={ChatPage} />
         <Route path='/menu-test' component={MenuTestPage} />
         <Redirect from='/auth' to='/dashboard' />
         <Redirect exact from='/' to='/dashboard' />
