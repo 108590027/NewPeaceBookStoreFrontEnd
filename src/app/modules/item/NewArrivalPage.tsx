@@ -1,6 +1,7 @@
 import React, {FC, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
 import {useSelector} from 'react-redux'
+import {Link} from 'react-router-dom'
 import {RootState} from '../../../setup'
 import {PageTitle} from '../../../system/layout/core'
 import SearchInput from '../../utils/SearchInput'
@@ -93,7 +94,7 @@ const NewArrivalPage: FC = () => {
               <div className='card card-flush py-4'>
                 <div className='card-header'>
                   <div className='card-title'>
-                    <h2>商品圖片</h2>
+                    <h2 className='required'>商品圖片</h2>
                   </div>
                 </div>
                 <div className='card-body pt-0'>
@@ -169,11 +170,14 @@ const NewArrivalPage: FC = () => {
                       className='form-control mb-2'
                       placeholder='簡介'
                       value={createDescription}
+                      style={{
+                        resize: 'none',
+                      }}
                       onChange={(e) => setCreateDescription(e.target.value)}
                     />
                   </div>
                   <div className='mb-10 fv-row'>
-                    <label className='form-label'>商品類(系)別</label>
+                    <label className='required form-label'>商品類(系)別</label>
                     <select
                       className='form-select mb-2'
                       data-control='select2'
