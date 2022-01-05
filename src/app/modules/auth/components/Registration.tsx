@@ -4,6 +4,7 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {useFormik} from 'formik'
 import * as Yup from 'yup'
 import clsx from 'clsx'
+import {UserModel} from '../../auth/redux/AuthModel'
 import {Link} from 'react-router-dom'
 import registerAPI from '../API/RegisterAPI'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
@@ -52,6 +53,7 @@ export function Registration() {
     shallowEqual
   ) as CategoryState
   const [loading, setLoading] = useState(false)
+
   const formik = useFormik({
     initialValues,
     validationSchema: registrationSchema,
@@ -254,20 +256,18 @@ export function Registration() {
       </div>
       <div className='fv-row mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>系別</label>
-        <input
-          placeholder='請輸入系別'
-          type='number'
-          {...formik.getFieldProps('major')}
-          className={clsx(
-            'form-control form-control-lg form-control-solid',
-            {
-              'is-invalid': formik.touched.major && formik.errors.major,
-            },
-            {
-              'is-valid': formik.touched.major && !formik.errors.major,
-            }
+        <select id='createMajor' className='form-select mb-5' {...formik.getFieldProps('major')}>
+          {categoryState.categories.map((category) =>
+            category.is_department ? (
+              <option key={category.id} value={category.id}>
+                {category.name}
+              </option>
+            ) : (
+              <></>
+            )
           )}
-        />
+        </select>
+
         {formik.touched.major && formik.errors.major && (
           <div className='fv-plugins-message-container'>
             <div className='fv-help-block'>
