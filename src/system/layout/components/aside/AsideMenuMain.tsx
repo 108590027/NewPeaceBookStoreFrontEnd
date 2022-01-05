@@ -28,6 +28,12 @@ export function AsideMenuMain() {
         title={'商品上架'}
         fontIcon='bi-app-indicator'
       />
+      <AsideMenuItem
+        to={`/chat`}
+        icon='/media/icons/duotune/art/art002.svg'
+        title={'聊天室'}
+        fontIcon='bi-app-indicator'
+      />
       {isAdmin && (
         <>
           <div className='menu-item'>

@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {FC, useState} from 'react'
 import clsx from 'clsx'
-import {toAbsoluteUrl} from '../../helpers'
 import {UserModel} from '../../../app/modules/auth/redux/AuthModel'
 import ChatPath from '../../../app/modules/websocket/Path/ChatPath'
 import {getTimeElapsedString} from '../../../app/utils/DateUtil'
