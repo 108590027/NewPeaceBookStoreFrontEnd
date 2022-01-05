@@ -1,12 +1,14 @@
 import React, {FC, useState} from 'react'
 
 interface Props {
+  placeholder: string
   state: string
+  event: (msg: string) => void
   setState: (msg: string) => void
   apiFunc: (msg: string) => Promise<string[]>
 }
 
-const SearchInput: FC<Props> = ({state, setState, apiFunc}) => {
+const SearchInput: FC<Props> = ({placeholder, state, event, setState, apiFunc}) => {
   const [focus, setFocus] = useState(false)
   const [predicts, setPredicts] = useState([] as string[])
 
@@ -20,9 +22,11 @@ const SearchInput: FC<Props> = ({state, setState, apiFunc}) => {
     <div className='w-100' onMouseEnter={() => setFocus(true)} onMouseLeave={() => setFocus(false)}>
       <input
         type='text'
+        placeholder={placeholder}
         value={state}
         onFocus={() => setFocus(true)}
         onChange={(e) => onChange(e.target.value)}
+        onKeyDown={(e) => e.key === 'Enter' && event(state)}
         className='form-control w-100'
       />
       {focus ? (
@@ -32,6 +36,7 @@ const SearchInput: FC<Props> = ({state, setState, apiFunc}) => {
             onClick={() => {
               onChange(predict)
               setFocus(false)
+              event(predict)
             }}
             style={
               i === predicts.length - 1

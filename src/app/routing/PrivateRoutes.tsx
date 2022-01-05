@@ -19,6 +19,7 @@ export function PrivateRoutes() {
   const AdminUsersPage = lazy(() => import('../modules/admin/components/AdminUsersPage'))
   const AdminUserPage = lazy(() => import('../modules/admin/components/AdminUserPage'))
   const NewArrivalPage = lazy(() => import('../modules/item/NewArrivalPage'))
+  const SearchPage = lazy(() => import('../modules/item/components/SearchPage'))
   const ItemPage = lazy(() => import('../modules/item/components/ItemPage'))
   const ShoppingCartPage = lazy(() => import('../modules/item/components/ShoppingCartPage'))
 
@@ -39,6 +40,7 @@ export function PrivateRoutes() {
 
         <Route path='/item/shoppingcart' component={ShoppingCartPage} />
         <Route path='/item/newarrival' component={NewArrivalPage} />
+        <Route path='/item/search/:keyword' component={SearchPage} />
         <Route path='/item/:id' component={ItemPage} />
 
         <Route path='/builder' component={BuilderPageWrapper} />
