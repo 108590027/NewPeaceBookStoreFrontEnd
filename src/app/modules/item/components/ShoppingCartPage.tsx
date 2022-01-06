@@ -13,8 +13,9 @@ import getItemAPI from '../API/GetItemsAPI'
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
-  const [updateItem, setUpdateItem] = useState(0)
+  const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
+  var totalPrice = 0
 
   const getUserName = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
@@ -24,49 +25,57 @@ const ShoppingCartPage: FC = () => {
   const getInfo = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
     return item
-  }
-
-  /*const getItem = async (itemId: number) => {
-    const item = await getItemAPI(itemId)
+    /*let item = await getItemAPI(itemId)
     if ('id' in item) {
-      return item
-    } else {
-      toast.warn('取得商品失敗')
-    }
-  }*/
+      setItemPrice(item.price)
+      setItemName(item.owner.name)
+    }*/
+  }
 
   const calculatePrice = (price: number | undefined, quantity: number) => {
     if (!price) {
       price = 0
     }
-    return price * quantity
+    let result = price * quantity
+    totalPrice += result
+    return result
   }
 
   const openUpdateModal = (id: number, quantity: number) => {
-    setUpdateItem(id)
-    setUpdateQuantity(quantity)
     let item = itemState.items.find((item) => item.id === id)
     if (item) {
+      setUpdateItemId(id)
+      setUpdateQuantity(quantity)
       new Modal('#updateModal').show()
     }
   }
 
-  const deleteItem = (id: number) => {
+  const deleteItem = async (id: number) => {
+    await dispatch(actions.deleteCartItem(id))
     toast.success('已刪除商品')
-    dispatch(actions.deleteCartItem(id))
   }
 
-  const modifyItem = () => {
-    dispatch(actions.updateCartItem(updateItem, updateQuantity))
-    document.getElementById('updateModalCancel')?.click()
-    toast.success(`已修改商品數量`)
+  const modifyItem = async () => {
+    const item = await getItemAPI(updateItemId)
+    if ('id' in item) {
+      if (item.quantity >= updateQuantity) {
+        dispatch(actions.updateCartItem(updateItemId, updateQuantity))
+        toast.success(`已修改商品：${item.name}下訂數量為${updateQuantity}個`)
+        setUpdateQuantity(0)
+        setUpdateItemId(0)
+        document.getElementById('updateModalCancel')?.click()
+      } else {
+        toast.error(`下訂數量不可大於商品存貨數量(${item.quantity}個)`)
+      }
+    } else {
+      toast.error(item)
+    }
   }
 
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
       <div className='col-12'>
-        {/* 因為目前沒辦法加東西進購物車，所以先暫時直接指定某個item id */}
         <h5>賣家名稱：{getUserName(CartState.Carts[0]?.itemId) || '目前沒有任何商品！'}</h5>
         <div className='card card-xxl-stretch mb-5 mb-xxl-8'>
           <div className='table-responsive'>
@@ -82,7 +91,7 @@ const ShoppingCartPage: FC = () => {
               </thead>
               <tbody>
                 {CartState.Carts.map((item) => (
-                  <tr>
+                  <tr key={item.itemId}>
                     <td>{getInfo(item.itemId)?.name}</td>
                     <td>{item.quantity}</td>
                     <td>{getInfo(item.itemId)?.price}</td>
@@ -103,6 +112,11 @@ const ShoppingCartPage: FC = () => {
                     </td>
                   </tr>
                 ))}
+                <tr>
+                  <td colSpan={5} className='fs-5 text-end'>
+                    <h2>總計　${totalPrice}</h2>
+                  </td>
+                </tr>
               </tbody>
             </table>
           </div>
@@ -133,6 +147,7 @@ const ShoppingCartPage: FC = () => {
                     <input
                       id='updateQuentity'
                       value={updateQuantity}
+                      min={1}
                       type='number'
                       className='form-control mt-1'
                       onChange={(e) => setUpdateQuantity(parseInt(e.target.value))}
