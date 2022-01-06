@@ -1,4 +1,5 @@
 import React, {FC, useState} from 'react'
+import {useHistory} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {match} from 'react-router'
 import {RootState} from '../../../../setup'
@@ -9,6 +10,7 @@ import {Swiper, SwiperSlide} from 'swiper/react'
 import {Link} from 'react-router-dom'
 import SwiperCore, {Navigation} from 'swiper'
 import * as CartRedux from '../redux/CartRedux'
+import * as ChatRedux from '../../chat/redux/ChatRedux'
 import {toast} from 'react-toastify'
 import {dispatch} from '../../../../setup/redux/Store'
 import 'swiper/css/bundle'
@@ -22,7 +24,7 @@ SwiperCore.use([Navigation])
 const BreadCrumbs: Array<PageLink> = [
   {
     title: '商品頁面',
-    path: `/`,
+    path: '/',
     isSeparator: false,
     isActive: false,
   },
@@ -37,6 +39,11 @@ const ItemPage: FC<Props> = (props) => {
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const item = itemState.items.find((item) => item.id === currentId)
   const [itemCount, setItemCount] = useState(1)
+  const history = useHistory()
+  const redirectToChat = (id: number) => {
+    dispatch(ChatRedux.actions.newChat(id))
+    history.push(`/chat#${id}`)
+  }
 
   if (parseInt(props.match.params.id) !== currentId) {
     // 當route的分類ID變動時，必須進行更新
@@ -91,12 +98,14 @@ const ItemPage: FC<Props> = (props) => {
               <h1 className='fw-bolder m-0'>{item?.name}</h1>
             </div>
           </div>
-          <div className='card-body border-top p-9'>
+          <div className='card-body border-top'>
             <h1 className='text-danger mb-3'>${item?.price}</h1>
-            <br></br>
-            <Link to={`/chat#${item?.owner.id}`} className='col-auto '>
-              <h5 className='text-primary'>聯繫賣家</h5>
-            </Link>
+            <button
+              className='col-auto btn btn-lg btn-danger'
+              onClick={() => redirectToChat(item?.owner.id as number)}
+            >
+              聯繫賣家
+            </button>
           </div>
 
           <div className='card-body border-top p-9'>
@@ -111,14 +120,14 @@ const ItemPage: FC<Props> = (props) => {
               value={itemCount}
               onChange={(e) => setItemCount(parseInt(e.target.value))}
             />
+            <br></br>
+            <button
+              className='btn btn-lg btn-primary w-100 mb-5'
+              onClick={() => addToCart(item?.quantity as number)}
+            >
+              加入購物車
+            </button>
           </div>
-
-          <button
-            className='btn btn-lg btn-primary w-100 mb-5'
-            onClick={() => addToCart(item?.quantity as number)}
-          >
-            加入購物車
-          </button>
         </div>
       </div>
       <div className='card mb-5 mb-xl-10'>
