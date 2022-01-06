@@ -7,6 +7,7 @@ import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {IAuthState} from '../../../../app/modules/auth/redux/AuthRedux'
 import getCategoriesAPI from '../../../../app/modules/category/API/GetCategoriesAPI'
 import {CategoryState} from '../../../../app/modules/category/redux/CategoryRedux'
+import {CartState} from '../../../../app/modules/item/redux/CartRedux'
 import {RootState} from '../../../../setup'
 
 const HeaderUserMenu: FC = () => {
@@ -15,6 +16,7 @@ const HeaderUserMenu: FC = () => {
     shallowEqual
   ) as CategoryState
   const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
+  const CartState: CartState = useSelector((state: RootState) => state.cart)
   const user: UserModel = authState?.auth?.user as UserModel
   if (categoryState.lastUpdate <= Date.now() - 30000) {
     getCategoriesAPI()
@@ -50,7 +52,9 @@ const HeaderUserMenu: FC = () => {
         <Link to={'/item/shoppingcart'} className='menu-link px-5'>
           我的購物車
           <span className='menu-badge'>
-            <span className='badge badge-light-danger badge-circle fw-bolder fs-7'>3</span>
+            <span className='badge badge-light-danger badge-circle fw-bolder fs-7'>
+              {CartState.Carts.length}
+            </span>
           </span>
         </Link>
       </div>
