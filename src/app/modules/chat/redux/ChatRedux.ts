@@ -14,6 +14,7 @@ export const actionTypes = {
   updateList: 'updateList',
   initMessages: 'initMessages',
   updateChat: 'updateChat',
+  newChat: 'newChat',
 }
 
 const initialChatState: ChatState = {
@@ -91,6 +92,16 @@ export const reducer = persistReducer(
         return {...state}
       }
 
+      case actionTypes.newChat: {
+        const userId: number = action.payload?.userId
+
+        if (!state.chats.find((c) => c.userId === userId)) {
+          state.chats.push({userId: userId, messages: []})
+        }
+        state.lastUpdate = Date.now()
+        return {...state}
+      }
+
       default:
         return state
     }
@@ -113,6 +124,10 @@ export const actions = {
   updateChat: (userId: number, fromId: number, message: string) => ({
     type: actionTypes.updateChat,
     payload: {userId, fromId, message},
+  }),
+  newChat: (userId: number) => ({
+    type: actionTypes.newChat,
+    payload: {userId},
   }),
 }
 
