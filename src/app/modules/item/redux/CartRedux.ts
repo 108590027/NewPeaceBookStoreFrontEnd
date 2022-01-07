@@ -19,7 +19,7 @@ const initialCartState: CartState = {
   lastUpdate: 0,
 }
 
-type CartType = {itemId: number; quantity: number}
+export type CartType = {itemId: number; quantity: number}
 
 export interface CartState {
   Carts: CartType[]
