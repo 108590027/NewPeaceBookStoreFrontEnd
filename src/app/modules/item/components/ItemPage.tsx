@@ -108,11 +108,14 @@ const ItemPage: FC<Props> = (props) => {
           </div>
           <div className='card-body border-top'>
             <h1 className='text-danger mb-3'>${item?.price}</h1>
-            {item?.tags.map((tag, i) => (
-              <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
-                #{tag.tag.name}
-              </span>
-            ))}
+            {item?.tags.map(
+              (tag, i) =>
+                tag.tag.name !== '' && (
+                  <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
+                    #{tag.tag.name}
+                  </span>
+                )
+            )}
             {authId === userId ?? (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家

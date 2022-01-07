@@ -84,6 +84,12 @@ const NewArrivalPage: FC = () => {
       toast.warn('請輸入名稱等資訊！')
       return
     }
+    tags.forEach((tag) => {
+      if (tag === '') {
+        const index = tags.indexOf(tag)
+        tags.splice(index, 1)
+      }
+    })
     setOnSubmit(true)
     setTimeout(async () => {
       const result = await createItemAPI(
