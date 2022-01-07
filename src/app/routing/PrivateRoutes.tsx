@@ -21,6 +21,7 @@ export function PrivateRoutes() {
   const NewArrivalPage = lazy(() => import('../modules/item/NewArrivalPage'))
   const SearchPage = lazy(() => import('../modules/item/components/SearchPage'))
   const ItemPage = lazy(() => import('../modules/item/components/ItemPage'))
+  const TagPage = lazy(() => import('../modules/tag/components/TagPage'))
   const ShoppingCartPage = lazy(() => import('../modules/item/components/ShoppingCartPage'))
 
   return (
@@ -42,6 +43,8 @@ export function PrivateRoutes() {
         <Route path='/item/newarrival' component={NewArrivalPage} />
         <Route path='/item/search' component={SearchPage} />
         <Route path='/item/:id' component={ItemPage} />
+
+        <Route path='/tag/:id' component={TagPage} />
 
         <Route path='/builder' component={BuilderPageWrapper} />
         <Route path='/crafted/pages/profile' component={ProfilePage} />

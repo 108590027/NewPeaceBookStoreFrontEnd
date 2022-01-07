@@ -1,7 +1,7 @@
 import axios from 'axios'
-// import * as ItemRedux from '../redux/ItemRedux'
+import * as ItemRedux from '../redux/ItemRedux'
 import {ErrorResponse, NetworkErrorResponse} from '../../errors/ErrorDataTypes'
-// import {dispatch} from '../../../../setup/redux/Store'
+import {dispatch} from '../../../../setup/redux/Store'
 import {ItemModel} from '../redux/ItemModel'
 
 export type Response = {
@@ -16,7 +16,7 @@ export default async function getItemsByTagAPI(
 ): Promise<ItemModel[] | ErrorResponse> {
   try {
     const {data} = await axios.get<Response>(API_URL(tagId))
-    // dispatch(ItemRedux.actions.updateItems(data.data))
+    dispatch(ItemRedux.actions.updateItems(data.data))
     return data.data
   } catch (err: any) {
     console.log(err)

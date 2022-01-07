@@ -13,12 +13,12 @@ export const actionTypes = {
   updateTags: 'updateTags',
 }
 
-const initialTagstate: Tagstate = {
+const initialTagstate: TagState = {
   tags: [],
   lastUpdate: 0,
 }
 
-export interface Tagstate {
+export interface TagState {
   tags: TagModel[]
   lastUpdate: number
 }
