@@ -25,7 +25,7 @@ export interface TagState {
 
 export const reducer = persistReducer(
   {storage, key: 'NewPeaceBookStoreTag'}, // Tag存到localStorage持久化保存
-  (state: Tagstate = initialTagstate, action: ActionWithPayload<any>) => {
+  (state: TagState = initialTagstate, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setTags: {
         let tags: TagModel[] = action.payload?.tags

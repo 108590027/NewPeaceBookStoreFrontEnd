@@ -27,7 +27,7 @@ const TagPage: FC<Props> = (props) => {
     setCurrentId(parseInt(props.match.params.id))
   }
   const items = itemState.items.filter(
-    (item) => item.tags.some((tag) => tag.id === currentId) && item.quantity > 0
+    (item) => item.tags.some((tag) => tag.tag.id === currentId) && item.quantity > 0
   )
   if (!load && currentId !== 0) {
     setLoad(true)
