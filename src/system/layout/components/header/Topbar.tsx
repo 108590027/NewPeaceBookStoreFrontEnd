@@ -24,14 +24,7 @@ const Topbar: FC = () => {
 
   return (
     <div className='d-flex align-items-stretch flex-shrink-0'>
-      {/* Search */}
-      {/* <div className={clsx('d-flex align-items-stretch', toolbarButtonMarginClass)}>
-        <Search />
-      </div> */}
-
-      {/* NOTIFICATIONS */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
-        {/* begin::Menu- wrapper */}
         <div
           className={clsx(
             'btn btn-icon btn-active-light-primary position-relative',
@@ -46,10 +39,7 @@ const Topbar: FC = () => {
           </Link>
         </div>
         <HeaderNotificationsMenu />
-        {/* end::Menu wrapper */}
       </div>
-
-      {/* SHOPPING CART */}
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         <div
           className={clsx(
@@ -66,8 +56,6 @@ const Topbar: FC = () => {
           <span className='menu-badge'></span>
         </div>
       </div>
-
-      {/* User */}
       <div
         className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}
         id='kt_header_user_menu_toggle'

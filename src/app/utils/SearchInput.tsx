@@ -1,9 +1,9 @@
 import React, {FC, useState} from 'react'
 
 interface Props {
-  placeholder: string
+  placeholder?: string
   state: string
-  event: (msg: string) => void
+  event?: (msg: string) => void
   setState: (msg: string) => void
   apiFunc: (msg: string) => Promise<string[]>
 }
@@ -26,7 +26,7 @@ const SearchInput: FC<Props> = ({placeholder, state, event, setState, apiFunc}) 
         value={state}
         onFocus={() => setFocus(true)}
         onChange={(e) => onChange(e.target.value)}
-        onKeyDown={(e) => e.key === 'Enter' && event(state)}
+        onKeyDown={(e) => e.key === 'Enter' && event && event(state)}
         className='form-control w-100'
       />
       {focus ? (
@@ -36,7 +36,9 @@ const SearchInput: FC<Props> = ({placeholder, state, event, setState, apiFunc}) 
             onClick={() => {
               onChange(predict)
               setFocus(false)
-              event(predict)
+              if (event) {
+                event(predict)
+              }
             }}
             style={
               i === predicts.length - 1

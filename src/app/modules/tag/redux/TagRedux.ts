@@ -13,19 +13,19 @@ export const actionTypes = {
   updateTags: 'updateTags',
 }
 
-const initialTagstate: Tagstate = {
+const initialTagstate: TagState = {
   tags: [],
   lastUpdate: 0,
 }
 
-export interface Tagstate {
+export interface TagState {
   tags: TagModel[]
   lastUpdate: number
 }
 
 export const reducer = persistReducer(
   {storage, key: 'NewPeaceBookStoreTag'}, // Tag存到localStorage持久化保存
-  (state: Tagstate = initialTagstate, action: ActionWithPayload<any>) => {
+  (state: TagState = initialTagstate, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setTags: {
         let tags: TagModel[] = action.payload?.tags
