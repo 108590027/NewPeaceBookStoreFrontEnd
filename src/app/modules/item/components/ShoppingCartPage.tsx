@@ -63,9 +63,9 @@ const ShoppingCartPage: FC = () => {
     }
   }
 
-  const deleteItem = async (id: number) => {
-    await dispatch(actions.deleteCartItem(id))
-    toast.success('已刪除商品')
+  const deleteItem = async (item: ItemModel) => {
+    await dispatch(actions.deleteCartItem(item.id))
+    toast.success(`已從購物車刪除商品：${item.name}`)
   }
 
   const modifyItem = async () => {
@@ -118,7 +118,7 @@ const ShoppingCartPage: FC = () => {
                 </div>
                 {/* <!--begin::Selected products--> */}
                 <div className='fw-bolder fs-4'>
-                  Total Cost:$<span id='edit_order_total_price'>{totalPrice}</span>
+                  訂單總金額:　$<span id='edit_order_total_price'>{totalPrice}</span>
                 </div>
               </div>
               {/* <!--end::Input group--> */}
@@ -171,8 +171,8 @@ const ShoppingCartPage: FC = () => {
                   <tr className='text-start text-gray-400 fw-bolder fs-7 gs-0'>
                     <th className='w-25px pe-2'></th>
                     <th className=''>產品資訊</th>
-                    <th className='text-center'>購買數量</th>
-                    <th className='text-center'>剩餘數量</th>
+                    <th className='min-w-70px text-center'>購買數量</th>
+                    <th className='min-w-70px text-center'>剩餘數量</th>
                     <th className='min-w-150px text-center'>操作</th>
                   </tr>
                 </thead>
@@ -210,11 +210,13 @@ const ShoppingCartPage: FC = () => {
                           {/* <!--end::Thumbnail--> */}
                           <div className='ms-5'>
                             {/* <!--begin::Title--> */}
-                            <span className='text-gray-800 text-hover-primary fs-5 fw-bolder'>
-                              {item.name}
-                            </span>
+                            {/* text-hover-primary */}
+                            <span className='text-gray-800 fs-5 fw-bolder'>{item.name}</span>
                             {/* <!--end::Title--> */}
                             <div className='d-flex flex-wrap gap-3'>
+                              {/* <!--begin::SKU--> */}
+                              <div className='text-muted fs-7'>{item.owner.name}</div>
+                              {/* <!--end::SKU--> */}
                               {/* <!--begin::Price--> */}
                               <div className='fw-bold fs-7'>
                                 Price: $
@@ -223,9 +225,6 @@ const ShoppingCartPage: FC = () => {
                                 </span>
                               </div>
                               {/* <!--end::Price--> */}
-                              {/* <!--begin::SKU--> */}
-                              <div className='text-muted fs-7'>{item.owner.name}</div>
-                              {/* <!--end::SKU--> */}
                             </div>
                           </div>
                         </div>
@@ -248,7 +247,7 @@ const ShoppingCartPage: FC = () => {
                         </button>
                         <button
                           className='btn btn-danger btn-sm mx-2'
-                          onClick={() => deleteItem(item.id)}
+                          onClick={() => deleteItem(item)}
                         >
                           <i className='bi bi-trash-fill fs-5'></i>刪除
                         </button>

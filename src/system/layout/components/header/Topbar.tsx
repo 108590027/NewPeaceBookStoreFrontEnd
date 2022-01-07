@@ -48,10 +48,13 @@ const Topbar: FC = () => {
           )}
         >
           <Link to={'/item/shoppingcart'}>
-            <KTSVG
-              path='/media/icons/duotune/ecommerce/ecm001.svg'
-              className={toolbarButtonIconSizeClass}
-            />
+            <span className='fw-bolder fs-7'>
+              <KTSVG
+                path='/media/icons/duotune/ecommerce/ecm001.svg'
+                className={toolbarButtonIconSizeClass}
+              />
+              {CartState.Carts.length > 0 ? CartState.Carts.length : null}
+            </span>
           </Link>
           <span className='menu-badge'></span>
         </div>
