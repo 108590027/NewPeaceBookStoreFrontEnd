@@ -36,7 +36,7 @@ const Topbar: FC = () => {
             toolbarButtonHeightClass
           )}
         >
-          <Link to={'/newarrival'}>
+          <Link to={'/item/newarrival'}>
             <KTSVG
               path='/media/icons/duotune/arrows/arr013.svg'
               className={toolbarButtonIconSizeClass}
@@ -55,7 +55,7 @@ const Topbar: FC = () => {
             toolbarButtonHeightClass
           )}
         >
-          <Link to={'/shoppingcart'}>
+          <Link to={'/item/shoppingcart'}>
             <KTSVG
               path='/media/icons/duotune/ecommerce/ecm001.svg'
               className={toolbarButtonIconSizeClass}
