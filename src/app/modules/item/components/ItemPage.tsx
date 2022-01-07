@@ -17,6 +17,7 @@ import 'swiper/css/bundle'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import '../css/swiper.css'
+import {IAuthState} from '../../auth/redux/AuthRedux'
 
 // install Swiper modules
 SwiperCore.use([Navigation])
@@ -36,13 +37,19 @@ interface Props {
 const ItemPage: FC<Props> = (props) => {
   const [load, setLoad] = useState(false)
   const [currentId, setCurrentId] = useState(0)
+  const userState: IAuthState = useSelector((state: RootState) => state.auth)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const item = itemState.items.find((item) => item.id === currentId)
   const [itemCount, setItemCount] = useState(1)
   const history = useHistory()
-  const redirectToChat = (id: number) => {
-    dispatch(ChatRedux.actions.newChat(id))
-    history.push(`/chat#${id}`)
+  const authId = userState.auth?.user?.id as number
+  const userId = item?.owner.id as number
+  const redirectToChat = () => {
+    if (authId === userId) {
+      return
+    }
+    dispatch(ChatRedux.actions.newChat(authId, userId))
+    history.push(`/chat#${userId}`)
   }
 
   if (parseInt(props.match.params.id) !== currentId) {
@@ -80,6 +87,7 @@ const ItemPage: FC<Props> = (props) => {
                 {item?.images.map((image, i) => (
                   <SwiperSlide>
                     <img
+                      key={`image-${i}`}
                       src={image ? image.photo : '/media/icons/duotune/ecommerce/ecm005.svg'}
                       alt=''
                     />
@@ -100,12 +108,16 @@ const ItemPage: FC<Props> = (props) => {
           </div>
           <div className='card-body border-top'>
             <h1 className='text-danger mb-3'>${item?.price}</h1>
-            <button
-              className='col-auto btn btn-lg btn-danger'
-              onClick={() => redirectToChat(item?.owner.id as number)}
-            >
-              聯繫賣家
-            </button>
+            {item?.tags.map((tag, i) => (
+              <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
+                #{tag.tag.name}
+              </span>
+            ))}
+            {authId === userId ?? (
+              <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
+                聯繫賣家
+              </button>
+            )}
           </div>
 
           <div className='card-body border-top p-9'>
@@ -161,7 +173,9 @@ const ItemPage: FC<Props> = (props) => {
             <label className='col-lg-4 fw-bold text-muted'>分類</label>
 
             <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{item?.category.name}</span>
+              <Link to={`/category/${item?.category.id}`} className='fw-bolder fs-6 text-primary'>
+                {item?.category.name}
+              </Link>
             </div>
           </div>
 
