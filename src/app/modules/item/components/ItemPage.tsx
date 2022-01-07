@@ -111,9 +111,13 @@ const ItemPage: FC<Props> = (props) => {
             {item?.tags.map(
               (tag, i) =>
                 tag.tag.name !== '' && (
-                  <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
+                  <Link
+                    to={`/tag/${tag.tag.id}`}
+                    className='mx-1 my-2 badge badge-light-primary'
+                    key={`tag-${i}`}
+                  >
                     #{tag.tag.name}
-                  </span>
+                  </Link>
                 )
             )}
             {authId === userId ?? (
