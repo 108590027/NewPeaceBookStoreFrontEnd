@@ -6,6 +6,7 @@ import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {RootState} from '../../../../setup'
 import {KTSVG} from '../../../helpers'
 import {HeaderNotificationsMenu, HeaderUserMenu, QuickLinks} from '../../../partials'
+import {CartState} from '../../../../app/modules/item/redux/CartRedux'
 import {useLayout} from '../../core'
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
@@ -19,6 +20,7 @@ const Topbar: FC = () => {
     ({auth}) => auth.auth?.user,
     shallowEqual
   ) as UserModel
+  const CartState: CartState = useSelector((state: RootState) => state.cart)
 
   return (
     <div className='d-flex align-items-stretch flex-shrink-0'>
@@ -61,6 +63,7 @@ const Topbar: FC = () => {
               className={toolbarButtonIconSizeClass}
             />
           </Link>
+          <span className='menu-badge'></span>
         </div>
       </div>
 

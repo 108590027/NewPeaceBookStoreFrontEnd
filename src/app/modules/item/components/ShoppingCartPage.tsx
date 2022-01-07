@@ -10,6 +10,7 @@ import {CartState, actions} from '../redux/CartRedux'
 import {dispatch} from '../../../../setup/redux/Store'
 import {ItemModel} from '../redux/ItemModel'
 import getItemAPI from '../API/GetItemsAPI'
+import {serialize} from 'v8'
 
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
@@ -155,7 +156,7 @@ const ShoppingCartPage: FC = () => {
                 <input
                   type='text'
                   data-kt-ecommerce-edit-order-filter='search'
-                  className='form-control form-control-solid w-100 w-lg-50 ps-14'
+                  className='form-control form-control-solid w-100 ps-14'
                   placeholder='Search Products'
                 />
               </div>
@@ -190,19 +191,22 @@ const ShoppingCartPage: FC = () => {
                         <div
                           className='d-flex align-items-center'
                           data-kt-ecommerce-edit-order-filter='product'
-                          data-kt-ecommerce-edit-order-id='product_1'
+                          data-kt-ecommerce-edit-order-id={item.id}
                         >
                           {/* <!--begin::Thumbnail--> */}
                           <img
-                            className='symbol symbol-50px'
+                            className='symbol symbol-50px '
                             src={
                               item.images[0]
                                 ? item.images[0].photo
                                 : '/media/icons/duotune/ecommerce/ecm005.svg'
                             }
                             alt=''
-                            height='50px'
+                            height='auto'
+                            width='50px'
+                            background-position='center'
                           ></img>
+
                           {/* <!--end::Thumbnail--> */}
                           <div className='ms-5'>
                             {/* <!--begin::Title--> */}
