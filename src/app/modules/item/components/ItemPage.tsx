@@ -109,9 +109,11 @@ const ItemPage: FC<Props> = (props) => {
           <div className='card-body border-top'>
             <h1 className='text-danger mb-3'>${item?.price}</h1>
             {item?.tags.map((tag, i) => (
-              <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
-                #{tag.tag.name}
-              </span>
+              <Link to={`/tag/${tag.id}`}>
+                <span className='mx-1 my-2 badge badge-light-primary' key={`tag-${i}`}>
+                  #{tag.tag.name}
+                </span>
+              </Link>
             ))}
             {authId === userId ?? (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>

@@ -41,7 +41,7 @@ export function PrivateRoutes() {
 
         <Route path='/item/shoppingcart' component={ShoppingCartPage} />
         <Route path='/item/newarrival' component={NewArrivalPage} />
-        <Route path='/item/search/:keyword' component={SearchPage} />
+        <Route path='/item/search' component={SearchPage} />
         <Route path='/item/:id' component={ItemPage} />
 
         <Route path='/tag/:id' component={TagPage} />

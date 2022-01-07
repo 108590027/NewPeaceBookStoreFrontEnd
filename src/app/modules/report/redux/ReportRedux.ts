@@ -24,7 +24,7 @@ export interface ReportState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Report', whitelist: ['reports']}, // Report存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreReport', whitelist: ['reports']}, // Report存到localStorage持久化保存
   (state: ReportState = initialReportState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setReports: {

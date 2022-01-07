@@ -24,7 +24,7 @@ export interface OrderState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Order', whitelist: ['orders']}, // Order存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreOrder', whitelist: ['orders']}, // Order存到localStorage持久化保存
   (state: OrderState = initialOrderState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setOrders: {

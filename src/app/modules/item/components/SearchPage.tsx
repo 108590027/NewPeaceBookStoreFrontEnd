@@ -1,38 +1,35 @@
 import React, {FC, useState} from 'react'
-import {match} from 'react-router'
+import {useLocation} from 'react-router-dom'
 import {PageTitle} from '../../../../system/layout/core'
 import {Card4} from '../../../../system/partials/content/cards/Card4'
-import {ItemModel} from "../redux/ItemModel";
+import {ItemModel} from '../redux/ItemModel'
 import getItemsByKeywordAPI from '../API/GetItemsByKeywordAPI'
 
-interface Props {
-  match: match<{keyword: string}>
-}
-
-const SearchPage: FC<Props> = (props) => {
+const SearchPage: FC = () => {
+  const location = useLocation()
   const [items, setItems] = useState([] as ItemModel[])
   const [load, setLoad] = useState(false)
   const [currentKeyword, setCurrentKeyword] = useState('') // 紀錄目前的Keyword
-  if (props.match.params.keyword !== currentKeyword) {
+  if (location.hash !== `#${currentKeyword}`) {
     // 當route的Keyword變動時，必須進行更新
     setLoad(false)
-    setCurrentKeyword(props.match.params.keyword)
+    setCurrentKeyword(location.hash.replace('#', ''))
   }
-  if (!load) {
+  if (!load && currentKeyword !== '') {
     setLoad(true)
     ;(async () => {
       const searchItems = await getItemsByKeywordAPI(currentKeyword)
       if ('message' in searchItems) {
         setItems([])
       } else {
-        setItems(searchItems)
+        setItems([...searchItems])
       }
     })()
   }
 
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{`搜尋${props.match.params.keyword}`}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{`搜尋${currentKeyword}`}</PageTitle>
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {items.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
