@@ -32,12 +32,14 @@ export const reducer = persistReducer(
       case actionTypes.setItems: {
         const items: ItemModel[] = action.payload?.items
         const lastUpdate = Date.now()
+        state.items = [...state.items]
         return {items, lastUpdate}
       }
 
       case actionTypes.createItem: {
         const item: ItemModel = action.payload?.item
         state.items.push(item)
+        state.items = [...state.items]
         return {...state}
       }
 
@@ -47,6 +49,7 @@ export const reducer = persistReducer(
         if (item) {
           state.items.splice(state.items.indexOf(item), 1)
         }
+        state.items = [...state.items]
         return {...state}
       }
 
@@ -59,6 +62,7 @@ export const reducer = persistReducer(
         } else {
           state.items.push(item)
         }
+        state.items = [...state.items]
         return {...state}
       }
 
@@ -72,6 +76,7 @@ export const reducer = persistReducer(
             state.items.push(item)
           }
         })
+        state.items = [...state.items]
         return {...state}
       }
 

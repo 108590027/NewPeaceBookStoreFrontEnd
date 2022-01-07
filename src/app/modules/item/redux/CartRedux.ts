@@ -19,13 +19,15 @@ const initialCartState: CartState = {
   lastUpdate: 0,
 }
 
+type CartType = {itemId: number; quantity: number}
+
 export interface CartState {
-  Carts: {itemId: number; quantity: number}[]
+  Carts: CartType[]
   lastUpdate: number
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Cart', whitelist: ['Carts']}, // Cart存到localStorage持久化保存
+  {storage, key: 'v100-demo1-Cart'}, // Cart存到localStorage持久化保存
   (state: CartState = initialCartState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.resetCart: {
@@ -38,7 +40,9 @@ export const reducer = persistReducer(
         if (item) {
           state.Carts.splice(state.Carts.indexOf(item), 1)
         }
-        return {...state}
+        const lastUpdate = Date.now()
+        const Carts = state.Carts
+        return {lastUpdate, Carts: [...Carts]}
       }
 
       case actionTypes.updateCartItem: {
@@ -50,7 +54,9 @@ export const reducer = persistReducer(
         } else {
           state.Carts.push({itemId, quantity})
         }
-        return {...state}
+        const lastUpdate = Date.now()
+        const Carts = state.Carts
+        return {lastUpdate, Carts: [...Carts]}
       }
 
       default:
