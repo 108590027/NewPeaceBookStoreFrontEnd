@@ -24,7 +24,7 @@ export interface Tagstate {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Tag', whitelist: ['tags']}, // Tag存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreTag', whitelist: ['tags']}, // Tag存到localStorage持久化保存
   (state: Tagstate = initialTagstate, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setTags: {
@@ -39,6 +39,7 @@ export const reducer = persistReducer(
         if (tag) {
           state.tags.splice(state.tags.indexOf(tag), 1)
         }
+        state.tags = [...state.tags]
         return {...state}
       }
 
@@ -52,6 +53,7 @@ export const reducer = persistReducer(
             state.tags.push(o)
           }
         })
+        state.tags = [...state.tags]
         return {...state}
       }
 

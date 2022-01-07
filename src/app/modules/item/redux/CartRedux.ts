@@ -27,7 +27,7 @@ export interface CartState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Cart'}, // Cart存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreCart'}, // Cart存到localStorage持久化保存
   (state: CartState = initialCartState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.resetCart: {

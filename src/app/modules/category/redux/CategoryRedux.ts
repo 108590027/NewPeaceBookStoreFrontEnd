@@ -27,7 +27,7 @@ export interface CategoryState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Category', whitelist: ['categories']}, // Category存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreCategory', whitelist: ['categories']}, // Category存到localStorage持久化保存
   (state: CategoryState = initialCategoryState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setCategories: {

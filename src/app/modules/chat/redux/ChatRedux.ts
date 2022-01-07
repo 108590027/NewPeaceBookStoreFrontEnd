@@ -35,7 +35,7 @@ export interface ChatState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Chat', whitelist: ['chats']}, // Chat存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreChat', whitelist: ['chats']}, // Chat存到localStorage持久化保存
   (state: ChatState = initialChatState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.resetChat: {
