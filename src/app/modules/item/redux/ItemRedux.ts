@@ -26,7 +26,7 @@ export interface ItemState {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Item', whitelist: ['items']}, // Item存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreItem', whitelist: ['items']}, // Item存到localStorage持久化保存
   (state: ItemState = initialItemState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setItems: {

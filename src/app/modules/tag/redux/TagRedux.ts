@@ -24,12 +24,13 @@ export interface Tagstate {
 }
 
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-Tag', whitelist: ['tags']}, // Tag存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreTag'}, // Tag存到localStorage持久化保存
   (state: Tagstate = initialTagstate, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setTags: {
-        const tags: TagModel[] = action.payload?.tags
+        let tags: TagModel[] = action.payload?.tags
         const lastUpdate = Date.now()
+        tags = [...tags]
         return {tags, lastUpdate}
       }
 
@@ -39,11 +40,13 @@ export const reducer = persistReducer(
         if (tag) {
           state.tags.splice(state.tags.indexOf(tag), 1)
         }
-        return {...state}
+        const tags = [...state.tags]
+        const lastUpdate = Date.now()
+        return {tags, lastUpdate}
       }
 
       case actionTypes.updateTags: {
-        const tags: TagModel[] = action.payload.tags
+        let tags: TagModel[] = action.payload.tags
         tags.forEach((o) => {
           const tag = state.tags.find((i) => i.id === o.id)
           if (tag) {
@@ -52,7 +55,9 @@ export const reducer = persistReducer(
             state.tags.push(o)
           }
         })
-        return {...state}
+        tags = [...state.tags]
+        const lastUpdate = Date.now()
+        return {tags, lastUpdate}
       }
 
       default:

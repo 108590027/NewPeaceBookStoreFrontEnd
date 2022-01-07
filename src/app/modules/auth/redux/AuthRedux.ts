@@ -31,7 +31,7 @@ export interface IAuthState {
 
 // SimpleMark: 管理、保存登入中使用者狀態
 export const reducer = persistReducer(
-  {storage, key: 'v100-demo1-auth', whitelist: ['auth', 'users']}, // auth存到localStorage持久化保存
+  {storage, key: 'NewPeaceBookStoreauth', whitelist: ['auth', 'users']}, // auth存到localStorage持久化保存
   (state: IAuthState = initialAuthState, action: ActionWithPayload<any>) => {
     switch (action.type) {
       case actionTypes.setAuth: {
