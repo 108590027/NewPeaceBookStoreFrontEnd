@@ -254,6 +254,7 @@ const NewArrivalPage: FC = () => {
                   {tags.map((tag, i) => (
                     <div className='col-xl-3 col-lg-4 col-md-6 col-12' key={i}>
                       <SearchInput
+                        placeholder='請輸入Tag'
                         state={tag}
                         setState={(msg: string) => setTag(i, msg)}
                         apiFunc={(msg: string) => searchExistTag(msg)}
