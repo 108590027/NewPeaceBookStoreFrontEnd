@@ -76,106 +76,209 @@ const ShoppingCartPage: FC = () => {
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
       <div className='col-12'>
-        <h5>賣家名稱：{getUserName(CartState.Carts[0]?.itemId) || '目前沒有任何商品！'}</h5>
-        <div className='card card-xxl-stretch mb-5 mb-xxl-8'>
-          <div className='table-responsive'>
-            <table className='table table-hover table-rounded table-striped gy-4 gs-7 text-center align-middle'>
-              <thead>
-                <tr className='fw-bold fs-6 text-gray-800 border-bottom-2 border-gray-200'>
-                  <th>名稱</th>
-                  <th>數量</th>
-                  <th>單價</th>
-                  <th>總計</th>
-                  <th>操作</th>
-                </tr>
-              </thead>
-              <tbody>
-                {CartState.Carts.map((item) => (
-                  <tr key={item.itemId}>
-                    <td>{getInfo(item.itemId)?.name}</td>
-                    <td>{item.quantity}</td>
-                    <td>{getInfo(item.itemId)?.price}</td>
-                    <td>{calculatePrice(getInfo(item.itemId)?.price, item.quantity)}</td>
-                    <td>
-                      <button
-                        className='btn btn-primary btn-sm mx-2'
-                        onClick={() => openUpdateModal(item.itemId, item.quantity)}
-                      >
-                        <i className='bi bi-pencil-square fs-5'></i>修改數量
-                      </button>
-                      <button
-                        className='btn btn-danger btn-sm mx-2'
-                        onClick={() => deleteItem(item.itemId)}
-                      >
-                        <i className='bi bi-trash-fill fs-5'></i>刪除
-                      </button>
-                    </td>
-                  </tr>
-                ))}
-                <tr>
-                  <td colSpan={5} className='fs-5 text-end'>
-                    <h2>總計　${totalPrice}</h2>
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        {/* begin::修改數量的modal */}
-        <div className='modal fade' tabIndex={-1} id='updateModal'>
-          <div className='modal-dialog'>
-            <div className='modal-content'>
-              <div className='modal-header'>
-                <h5 className='modal-title'>修改商品數量</h5>
+        <div className='card card-flush py-4'>
+          {' '}
+          <div className='card-header'>
+            <div className='card-title'>
+              <h2>勾選下訂商品</h2>
+            </div>
+          </div>{' '}
+          <div className='card-body pt-0'>
+            <div className='d-flex flex-column gap-10'>
+              {' '}
+              <div>
+                {' '}
+                <label className='form-label'>將商品加入至此筆訂單</label>{' '}
+                {/* <!--begin::Selected products--> */}
                 <div
-                  className='btn btn-icon btn-sm btn-active-light-primary ms-2'
-                  data-bs-dismiss='modal'
-                  aria-label='Close'
+                  className='d-flex flex-wrap gap-4 border border-dashed rounded p-6 mb-5'
+                  id='edit_order_selected_products'
                 >
-                  <KTSVG
-                    path='/media/icons/duotune/arrows/arr061.svg'
-                    className='svg-icon svg-icon-2x'
-                  />
+                  <span className='text-muted'>已勾選之商品會顯示在此處</span>
+                </div>
+                {/* <!--begin::Selected products--> */}
+                <div className='fw-bolder fs-4'>
+                  Total Cost:$<span id='edit_order_total_price'>{totalPrice}</span>
                 </div>
               </div>
-              <div className='modal-body'>
-                <div className='row'>
-                  <div className='col-12 mt-4'>
-                    <label className='form-check-label' htmlFor={`updateQuentity`}>
-                      商品數量
-                    </label>
-                    <input
-                      id='updateQuentity'
-                      value={updateQuantity}
-                      min={1}
-                      type='number'
-                      className='form-control mt-1'
-                      onChange={(e) => setUpdateQuantity(parseInt(e.target.value))}
-                    ></input>
-                  </div>
-                </div>
+              {/* <!--end::Input group--> */}
+              {/* <!--begin::Separator--> */}
+              <div className='separator'></div>
+              {/* <!--end::Separator--> */}
+              {/* <!--begin::Search products--> */}
+              <div className='d-flex align-items-center position-relative mb-n7'>
+                {/* <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg--> */}
+                <span className='svg-icon svg-icon-1 position-absolute ms-4'>
+                  <svg
+                    xmlns='http://www.w3.org/2000/svg'
+                    width='24'
+                    height='24'
+                    viewBox='0 0 24 24'
+                    fill='none'
+                  >
+                    <rect
+                      opacity='0.5'
+                      x='17.0365'
+                      y='15.1223'
+                      width='8.15546'
+                      height='2'
+                      rx='1'
+                      transform='rotate(45 17.0365 15.1223)'
+                      fill='black'
+                    />
+                    <path
+                      d='M11 19C6.55556 19 3 15.4444 3 11C3 6.55556 6.55556 3 11 3C15.4444 3 19 6.55556 19 11C19 15.4444 15.4444 19 11 19ZM11 5C7.53333 5 5 7.53333 5 11C5 14.4667 7.53333 17 11 17C14.4667 17 17 14.4667 17 11C17 7.53333 14.4667 5 11 5Z'
+                      fill='black'
+                    />
+                  </svg>
+                </span>
+                {/* <!--end::Svg Icon--> */}
+                <input
+                  type='text'
+                  data-kt-ecommerce-edit-order-filter='search'
+                  className='form-control form-control-solid w-100 w-lg-50 ps-14'
+                  placeholder='Search Products'
+                />
               </div>
-              <div className='modal-footer'>
-                <button
-                  id='updateModalCancel'
-                  type='button'
-                  className='btn btn-light'
-                  data-bs-dismiss='modal'
-                >
-                  取消
-                </button>
-                <button type='button' className='btn btn-primary' onClick={(e) => modifyItem()}>
-                  修改
-                </button>
-              </div>
+              {/* <!--end::Search products--> */}
+              {/* <!--begin::Table--> */}
+              <table
+                className='table align-middle table-row-dashed fs-6 gy-5'
+                id='edit_order_product_table'
+              >
+                {/* <!--begin::Table head--> */}
+                <thead>
+                  <tr className='text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0'>
+                    <th className='w-25px pe-2'></th>
+                    <th className='min-w-200px'>Product</th>
+                    <th className='min-w-100px text-end pe-5'>Qty Remaining</th>
+                  </tr>
+                </thead>
+                {/* <!--end::Table head--> */}
+                {/* <!--begin::Table body--> */}
+                <tbody className='fw-bold text-gray-600'>
+                  {/* <!--begin::Table row--> */}
+                  <tr>
+                    {/* <!--begin::Checkbox--> */}
+                    <td>
+                      <div className='form-check form-check-sm form-check-custom form-check-solid'>
+                        <input className='form-check-input' type='checkbox' value='1' />
+                      </div>
+                    </td>
+                    {/* <!--end::Checkbox--> */}
+                    {/* <!--begin::Product=--> */}
+                    <td>
+                      <div
+                        className='d-flex align-items-center'
+                        data-kt-ecommerce-edit-order-filter='product'
+                        data-kt-ecommerce-edit-order-id='product_1'
+                      >
+                        {/* <!--begin::Thumbnail--> */}
+                        <a
+                          href='../../demo1/dist/apps/ecommerce/catalog/edit-product.html'
+                          className='symbol symbol-50px'
+                        >
+                          <span
+                            className='symbol-label'
+                            style={{backgroundImage: `url('/media/logos/logo.png)'`}}
+                          ></span>
+                        </a>
+                        {/* <!--end::Thumbnail--> */}
+                        <div className='ms-5'>
+                          {/* <!--begin::Title--> */}
+                          <a
+                            href='../../demo1/dist/apps/ecommerce/catalog/edit-product.html'
+                            className='text-gray-800 text-hover-primary fs-5 fw-bolder'
+                          >
+                            Product 1
+                          </a>
+                          {/* <!--end::Title--> */}
+                          <div className='d-flex flex-wrap gap-3'>
+                            {/* <!--begin::Price--> */}
+                            <div className='fw-bold fs-7'>
+                              Price: $<span data-kt-ecommerce-edit-order-filter='price'>12.00</span>
+                            </div>
+                            {/* <!--end::Price--> */}
+                            {/* <!--begin::SKU--> */}
+                            <div className='text-muted fs-7'>SKU: 04456008</div>
+                            {/* <!--end::SKU--> */}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    {/* <!--end::Product=--> */}
+                    {/* <!--begin::Qty=--> */}
+                    <td className='text-end pe-5' data-order='19'>
+                      <span className='fw-bolder ms-3'>19</span>
+                    </td>
+                    {/* <!--end::Qty=--> */}
+                  </tr>
+                  {/* <!--end::Table row--> */}
+                  {/* <!--begin::Table row--> */}
+                  <tr>
+                    {/* <!--begin::Checkbox--> */}
+                    <td>
+                      <div className='form-check form-check-sm form-check-custom form-check-solid'>
+                        <input className='form-check-input' type='checkbox' value='1' />
+                      </div>
+                    </td>
+                    {/* <!--end::Checkbox--> */}
+                    {/* <!--begin::Product=--> */}
+                    <td>
+                      <div
+                        className='d-flex align-items-center'
+                        data-kt-ecommerce-edit-order-filter='product'
+                        data-kt-ecommerce-edit-order-id='product_2'
+                      >
+                        {/* <!--begin::Thumbnail--> */}
+                        <a
+                          href='../../demo1/dist/apps/ecommerce/catalog/edit-product.html'
+                          className='symbol symbol-50px'
+                        >
+                          <span
+                            className='symbol-label'
+                            style={{backgroundImage: `url('/media/logos/logo.png)'`}}
+                          ></span>
+                        </a>
+                        {/* <!--end::Thumbnail--> */}
+                        <div className='ms-5'>
+                          {/* <!--begin::Title--> */}
+                          <a
+                            href='../../demo1/dist/apps/ecommerce/catalog/edit-product.html'
+                            className='text-gray-800 text-hover-primary fs-5 fw-bolder'
+                          >
+                            Product 2
+                          </a>
+                          {/* <!--end::Title--> */}
+                          <div className='d-flex flex-wrap gap-3'>
+                            {/* <!--begin::Price--> */}
+                            <div className='fw-bold fs-7'>
+                              Price: $
+                              <span data-kt-ecommerce-edit-order-filter='price'>158.00</span>
+                            </div>
+                            {/* <!--end::Price--> */}
+                            {/* <!--begin::SKU--> */}
+                            <div className='text-muted fs-7'>SKU: 02593008</div>
+                            {/* <!--end::SKU--> */}
+                          </div>
+                        </div>
+                      </div>
+                    </td>
+                    {/* <!--end::Product=--> */}
+                    {/* <!--begin::Qty=--> */}
+                    <td className='text-end pe-5' data-order='44'>
+                      <span className='fw-bolder ms-3'>44</span>
+                    </td>
+                    {/* <!--end::Qty=--> */}
+                  </tr>
+                  {/* <!--end::Table row--> */}
+                </tbody>
+                {/* <!--end::Table body--> */}
+              </table>
+              {/* <!--end::Table--> */}
             </div>
           </div>
-        </div>
-        {/* end::修改數量的modal */}
-        <div className='d-flex justify-content-end mt-8'>
-          <button className='btn btn-primary'>
-            <span className='indicator-label '>下訂</span>
-          </button>
+          {/* <!--end::Card header--> */}
         </div>
       </div>
     </>
