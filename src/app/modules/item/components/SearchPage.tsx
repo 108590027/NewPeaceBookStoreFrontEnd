@@ -1,5 +1,4 @@
 import React, {FC, useState} from 'react'
-import {match} from 'react-router'
 import {useLocation} from 'react-router-dom'
 import {PageTitle} from '../../../../system/layout/core'
 import {Card4} from '../../../../system/partials/content/cards/Card4'
