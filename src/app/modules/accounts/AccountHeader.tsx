@@ -96,7 +96,7 @@ const AccountHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>{user.rate ? `${user.rate}%` : '-'}</div>
+                      <div className='fs-2 fw-bolder'>{user.rate ? `${user.rate * 20}%` : '-'}</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>評價</div>
