@@ -16,9 +16,11 @@ const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const [load, setLoad] = useState(false)
+  const [checkedCount, setCheckedCount] = useState(0)
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
   var items = [] as ItemModel[]
+  var checkedItems = [] as ItemModel[]
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
@@ -52,6 +54,16 @@ const ShoppingCartPage: FC = () => {
     let result = price * quantity
     totalPrice += result
     return result
+  }
+
+  const checkItem = (item: ItemModel, checked: boolean) => {
+    if (item && checked) {
+      checkedItems.push(item)
+      setCheckedCount(checkedCount + 1)
+    } else if (item && !checked) {
+      checkedItems.splice(checkedItems.indexOf(item), 1)
+      setCheckedCount(checkedCount - 1)
+    }
   }
 
   const openUpdateModal = (id: number, quantity: number) => {
@@ -103,7 +115,7 @@ const ShoppingCartPage: FC = () => {
               <h2>勾選下訂商品</h2>
             </div>
           </div>{' '}
-          <div className='card-body pt-0'>
+          <div className='card-body pt-0 pb-1'>
             <div className='d-flex flex-column gap-10'>
               {' '}
               <div>
@@ -114,7 +126,37 @@ const ShoppingCartPage: FC = () => {
                   className='d-flex flex-wrap gap-4 border border-dashed rounded p-6 mb-5'
                   id='edit_order_selected_products'
                 >
-                  <span className='text-muted'>已勾選之商品會顯示在此處</span>
+                  {checkedCount === 0 ? (
+                    <span className='text-muted'>已勾選之商品會顯示在此處</span>
+                  ) : (
+                    checkedItems.map((item) => (
+                      <div className='d-flex align-items-center'>
+                        <img
+                          className='symbol symbol-50px '
+                          src={
+                            item.images[0]
+                              ? item.images[0].photo
+                              : '/media/icons/duotune/ecommerce/ecm005.svg'
+                          }
+                          alt=''
+                          height='auto'
+                          width='50px'
+                          background-position='center'
+                        ></img>
+
+                        <div className='ms-5'>
+                          <span className='text-gray-800 fs-5 fw-bolder'>{item.name}</span>
+                          <div className='d-flex flex-wrap gap-3'>
+                            <div className='text-muted fs-7'>{item.owner.name}</div>
+                            <div className='fw-bold fs-7'>
+                              Price: $
+                              <span data-kt-ecommerce-edit-order-filter='price'>{item.price}</span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    ))
+                  )}
                 </div>
                 {/* <!--begin::Selected products--> */}
                 <div className='fw-bolder fs-4'>
@@ -162,102 +204,129 @@ const ShoppingCartPage: FC = () => {
               </div>
               {/* <!--end::Search products--> */}
               {/* <!--begin::Table--> */}
-              <table
-                className='table align-middle table-row-dashed fs-6 gy-5'
-                id='edit_order_product_table'
-              >
-                {/* <!--begin::Table head--> */}
-                <thead>
-                  <tr className='text-start text-gray-400 fw-bolder fs-7 gs-0'>
-                    <th className='w-25px pe-2'></th>
-                    <th className=''>產品資訊</th>
-                    <th className='min-w-70px text-center'>購買數量</th>
-                    <th className='min-w-70px text-center'>剩餘數量</th>
-                    <th className='min-w-150px text-center'>操作</th>
-                  </tr>
-                </thead>
-                {/* <!--end::Table head--> */}
-                {/* <!--begin::Table body--> */}
-                <tbody className='fw-bold text-gray-600'>
-                  {items.map((item) => (
-                    <tr key={item.id}>
-                      <td>
-                        <div className='form-check form-check-sm form-check-custom form-check-solid'>
-                          <input className='form-check-input' type='checkbox' value='1' />
-                        </div>
-                      </td>
-                      {/* <!--begin::Product=--> */}
-                      <td>
-                        <div
-                          className='d-flex align-items-center'
-                          data-kt-ecommerce-edit-order-filter='product'
-                          data-kt-ecommerce-edit-order-id={item.id}
+              <div className='dataTables_wrapper dt-bootstrap4 no-footer'>
+                <div className='table-responsive'>
+                  <div className='dataTables_scroll'>
+                    <div
+                      className='dataTables_scrollBody'
+                      style={{
+                        position: 'relative',
+                        overflow: 'auto',
+                        maxHeight: '400px',
+                        width: '100%',
+                      }}
+                    >
+                      <table
+                        className='table align-middle table-row-dashed fs-6 gy-5'
+                        id='edit_order_product_table'
+                      >
+                        {/* <!--begin::Table head--> */}
+                        <thead
+                          style={{
+                            position: 'sticky',
+                            backgroundColor: 'white',
+                            zIndex: '1',
+                            top: '0',
+                            boxShadow: 'inset 1px 1px #ffffff, 0 1px #000000',
+                          }}
                         >
-                          {/* <!--begin::Thumbnail--> */}
-                          <img
-                            className='symbol symbol-50px '
-                            src={
-                              item.images[0]
-                                ? item.images[0].photo
-                                : '/media/icons/duotune/ecommerce/ecm005.svg'
-                            }
-                            alt=''
-                            height='auto'
-                            width='50px'
-                            background-position='center'
-                          ></img>
-
-                          {/* <!--end::Thumbnail--> */}
-                          <div className='ms-5'>
-                            {/* <!--begin::Title--> */}
-                            {/* text-hover-primary */}
-                            <span className='text-gray-800 fs-5 fw-bolder'>{item.name}</span>
-                            {/* <!--end::Title--> */}
-                            <div className='d-flex flex-wrap gap-3'>
-                              {/* <!--begin::SKU--> */}
-                              <div className='text-muted fs-7'>{item.owner.name}</div>
-                              {/* <!--end::SKU--> */}
-                              {/* <!--begin::Price--> */}
-                              <div className='fw-bold fs-7'>
-                                Price: $
-                                <span data-kt-ecommerce-edit-order-filter='price'>
-                                  {item.price}
-                                </span>
-                              </div>
-                              {/* <!--end::Price--> */}
-                            </div>
-                          </div>
-                        </div>
-                      </td>
-                      {/* <!--end::Product=--> */}
-                      <td className='text-center' data-order='19'>
-                        <span className='fw-bolder '>{getBuyQuantity(item.id)}</span>
-                      </td>
-                      {/* <!--begin::Qty=--> */}
-                      <td className='text-center' data-order='19'>
-                        <span className='fw-bolder '>{item.quantity}</span>
-                      </td>
-                      {/* <!--end::Qty=--> */}
-                      <td className='text-center'>
-                        <button
-                          className='btn btn-primary btn-sm mx-2'
-                          onClick={() => openUpdateModal(item.id, getBuyQuantity(item.id))}
-                        >
-                          <i className='bi bi-pencil-square fs-5'></i>修改數量
-                        </button>
-                        <button
-                          className='btn btn-danger btn-sm mx-2'
-                          onClick={() => deleteItem(item)}
-                        >
-                          <i className='bi bi-trash-fill fs-5'></i>刪除
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-                {/* <!--end::Table body--> */}
-              </table>
-              {/* <!--end::Table--> */}
+                          <tr className='text-start text-gray-400 fw-bolder fs-7 gs-0'>
+                            <th className='w-25px pe-2'></th>
+                            <th className=''>產品資訊</th>
+                            <th className='min-w-70px text-center'>購買數量</th>
+                            <th className='min-w-70px text-center'>剩餘數量</th>
+                            <th className='min-w-150px text-center'>操作</th>
+                          </tr>
+                        </thead>
+                        {/* <!--end::Table head--> */}
+                        {/* <!--begin::Table body--> */}
+                        <tbody className='fw-bold text-gray-600'>
+                          {items.map((item) => (
+                            <tr key={item.id}>
+                              <td>
+                                <div className='form-check form-check-sm form-check-custom form-check-solid'>
+                                  <input
+                                    className='form-check-input'
+                                    type='checkbox'
+                                    value='1'
+                                    onChange={(e) => checkItem(item, e.target.checked)}
+                                  />
+                                </div>
+                              </td>
+                              {/* <!--begin::Product=--> */}
+                              <td>
+                                <div
+                                  className='d-flex align-items-center'
+                                  data-kt-ecommerce-edit-order-filter='product'
+                                  data-kt-ecommerce-edit-order-id={item.id}
+                                >
+                                  {/* <!--begin::Thumbnail--> */}
+                                  <img
+                                    className='symbol symbol-50px '
+                                    src={
+                                      item.images[0]
+                                        ? item.images[0].photo
+                                        : '/media/icons/duotune/ecommerce/ecm005.svg'
+                                    }
+                                    alt=''
+                                    height='auto'
+                                    width='50px'
+                                    background-position='center'
+                                  ></img>
+                                  {/* <!--end::Thumbnail--> */}
+                                  <div className='ms-5'>
+                                    {/* <!--begin::Title--> */}
+                                    <span className='text-gray-800 fs-5 fw-bolder'>
+                                      {item.name}
+                                    </span>
+                                    {/* <!--end::Title--> */}
+                                    <div className='d-flex flex-wrap gap-3'>
+                                      {/* <!--begin::SKU--> */}
+                                      <div className='text-muted fs-7'>{item.owner.name}</div>
+                                      {/* <!--end::SKU--> */}
+                                      {/* <!--begin::Price--> */}
+                                      <div className='fw-bold fs-7'>
+                                        Price: $
+                                        <span data-kt-ecommerce-edit-order-filter='price'>
+                                          {item.price}
+                                        </span>
+                                      </div>
+                                      {/* <!--end::Price--> */}
+                                    </div>
+                                  </div>
+                                </div>
+                              </td>
+                              {/* <!--end::Product=--> */}
+                              <td className='text-center' data-order='19'>
+                                <span className='fw-bolder '>{getBuyQuantity(item.id)}</span>
+                              </td>
+                              <td className='text-center' data-order='19'>
+                                <span className='fw-bolder '>{item.quantity}</span>
+                              </td>
+                              <td className='text-center'>
+                                <button
+                                  className='btn btn-primary btn-sm mx-2'
+                                  onClick={() => openUpdateModal(item.id, getBuyQuantity(item.id))}
+                                >
+                                  <i className='bi bi-pencil-square fs-5'></i>修改數量
+                                </button>
+                                <button
+                                  className='btn btn-danger btn-sm mx-2'
+                                  onClick={() => deleteItem(item)}
+                                >
+                                  <i className='bi bi-trash-fill fs-5'></i>刪除
+                                </button>
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                        {/* <!--end::Table body--> */}
+                      </table>
+                      {/* <!--end::Table--> */}
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           {/* <!--end::Card header--> */}
