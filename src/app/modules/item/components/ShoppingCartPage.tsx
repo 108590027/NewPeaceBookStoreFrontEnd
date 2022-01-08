@@ -17,27 +17,28 @@ const ShoppingCartPage: FC = () => {
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const [load, setLoad] = useState(false)
   const [checkedCount, setCheckedCount] = useState(0)
+  const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
-  var items = [] as ItemModel[]
-  var checkedItems = [] as ItemModel[]
+  var CartItems = [] as ItemModel[]
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
-  }
-  var totalPrice = 0
-
-  const getUserName = (itemId: number) => {
-    let item = itemState.items.find((item) => item.id === itemId)
-    return item?.owner.name
   }
 
   const getInfo = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
     if (item) {
-      items.push(item)
+      CartItems.push(item)
     }
   }
+
+  const sortCartItems = () => {
+    CartItems.sort((a: ItemModel, b: ItemModel) => {
+      return a.owner.id - b.owner.id
+    })
+  }
+
   const getBuyQuantity = (itemId: number) => {
     let item = CartState.Carts.find((element) => element.itemId === itemId)
     if (item) {
@@ -52,16 +53,28 @@ const ShoppingCartPage: FC = () => {
       price = 0
     }
     let result = price * quantity
-    totalPrice += result
     return result
   }
 
+  const getTotalPrice = () => {
+    let totalPrice = 0
+    checkedItems.map((item) => {
+      let buyQuantity = getBuyQuantity(item.id)
+      totalPrice += calculatePrice(item.price, buyQuantity)
+    })
+    return totalPrice
+  }
+
   const checkItem = (item: ItemModel, checked: boolean) => {
+    let items = checkedItems
     if (item && checked) {
-      checkedItems.push(item)
+      //if(checkedCount != 0 && )
+      items.push(item)
+      setCheckedItems(items)
       setCheckedCount(checkedCount + 1)
     } else if (item && !checked) {
-      checkedItems.splice(checkedItems.indexOf(item), 1)
+      items.splice(checkedItems.indexOf(item), 1)
+      setCheckedItems(items)
       setCheckedCount(checkedCount - 1)
     }
   }
@@ -107,20 +120,18 @@ const ShoppingCartPage: FC = () => {
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
       {CartState.Carts.map((item) => getInfo(item.itemId))}
+      {sortCartItems()}
       <div className='col-12'>
         <div className='card card-flush py-4'>
-          {' '}
           <div className='card-header'>
             <div className='card-title'>
               <h2>勾選下訂商品</h2>
             </div>
-          </div>{' '}
+          </div>
           <div className='card-body pt-0 pb-1'>
             <div className='d-flex flex-column gap-10'>
-              {' '}
               <div>
-                {' '}
-                <label className='form-label'>將商品加入至此筆訂單</label>{' '}
+                <label className='form-label'>將商品加入至此筆訂單</label>
                 {/* <!--begin::Selected products--> */}
                 <div
                   className='d-flex flex-wrap gap-4 border border-dashed rounded p-6 mb-5'
@@ -130,7 +141,7 @@ const ShoppingCartPage: FC = () => {
                     <span className='text-muted'>已勾選之商品會顯示在此處</span>
                   ) : (
                     checkedItems.map((item) => (
-                      <div className='d-flex align-items-center'>
+                      <div className='d-flex align-items-center border border-dashed rounded p-3 bg-white'>
                         <img
                           className='symbol symbol-50px '
                           src={
@@ -149,8 +160,12 @@ const ShoppingCartPage: FC = () => {
                           <div className='d-flex flex-wrap gap-3'>
                             <div className='text-muted fs-7'>{item.owner.name}</div>
                             <div className='fw-bold fs-7'>
-                              Price: $
+                              單價: $
                               <span data-kt-ecommerce-edit-order-filter='price'>{item.price}</span>
+                              <br />
+                              <span data-kt-ecommerce-edit-order-filter='quantity'>
+                                購買數量：{getBuyQuantity(item.id)}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -160,7 +175,7 @@ const ShoppingCartPage: FC = () => {
                 </div>
                 {/* <!--begin::Selected products--> */}
                 <div className='fw-bolder fs-4'>
-                  訂單總金額:　$<span id='edit_order_total_price'>{totalPrice}</span>
+                  訂單總金額:　$<span id='edit_order_total_price'>{getTotalPrice()}</span>
                 </div>
               </div>
               {/* <!--end::Input group--> */}
@@ -241,7 +256,7 @@ const ShoppingCartPage: FC = () => {
                         {/* <!--end::Table head--> */}
                         {/* <!--begin::Table body--> */}
                         <tbody className='fw-bold text-gray-600'>
-                          {items.map((item) => (
+                          {CartItems.map((item) => (
                             <tr key={item.id}>
                               <td>
                                 <div className='form-check form-check-sm form-check-custom form-check-solid'>
@@ -286,7 +301,7 @@ const ShoppingCartPage: FC = () => {
                                       {/* <!--end::SKU--> */}
                                       {/* <!--begin::Price--> */}
                                       <div className='fw-bold fs-7'>
-                                        Price: $
+                                        單價: $
                                         <span data-kt-ecommerce-edit-order-filter='price'>
                                           {item.price}
                                         </span>
