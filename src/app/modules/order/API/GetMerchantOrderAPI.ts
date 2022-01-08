@@ -11,7 +11,7 @@ export type Response = {
 }
 
 export const API_URL = (orderId: number) =>
-  `${import.meta.env.VITE_API_URL}/auth/marchant/order/${orderId}`
+  `${import.meta.env.VITE_API_URL}/auth/merchant/order/${orderId}`
 
 // 取得商店單筆訂單詳細資訊
 export default async function getMerchantOrderAPI(
