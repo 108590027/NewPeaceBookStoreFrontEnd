@@ -25,7 +25,6 @@ const ShoppingCartPage: FC = () => {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
   }
-  var totalPrice = 0
 
   const getUserName = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
@@ -52,8 +51,16 @@ const ShoppingCartPage: FC = () => {
       price = 0
     }
     let result = price * quantity
-    totalPrice += result
     return result
+  }
+
+  const getTotalPrice = () => {
+    let totalPrice = 0
+    checkedItems.map((item) => {
+      let buyQuantity = getBuyQuantity(item.id)
+      totalPrice += calculatePrice(item.price, buyQuantity)
+    })
+    return totalPrice
   }
 
   const checkItem = (item: ItemModel, checked: boolean) => {
@@ -149,8 +156,12 @@ const ShoppingCartPage: FC = () => {
                           <div className='d-flex flex-wrap gap-3'>
                             <div className='text-muted fs-7'>{item.owner.name}</div>
                             <div className='fw-bold fs-7'>
-                              Price: $
+                              單價: $
                               <span data-kt-ecommerce-edit-order-filter='price'>{item.price}</span>
+                              <br />
+                              <span data-kt-ecommerce-edit-order-filter='quantity'>
+                                購買數量：{getBuyQuantity(item.id)}
+                              </span>
                             </div>
                           </div>
                         </div>
@@ -160,7 +171,7 @@ const ShoppingCartPage: FC = () => {
                 </div>
                 {/* <!--begin::Selected products--> */}
                 <div className='fw-bolder fs-4'>
-                  訂單總金額:　$<span id='edit_order_total_price'>{totalPrice}</span>
+                  訂單總金額:　$<span id='edit_order_total_price'>{getTotalPrice()}</span>
                 </div>
               </div>
               {/* <!--end::Input group--> */}
@@ -286,7 +297,7 @@ const ShoppingCartPage: FC = () => {
                                       {/* <!--end::SKU--> */}
                                       {/* <!--begin::Price--> */}
                                       <div className='fw-bold fs-7'>
-                                        Price: $
+                                        單價: $
                                         <span data-kt-ecommerce-edit-order-filter='price'>
                                           {item.price}
                                         </span>
