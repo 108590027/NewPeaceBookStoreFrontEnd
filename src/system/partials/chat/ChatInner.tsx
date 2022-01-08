@@ -4,6 +4,7 @@ import clsx from 'clsx'
 import {UserModel} from '../../../app/modules/auth/redux/AuthModel'
 import ChatPath from '../../../app/modules/websocket/Path/ChatPath'
 import {getTimeElapsedString} from '../../../app/utils/DateUtil'
+import {Link} from 'react-router-dom'
 
 type Props = {
   auth: UserModel
@@ -76,12 +77,12 @@ const ChatInner: FC<Props> = ({auth, user, messages}) => {
                         </span>
                       </div>
                       <div className='ms-3'>
-                        <a
-                          href='#'
+                        <Link
+                          to={`/user/${user.id}`}
                           className='fs-5 fw-bolder text-gray-900 text-hover-primary me-1'
                         >
                           {user.name}
-                        </a>
+                        </Link>
                         <span className='text-muted fs-7 mb-1'>
                           {getTimeElapsedString(message.time)}
                         </span>
@@ -93,12 +94,9 @@ const ChatInner: FC<Props> = ({auth, user, messages}) => {
                         <span className='text-muted fs-7 mb-1'>
                           {getTimeElapsedString(message.time)}
                         </span>
-                        <a
-                          href='#'
-                          className='fs-5 fw-bolder text-gray-900 text-hover-primary ms-1'
-                        >
+                        <span className='fs-5 fw-bolder text-gray-900 text-hover-primary ms-1'>
                           你
-                        </a>
+                        </span>
                       </div>
                       <div className='symbol  symbol-35px symbol-circle '>
                         <span className='symbol-label symbol-circle bg-light-danger text-danger fs-3 fw-bolder'>
