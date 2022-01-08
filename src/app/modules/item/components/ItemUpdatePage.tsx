@@ -1,80 +1,57 @@
 import React, {FC, useState} from 'react'
-import {useDropzone} from 'react-dropzone'
 import {useSelector} from 'react-redux'
 import {match, useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
+import {ItemState} from '../../item/redux/ItemRedux'
+import {IAuthState} from '../../auth/redux/AuthRedux'
 import {RootState} from '../../../../setup'
 import {PageTitle} from '../../../../system/layout/core'
-import SearchInput from '../../../utils/SearchInput'
 import getCategoriesAPI from '../../category/API/GetCategoriesAPI'
 import {CategoryState} from '../../category/redux/CategoryRedux'
-import searchTagsAPI from '../../tag/API/SearchTagsAPI'
-import createItemAPI from '../API/CreateItemAPI'
+import updateItemAPI from '../API/UpdateItemAPI'
+import getItemAPI from '../API/GetItemAPI'
 
 interface Props {
   match: match<{id: string}>
 }
 
 const ItemUpdatePage: FC<Props> = (props) => {
-  const history = useHistory()
-  const categoryState: CategoryState = useSelector((state: RootState) => state.category)
-  const onDrop = (acceptedFiles: any[]) => {
-    const preImages: string[] = []
-    let i = 0
-    acceptedFiles.forEach((file: any) => {
-      const reader = new FileReader()
-      reader.onload = (e) => {
-        i++
-        const img = e.target?.result
-        if (img) {
-          preImages.push(img as string)
-          console.log(images)
-        }
-        if (i >= acceptedFiles.length) {
-          setImages([...preImages])
-        }
-      }
-      reader.readAsDataURL(file)
-    })
-  }
-  const {getRootProps, getInputProps} = useDropzone({onDrop})
   const [load, setLoad] = useState(false)
   const [onSubmit, setOnSubmit] = useState(false)
-  const [images, setImages] = useState([] as string[])
+  const [currentId, setCurrentId] = useState(0)
   const [createName, setCreateName] = useState('')
   const [createDescription, setCreateDescription] = useState('')
   const [createPrice, setCreatePrice] = useState(0)
   const [createQuantity, setCreateQuantity] = useState(0)
   const [createISBN, setCreateISBN] = useState('')
   const [createDepartment, setCreateDepartment] = useState(0)
-  const [tags, setTags] = useState([''] as string[])
-  const removeImage = (index: number) => {
-    images.splice(index, 1)
-    setImages([...images])
+  const history = useHistory()
+  const categoryState: CategoryState = useSelector((state: RootState) => state.category)
+  const userState: IAuthState = useSelector((state: RootState) => state.auth)
+  const itemState: ItemState = useSelector((state: RootState) => state.item)
+  const item = itemState.items.find((item) => item.id === currentId)
+  console.log(load, currentId)
+
+  if (parseInt(props.match.params.id) !== currentId) {
+    // 當route的分類ID變動時，必須進行更新
+    setCurrentId(parseInt(props.match.params.id))
+    ;(async () => {
+      const result = await getItemAPI(parseInt(props.match.params.id))
+      if ('id' in result) {
+        setCreateName(result.name)
+        setCreateDescription(result.name)
+        setCreatePrice(result.price)
+        setCreateQuantity(result.quantity)
+        setCreateISBN(result.ISBN)
+        setCreateDepartment(result.category.id)
+      }
+    })()
   }
-  const setTag = (i: number, name: string) => {
-    tags[i] = name
-    setTags([...tags])
+
+  if (!load && currentId !== 0) {
+    setLoad(true)
   }
-  const addTag = () => {
-    tags.push('')
-    setTags([...tags])
-  }
-  const searchExistTag = async (name: string): Promise<string[]> => {
-    if (name === '') {
-      return []
-    }
-    const tags = await searchTagsAPI(name)
-    const tagNames: string[] = []
-    if ('message' in tags) {
-      return tagNames
-    } else {
-      tags.forEach((tag) => {
-        tagNames.push(tag.name)
-      })
-      return tagNames
-    }
-  }
+
   const createItem = () => {
     if (createPrice <= 0) {
       toast.warn('輸入的價格異常')
@@ -88,29 +65,23 @@ const ItemUpdatePage: FC<Props> = (props) => {
       toast.warn('請輸入名稱等資訊！')
       return
     }
-    tags.forEach((tag) => {
-      if (tag === '') {
-        const index = tags.indexOf(tag)
-        tags.splice(index, 1)
-      }
-    })
+
     setOnSubmit(true)
     setTimeout(async () => {
-      const result = await createItemAPI(
+      const result = await updateItemAPI(
+        currentId,
         createName,
         createDescription,
         createISBN,
         createDepartment,
         createPrice,
-        createQuantity,
-        images,
-        tags
+        createQuantity
       )
       if ('id' in result) {
-        toast.success('建立成功！')
+        toast.success('修改成功！')
         history.push(`/item/${result.id}`)
       } else {
-        toast.error(`建立失敗：${result.message}`)
+        toast.error(`修改失敗：${result.message}`)
       }
       setOnSubmit(false)
     }, 500)
@@ -136,50 +107,6 @@ const ItemUpdatePage: FC<Props> = (props) => {
             data-kt-swapper-parent="{default: '#kt_content_container'}"
             className='page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0'
           ></div>
-          <div className='card card-flush py-4'>
-            <div className='card-header'>
-              <div className='card-title'>
-                <h2 className='required'>商品圖片</h2>
-              </div>
-            </div>
-            <div className='card-body pt-0'>
-              <div className='fv-row mb-2'>
-                <div className='dropzone' {...getRootProps()}>
-                  <input {...getInputProps()} />
-                  <div className='dz-message needsclick d-flex'>
-                    <i className='bi bi-file-earmark-arrow-up text-primary fs-3x'></i>
-                    <div className='ms-4'>
-                      <h3 className='fs-5 fw-bolder text-gray-900 my-3'>
-                        將圖片拖移到此或點擊此處上傳照片
-                      </h3>
-                    </div>
-                  </div>
-                </div>
-                <div className='d-flex'>
-                  {images.map((image, i) => (
-                    <div>
-                      <img src={image} style={{maxWidth: '175px'}} alt='' />
-                      <button
-                        style={{
-                          position: 'relative',
-                          right: '10px',
-                          verticalAlign: 'top',
-                          borderRadius: '50%',
-                          border: '10px',
-                          backgroundColor: '#cccccc',
-                          color: '#000000',
-                        }}
-                        onClick={() => removeImage(i)}
-                      >
-                        X
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </div>
-          </div>
-          {/* end::Media */}
           {/* begin::Product */}
           <div className='card card-flush py-4'>
             <div className='card-header'>
@@ -258,26 +185,6 @@ const ItemUpdatePage: FC<Props> = (props) => {
                   )}
                 </select>
               </div>
-              <div className='mb-10 fv-row'>
-                <label className='form-label d-block'>商品標籤</label>
-                <div className='row'>
-                  {tags.map((tag, i) => (
-                    <div className='col-xl-3 col-lg-4 col-md-6 col-12' key={i}>
-                      <SearchInput
-                        placeholder='請輸入Tag'
-                        state={tag}
-                        setState={(msg: string) => setTag(i, msg)}
-                        apiFunc={(msg: string) => searchExistTag(msg)}
-                      />
-                    </div>
-                  ))}
-                  <div className='col-xl-3 col-lg-4 col-md-6 col-12'>
-                    <button className='w-100 btn btn-primary' onClick={() => addTag()}>
-                      添加標籤
-                    </button>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
           <div className='d-flex justify-content-end'>
@@ -288,7 +195,7 @@ const ItemUpdatePage: FC<Props> = (props) => {
                   <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
                 </span>
               ) : (
-                <span className='indicator-label'>建立商品</span>
+                <span className='indicator-label'>修改商品</span>
               )}
             </button>
           </div>

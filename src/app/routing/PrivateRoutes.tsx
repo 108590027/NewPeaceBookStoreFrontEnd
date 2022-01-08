@@ -1,7 +1,6 @@
 import React, {Suspense, lazy} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {FallbackView} from '../../system/partials'
-import ItemUpdatePage from '../modules/item/components/ItemUpdatePage'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {MenuTestPage} from '../pages/MenuTestPage'
 
@@ -27,6 +26,7 @@ export function PrivateRoutes() {
   const NewArrivalPage = lazy(() => import('../modules/item/NewArrivalPage'))
   const SearchPage = lazy(() => import('../modules/item/components/SearchPage'))
   const ItemPage = lazy(() => import('../modules/item/components/ItemPage'))
+  const ItemUpdatePage = lazy(() => import('../modules/item/components/ItemUpdatePage'))
   const TagPage = lazy(() => import('../modules/tag/components/TagPage'))
   const ShoppingCartPage = lazy(() => import('../modules/item/components/ShoppingCartPage'))
 
@@ -51,8 +51,8 @@ export function PrivateRoutes() {
         <Route path='/item/shoppingcart' component={ShoppingCartPage} />
         <Route path='/item/newarrival' component={NewArrivalPage} />
         <Route path='/item/search' component={SearchPage} />
+        <Route path='/item/:id/update' component={ItemUpdatePage} />
         <Route path='/item/:id' component={ItemPage} />
-        <Route path='/item/update/:id' component={ItemUpdatePage} />
 
         <Route path='/tag/:id' component={TagPage} />
 
