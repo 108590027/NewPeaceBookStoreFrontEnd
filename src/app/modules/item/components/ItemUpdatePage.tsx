@@ -30,7 +30,11 @@ const ItemUpdatePage: FC<Props> = (props) => {
   const userState: IAuthState = useSelector((state: RootState) => state.auth)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const item = itemState.items.find((item) => item.id === currentId)
-  console.log(load, currentId)
+  if (item) {
+    if (userState.auth?.user?.id !== item?.owner.id) {
+      history.push(`/item/${item.id}`)
+    }
+  }
 
   if (parseInt(props.match.params.id) !== currentId) {
     // 當route的分類ID變動時，必須進行更新
