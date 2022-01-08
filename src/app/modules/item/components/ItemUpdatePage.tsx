@@ -32,7 +32,9 @@ const ItemUpdatePage: FC<Props> = (props) => {
   const item = itemState.items.find((item) => item.id === currentId)
   if (item) {
     if (userState.auth?.user?.id !== item?.owner.id) {
-      history.push(`/item/${item.id}`)
+      if (userState.auth?.user?.role !== 1) {
+        history.push(`/item/${item.id}`)
+      }
     }
   }
 
