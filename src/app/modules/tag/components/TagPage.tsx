@@ -9,7 +9,7 @@ import {ItemState} from '../../item/redux/ItemRedux'
 import {TagModel} from '../redux/TagModel'
 import getTagAPI from '../API/GetTagAPI'
 import getItemsByTagAPI from '../../item/API/GetItemsByTagAPI'
-import { toast } from 'react-toastify'
+import {toast} from 'react-toastify'
 
 interface Props {
   match: match<{id: string}>
@@ -45,7 +45,7 @@ const TagPage: FC<Props> = (props) => {
 
   return (
     <>
-      <PageTitle breadcrumbs={[]}>{`${tag?.name}`}</PageTitle>
+      <PageTitle breadcrumbs={[]}>{`${tag ? tag.name : ''}`}</PageTitle>
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {items.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
