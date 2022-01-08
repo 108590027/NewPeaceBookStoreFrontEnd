@@ -120,7 +120,7 @@ const ItemPage: FC<Props> = (props) => {
                   </Link>
                 )
             )}
-            {authId === userId ?? (
+            {authId === userId || (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
               </button>
