@@ -306,7 +306,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                             <tr key={orderItem.id}>
                               <td>
                                 <div className='d-flex align-items-center'>
-                                  <Link to='#' className='symbol symbol-50px'>
+                                  <Link to={`/item/${orderItem.item.id}`} className='symbol symbol-50px'>
                                     <img
                                       alt={orderItem.item.name}
                                       className='symbol-label'
@@ -321,7 +321,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                                   </Link>
                                   <div className='ms-5'>
                                     <Link
-                                      to='#'
+                                      to={`/item/${orderItem.item.id}`}
                                       className='fw-bolder text-gray-600 text-hover-primary'
                                     >
                                       {orderItem.item.name}
