@@ -137,6 +137,8 @@ const ItemPage: FC<Props> = (props) => {
               type='number'
               className='form-control form-control-solid'
               value={itemCount}
+              max={item?.quantity as number}
+              min='0'
               onChange={(e) => setItemCount(parseInt(e.target.value))}
             />
             <br></br>
