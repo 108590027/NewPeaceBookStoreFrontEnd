@@ -58,26 +58,25 @@ export const reducer = persistReducer(
         const id: number = item.id
         const oriItem = state.items.find((i) => i.id === id)
         if (oriItem) {
-          state.items[state.items.indexOf(item)] = {...item}
-        } else {
-          state.items.push(item)
+          state.items.splice(state.items.indexOf(oriItem), 1)
         }
+        state.items.push(item)
         state.items = [...state.items]
         return {...state}
       }
 
       case actionTypes.updateItems: {
-        const items: ItemModel[] = action.payload.items
+        let items: ItemModel[] = action.payload.items
         items.forEach((item) => {
-          const Item = state.items.find((i) => i.id === item.id)
-          if (Item) {
-            state.items[state.items.indexOf(item)] = {...item}
-          } else {
-            state.items.push(item)
+          const oriItem = state.items.find((i) => i.id === item.id)
+          if (oriItem) {
+            state.items.splice(state.items.indexOf(oriItem), 1)
           }
+          state.items.push(item)
         })
-        state.items = [...state.items]
-        return {...state}
+        items = [...state.items]
+        const lastUpdate = Date.now()
+        return {items, lastUpdate}
       }
 
       default:

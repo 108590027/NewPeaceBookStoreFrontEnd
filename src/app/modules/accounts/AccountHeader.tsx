@@ -52,7 +52,7 @@ const AccountHeader: React.FC = () => {
 
                 <div className='d-flex flex-wrap fw-bold fs-6 mb-4 pe-2'>
                   <a
-                    href='#'
+                    href={`/category/${major?.id}`}
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
                     <KTSVG
@@ -62,7 +62,7 @@ const AccountHeader: React.FC = () => {
                     {major?.name}
                   </a>
                   <a
-                    href='#'
+                    href={`mailto:${user.email}`}
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
                     <KTSVG

@@ -46,6 +46,18 @@ const ItemPage: FC<Props> = (props) => {
   const history = useHistory()
   const authId = userState.auth?.user?.id as number
   const userId = item?.owner.id as number
+  console.log(item)
+
+  if (parseInt(props.match.params.id) !== currentId) {
+    // 當route的分類ID變動時，必須進行更新
+    setLoad(false)
+    setCurrentId(parseInt(props.match.params.id))
+  }
+  console.log(load, currentId)
+  if (!load && currentId !== 0) {
+    setLoad(true)
+    getItemAPI(currentId)
+  }
 
   const redirectToChat = () => {
     if (authId === userId) {
@@ -54,17 +66,6 @@ const ItemPage: FC<Props> = (props) => {
     dispatch(ChatRedux.actions.newChat(authId, userId))
     history.push(`/chat#${userId}`)
   }
-
-  if (parseInt(props.match.params.id) !== currentId) {
-    // 當route的分類ID變動時，必須進行更新
-    setLoad(false)
-    setCurrentId(parseInt(props.match.params.id))
-  }
-  if (!load && currentId !== 0) {
-    setLoad(true)
-    getItemAPI(currentId)
-  }
-
   const addToCart = async (quantity: number) => {
     if (itemCount === 0) {
       toast.warn('請選擇商品數量')
@@ -125,9 +126,9 @@ const ItemPage: FC<Props> = (props) => {
             )}
             <br></br>
             {authId === userId ? (
-              <button className='col-auto btn btn-lg btn-primary' onClick={() => redirectToChat()}>
+              <Link to={`/item/${item?.id}/update`} className='col-auto btn btn-lg btn-primary'>
                 編輯商品
-              </button>
+              </Link>
             ) : (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
@@ -138,6 +139,7 @@ const ItemPage: FC<Props> = (props) => {
           <div className='card-body border-top p-9'>
             <div className='row'>
               <h3 className='col-auto'>數量</h3>
+
               <h5 className='col-auto text-muted'>剩餘數量：{item?.quantity}個</h5>
             </div>
 

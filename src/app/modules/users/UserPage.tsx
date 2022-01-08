@@ -4,9 +4,6 @@ import {PageLink, PageTitle} from '../../../system/layout/core'
 import {UserHeader} from './UserHeader'
 import {Comments} from './components/settings/Comments'
 import {Items} from './components/settings/Items'
-import {IAuthState} from '../auth/redux/AuthRedux'
-import {useSelector} from 'react-redux'
-import {RootState} from '../../../setup'
 import {UserModel} from '../auth/redux/AuthModel'
 import getUserAPI from '../auth/API/GetUserAPI'
 
@@ -29,20 +26,14 @@ interface Props {
   match: match<{id: string}>
 }
 const UserPage: React.FC<Props> = ({match}) => {
-  const userState: IAuthState = useSelector((state: RootState) => state.auth)
   const [user, setUser] = useState<UserModel>()
   if (user?.id !== parseInt(match.params.id)) {
-    const u = userState.users.find((u) => u.id === parseInt(match.params.id))
-    if (!u) {
-      ;(async () => {
-        const data = await getUserAPI(parseInt(match.params.id))
-        if ('id' in data) {
-          setUser(data)
-        }
-      })()
-    } else {
-      setUser(u)
-    }
+    ;(async () => {
+      const data = await getUserAPI(parseInt(match.params.id))
+      if ('id' in data) {
+        setUser(data)
+      }
+    })()
   }
 
   return (

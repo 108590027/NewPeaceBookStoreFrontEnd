@@ -1,12 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../../setup'
-import {
-  ChartsWidget1,
-  TablesWidget1,
-  ListsWidget5,
-  TablesWidget5,
-} from '../../../../system/partials/widgets'
 import {UserModel} from '../../auth/redux/AuthModel'
 import * as AuthRedux from '../../auth/redux/AuthRedux'
 
@@ -46,26 +40,6 @@ export function Overview() {
               )}
             </div>
           </div>
-        </div>
-      </div>
-
-      <div className='row gy-10 gx-xl-10'>
-        <div className='col-xl-6'>
-          <ChartsWidget1 className='card-xxl-stretch mb-5 mb-xl-10' />
-        </div>
-
-        <div className='col-xl-6'>
-          <TablesWidget1 className='card-xxl-stretch mb-5 mb-xl-10' />
-        </div>
-      </div>
-
-      <div className='row gy-10 gx-xl-10'>
-        <div className='col-xl-6'>
-          <ListsWidget5 className='card-xxl-stretch mb-5 mb-xl-10' />
-        </div>
-
-        <div className='col-xl-6'>
-          <TablesWidget5 className='card-xxl-stretch mb-5 mb-xl-10' />
         </div>
       </div>
     </>
