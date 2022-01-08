@@ -9,7 +9,7 @@ import {ItemState} from '../../item/redux/ItemRedux'
 import {CartState, actions} from '../redux/CartRedux'
 import {dispatch} from '../../../../setup/redux/Store'
 import {ItemModel} from '../redux/ItemModel'
-import getItemAPI from '../API/GetItemsAPI'
+import getItemAPI from '../API/GetItemAPI'
 import {serialize} from 'v8'
 
 const ShoppingCartPage: FC = () => {

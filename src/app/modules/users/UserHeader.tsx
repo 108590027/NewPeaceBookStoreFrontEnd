@@ -7,24 +7,18 @@ import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../auth/redux/AuthModel'
 import {CategoryState} from '../category/redux/CategoryRedux'
-import getUserAPI from '../auth/API/GetUserAPI'
 
-const AccountHeader: React.FC = () => {
+interface Props {
+  user: UserModel | undefined
+}
+
+const UserHeader: React.FC<Props> = ({user}) => {
   const location = useLocation()
-  const user: UserModel = useSelector<RootState>(
-    ({auth}) => auth.auth?.user,
-    shallowEqual
-  ) as UserModel
   const categoryState: CategoryState = useSelector<RootState>(
     ({category}) => category,
     shallowEqual
   ) as CategoryState
-  const major = categoryState.categories.find((c) => c.id === user.major)
-  if (user) {
-    if (user.rate === undefined) {
-      getUserAPI(user.id)
-    }
-  }
+  const major = categoryState.categories.find((c) => c.id === user?.major)
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -46,7 +40,7 @@ const AccountHeader: React.FC = () => {
               <div className='d-flex flex-column'>
                 <div className='d-flex align-items-center mb-2'>
                   <a href='#' className='text-gray-800 text-hover-primary fs-2 fw-bolder me-1'>
-                    {user.name}
+                    {user?.name}
                   </a>
                 </div>
 
@@ -69,7 +63,7 @@ const AccountHeader: React.FC = () => {
                       path='/media/icons/duotune/communication/com011.svg'
                       className='svg-icon-4 me-1'
                     />
-                    {user.email}
+                    {user?.email}
                   </a>
                 </div>
               </div>
@@ -80,7 +74,7 @@ const AccountHeader: React.FC = () => {
                 <div className='d-flex flex-wrap'>
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>{user.totalBuyOrders || 0}筆</div>
+                      <div className='fs-2 fw-bolder'>{user?.totalBuyOrders || 0}筆</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>買入</div>
@@ -88,7 +82,7 @@ const AccountHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>{user.totalSellOrders || 0}筆</div>
+                      <div className='fs-2 fw-bolder'>{user?.totalSellOrders || 0}筆</div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>賣出</div>
@@ -96,7 +90,9 @@ const AccountHeader: React.FC = () => {
 
                   <div className='border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3'>
                     <div className='d-flex align-items-center'>
-                      <div className='fs-2 fw-bolder'>{user.rate ? `${user.rate * 20}%` : '-'}</div>
+                      <div className='fs-2 fw-bolder'>
+                        {user?.rate ? `${user.rate * 20}%` : '-'}
+                      </div>
                     </div>
 
                     <div className='fw-bold fs-6 text-gray-400'>評價</div>
@@ -113,42 +109,9 @@ const AccountHeader: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/account/overview' && 'active')
+                  (location.pathname === `/user/${user?.id}` && 'active')
                 }
-                to='/account/overview'
-              >
-                總覽
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                className={
-                  `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/account/settings' && 'active')
-                }
-                to='/account/settings'
-              >
-                修改個人資訊
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                className={
-                  `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/account/comments' && 'active')
-                }
-                to='/account/comments'
-              >
-                評論
-              </Link>
-            </li>
-            <li className='nav-item'>
-              <Link
-                className={
-                  `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/account/items' && 'active')
-                }
-                to='/account/items'
+                to={`/user/${user?.id}`}
               >
                 商品
               </Link>
@@ -157,11 +120,11 @@ const AccountHeader: React.FC = () => {
               <Link
                 className={
                   `nav-link text-active-primary me-6 ` +
-                  (location.pathname === '/account/orders' && 'active')
+                  (location.pathname === `/user/${user?.id}/comments` && 'active')
                 }
-                to='/account/orders'
+                to={`/user/${user?.id}/comments`}
               >
-                訂單記錄
+                評論
               </Link>
             </li>
           </ul>
@@ -171,4 +134,4 @@ const AccountHeader: React.FC = () => {
   )
 }
 
-export {AccountHeader}
+export {UserHeader}

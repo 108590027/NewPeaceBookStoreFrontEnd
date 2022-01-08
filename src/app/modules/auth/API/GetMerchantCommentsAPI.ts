@@ -19,7 +19,6 @@ export default async function getMerchantCommentsAPI(
     const {data: res} = await axios.get<Response>(API_URL(userId))
     const user = store.getState().auth.users.find((u) => u.id === userId)
     if (user) {
-      user.comments = res.data
       dispatch(AuthRedux.actions.setAuthComments(res.data))
     }
     return res.data

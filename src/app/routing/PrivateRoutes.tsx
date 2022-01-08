@@ -9,6 +9,7 @@ export function PrivateRoutes() {
   const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
   const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
+  const UserPage = lazy(() => import('../modules/users/UserPage'))
   const OrderDetail = lazy(() => import('../modules/accounts/components/OrderDetail'))
   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
   const ChatPage = lazy(() => import('../modules/chat/ChatPage'))
@@ -38,6 +39,7 @@ export function PrivateRoutes() {
 
         <Route path='/account/order/:id' component={OrderDetail} />
         <Route path='/account' component={AccountPage} />
+        <Route path='/user/:id' component={UserPage} />
 
         <Route path='/item/shoppingcart' component={ShoppingCartPage} />
         <Route path='/item/newarrival' component={NewArrivalPage} />
