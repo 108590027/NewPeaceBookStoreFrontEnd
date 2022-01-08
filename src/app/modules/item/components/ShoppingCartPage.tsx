@@ -1,6 +1,7 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {useSelector} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {KTSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
@@ -9,13 +10,17 @@ import {ItemState} from '../../item/redux/ItemRedux'
 import {CartState, actions} from '../redux/CartRedux'
 import {dispatch} from '../../../../setup/redux/Store'
 import {ItemModel} from '../redux/ItemModel'
+import {CartType} from '../redux/CartRedux'
 import getItemAPI from '../API/GetItemAPI'
+import createOrderAPI from '../../order/API/CreateOrderAPI'
 import {serialize} from 'v8'
 
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
+  const history = useHistory()
   const [load, setLoad] = useState(false)
+  const [search, setSearch] = useState('')
   const [checkedCount, setCheckedCount] = useState(0)
   const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
   const [updateItemId, setUpdateItemId] = useState(0)
@@ -68,14 +73,20 @@ const ShoppingCartPage: FC = () => {
   const checkItem = (item: ItemModel, checked: boolean) => {
     let items = checkedItems
     if (item && checked) {
-      //if(checkedCount != 0 && )
-      items.push(item)
-      setCheckedItems(items)
-      setCheckedCount(checkedCount + 1)
+      if (checkedCount !== 0 && item.owner.id !== items[0].owner.id) {
+        document.getElementById('product' + item.id).checked = false
+        toast.warn('不可加入不同賣家的商品！')
+      } else {
+        items.push(item)
+        setCheckedItems(items)
+        setCheckedCount(checkedCount + 1)
+      }
     } else if (item && !checked) {
-      items.splice(checkedItems.indexOf(item), 1)
-      setCheckedItems(items)
-      setCheckedCount(checkedCount - 1)
+      if (checkedItems.indexOf(item) !== -1) {
+        items.splice(checkedItems.indexOf(item), 1)
+        setCheckedItems(items)
+        setCheckedCount(checkedCount - 1)
+      }
     }
   }
 
@@ -113,6 +124,25 @@ const ShoppingCartPage: FC = () => {
       }
     } else {
       toast.error(item)
+    }
+  }
+
+  const postOrder = async () => {
+    if (checkedCount > 0) {
+      let orderItem = [] as CartType[]
+      checkedItems.forEach((item) => {
+        orderItem.push({itemId: item.id, quantity: getBuyQuantity(item.id)})
+      })
+      const result = await createOrderAPI(checkedItems[0].owner.id, orderItem)
+      if ('id' in result) {
+        toast.success('訂單已成立')
+        checkedItems.forEach((item) => {
+          dispatch(actions.deleteCartItem(item.id))
+        })
+        history.push(`/order/${result.id}`)
+      } else {
+        toast.error(`建立失敗：${result.message}`)
+      }
     }
   }
 
@@ -215,6 +245,8 @@ const ShoppingCartPage: FC = () => {
                   data-kt-ecommerce-edit-order-filter='search'
                   className='form-control form-control-solid w-100 ps-14'
                   placeholder='Search Products'
+                  value={search}
+                  onChange={(e) => setSearch(e.target.value)}
                 />
               </div>
               {/* <!--end::Search products--> */}
@@ -261,6 +293,7 @@ const ShoppingCartPage: FC = () => {
                               <td>
                                 <div className='form-check form-check-sm form-check-custom form-check-solid'>
                                   <input
+                                    id={'product' + item.id.toString()}
                                     className='form-check-input'
                                     type='checkbox'
                                     value='1'
@@ -345,6 +378,11 @@ const ShoppingCartPage: FC = () => {
             </div>
           </div>
           {/* <!--end::Card header--> */}
+          <div className='text-end mt-5 me-5'>
+            <button type='button' className='btn btn-success' onClick={(e) => postOrder()}>
+              建立訂單
+            </button>
+          </div>
         </div>
       </div>
       {/* begin::修改數量的modal */}
