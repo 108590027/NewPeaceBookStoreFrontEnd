@@ -115,8 +115,8 @@ const ShoppingCartPage: FC = () => {
     let checked = checkedItems
     let searched = searchItems
     items.splice(items.indexOf(item), 1)
-    checked.splice(items.indexOf(item), 1)
-    searched.splice(items.indexOf(item), 1)
+    checked.splice(checked.indexOf(item), 1)
+    searched.splice(searched.indexOf(item), 1)
     setCheckedItems(checked)
     setSearchItems(searched)
     setAllItems(items)
