@@ -20,7 +20,7 @@ export default async function createOrderAPI(
   try {
     const {data} = await axios.post<Response>(API_URL(), {
       merchantId,
-      items,
+      items: JSON.stringify(items),
     })
     dispatch(OrderRedux.actions.updateOrders([data.data]))
     return data.data

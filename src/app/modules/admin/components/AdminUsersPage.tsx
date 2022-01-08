@@ -183,7 +183,7 @@ const AdminUsersPage: FC = () => {
                     >
                       {categoryState.categories.map(
                         (category) =>
-                          category.is_department ?? (
+                          category.is_department && (
                             <option key={category.id} value={category.id}>
                               {category.name}
                             </option>
