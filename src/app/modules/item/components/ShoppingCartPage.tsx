@@ -17,10 +17,10 @@ const ShoppingCartPage: FC = () => {
   const itemState: ItemState = useSelector((state: RootState) => state.item)
   const [load, setLoad] = useState(false)
   const [checkedCount, setCheckedCount] = useState(0)
+  const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
   var items = [] as ItemModel[]
-  var checkedItems = [] as ItemModel[]
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
@@ -57,11 +57,14 @@ const ShoppingCartPage: FC = () => {
   }
 
   const checkItem = (item: ItemModel, checked: boolean) => {
+    let items = checkedItems
     if (item && checked) {
-      checkedItems.push(item)
+      items.push(item)
+      setCheckedItems(items)
       setCheckedCount(checkedCount + 1)
     } else if (item && !checked) {
-      checkedItems.splice(checkedItems.indexOf(item), 1)
+      items.splice(checkedItems.indexOf(item), 1)
+      setCheckedItems(items)
       setCheckedCount(checkedCount - 1)
     }
   }
@@ -109,18 +112,15 @@ const ShoppingCartPage: FC = () => {
       {CartState.Carts.map((item) => getInfo(item.itemId))}
       <div className='col-12'>
         <div className='card card-flush py-4'>
-          {' '}
           <div className='card-header'>
             <div className='card-title'>
               <h2>勾選下訂商品</h2>
             </div>
-          </div>{' '}
+          </div>
           <div className='card-body pt-0 pb-1'>
             <div className='d-flex flex-column gap-10'>
-              {' '}
               <div>
-                {' '}
-                <label className='form-label'>將商品加入至此筆訂單</label>{' '}
+                <label className='form-label'>將商品加入至此筆訂單</label>
                 {/* <!--begin::Selected products--> */}
                 <div
                   className='d-flex flex-wrap gap-4 border border-dashed rounded p-6 mb-5'
@@ -130,7 +130,7 @@ const ShoppingCartPage: FC = () => {
                     <span className='text-muted'>已勾選之商品會顯示在此處</span>
                   ) : (
                     checkedItems.map((item) => (
-                      <div className='d-flex align-items-center'>
+                      <div className='d-flex align-items-center border border-dashed rounded p-3 bg-white'>
                         <img
                           className='symbol symbol-50px '
                           src={
