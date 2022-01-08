@@ -200,6 +200,7 @@ const NewArrivalPage: FC = () => {
                   type='number'
                   className='form-control mb-2'
                   placeholder='價格'
+                  min={1}
                   value={createPrice}
                   onChange={(e) => setCreatePrice(parseInt(e.target.value))}
                 />
@@ -210,6 +211,8 @@ const NewArrivalPage: FC = () => {
                   type='number'
                   className='form-control mb-2'
                   placeholder='數量'
+                  min={1}
+                  max={99}
                   value={createQuantity}
                   onChange={(e) => setCreateQuantity(parseInt(e.target.value))}
                 />
