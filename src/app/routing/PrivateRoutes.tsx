@@ -12,6 +12,10 @@ export function PrivateRoutes() {
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
   const UserPage = lazy(() => import('../modules/users/UserPage'))
   const OrderDetail = lazy(() => import('../modules/accounts/components/OrderDetail'))
+  const MerchantOrderDetail = lazy(
+    () => import('../modules/accounts/components/MerchantOrderDetail')
+  )
+  const MerchantOrders = lazy(() => import('../modules/accounts/components/MerchantOrders'))
   const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
   const ChatPage = lazy(() => import('../modules/chat/ChatPage'))
   const CategoryPage = lazy(() => import('../modules/category/components/CategoryPage'))
@@ -39,6 +43,8 @@ export function PrivateRoutes() {
         <Route path='/category/:id' component={CategoryPage} />
 
         <Route path='/account/order/:id' component={OrderDetail} />
+        <Route path='/account/MerchantOrder/:id' component={MerchantOrderDetail} />
+        <Route path='/account/MerchantOrders' component={MerchantOrders} />
         <Route path='/account' component={AccountPage} />
         <Route path='/user/:id' component={UserPage} />
 

@@ -6,7 +6,7 @@ export type Response = {
 }
 
 export const API_URL = (orderId: number) =>
-  `${import.meta.env.VITE_API_URL}/auth/marchant/order/${orderId}/payment/complete`
+  `${import.meta.env.VITE_API_URL}/auth/merchant/order/${orderId}/payment/complete`
 
 // 將商店訂單設置為已付款狀態
 export default async function updateMerchantOrderPayCompleteAPI(

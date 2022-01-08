@@ -32,7 +32,6 @@ const UserPage: React.FC<Props> = ({match}) => {
   const userState: IAuthState = useSelector((state: RootState) => state.auth)
   const [user, setUser] = useState<UserModel>()
   if (user?.id !== parseInt(match.params.id)) {
-    console.log(user?.id)
     const u = userState.users.find((u) => u.id === parseInt(match.params.id))
     if (!u) {
       ;(async () => {

@@ -60,6 +60,12 @@ const HeaderUserMenu: FC = () => {
       </div>
 
       <div className='menu-item px-5'>
+        <Link to={'/account/MerchantOrders'} className='menu-link px-5'>
+          管理商店訂單
+        </Link>
+      </div>
+
+      <div className='menu-item px-5'>
         <Link to='/account/orders' className='menu-link px-5'>
           <span className='menu-text'>歷史訂單</span>
         </Link>

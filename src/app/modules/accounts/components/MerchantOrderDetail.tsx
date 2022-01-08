@@ -5,8 +5,9 @@ import {toast} from 'react-toastify'
 import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
 import {toSlimDateString} from '../../../utils/DateUtil'
-import postCommentAPI from '../../comment/API/PostCommentAPI'
-import getAuthOrderAPI from '../../order/API/GetAuthOrderAPI'
+import getMerchantOrderAPI from '../../order/API/GetMerchantOrderAPI'
+import updateMerchantOrderCompleteAPI from '../../order/API/UpdateMerchantOrderCompleteAPI'
+import updateMerchantOrderPayCompleteAPI from '../../order/API/UpdateMerchantOrderPayCompleteAPI'
 import {OrderModel} from '../../order/redux/OrderModel'
 
 interface Props {
@@ -16,38 +17,20 @@ interface Props {
 // 麵包屑導航
 const BreadCrumbs: Array<PageLink> = [
   {
-    title: '歷史訂單記錄',
-    path: '/account/orders',
+    title: '商店訂單管理',
+    path: '/account/MerchantOrders',
     isSeparator: false,
     isActive: false,
   },
 ]
 
-const OrderDetail: FC<Props> = (props: Props) => {
+const MerchantOrderDetail: FC<Props> = (props: Props) => {
   const [orderId, setOrderId] = useState(0)
-  const [currentRate, setCurrentRate] = useState(5)
-  const [commentMessage, setCommentMessage] = useState('')
   const [orderData, setOrderData] = useState({} as OrderModel)
-  const postComment = async () => {
-    if (orderData.status !== 2 || orderData.comment !== null) {
-      return
-    }
-    if (commentMessage === '') {
-      toast.warn('請輸入評論！')
-      return
-    }
-    const result = await postCommentAPI(orderId, currentRate, commentMessage)
-    if ('id' in result) {
-      setOrderData(result)
-      toast.success(`發布成功！`)
-    } else {
-      toast.error(`發布失敗：${result.message}`)
-    }
-  }
   if (orderId !== parseInt(props.match.params.id)) {
     setOrderId(parseInt(props.match.params.id))
     ;(async () => {
-      const res = await getAuthOrderAPI(parseInt(props.match.params.id))
+      const res = await getMerchantOrderAPI(parseInt(props.match.params.id))
       if ('id' in res) {
         setOrderData(res)
       } else {
@@ -55,6 +38,35 @@ const OrderDetail: FC<Props> = (props: Props) => {
       }
     })()
   }
+  const sendOrderPayStatusAPI = async () => {
+    if (window.confirm('一旦修改就無法復原\n確定進行此操作嗎？')) {
+      if (orderData.id) {
+        const result = await updateMerchantOrderPayCompleteAPI(orderData.id)
+        if (result > 0) {
+          orderData.status = 1
+          setOrderData({...orderData})
+          toast.success('修改狀態成功！')
+        } else {
+          toast.error('修改狀態失敗！')
+        }
+      }
+    }
+  }
+  const sendOrderCompleteStatusAPI = async () => {
+    if (window.confirm('一旦修改就無法復原\n確定進行此操作嗎？')) {
+      if (orderData.id) {
+        const result = await updateMerchantOrderCompleteAPI(orderData.id)
+        if (result > 0) {
+          orderData.status = 2
+          setOrderData({...orderData})
+          toast.success('修改狀態成功！')
+        } else {
+          toast.error('修改狀態失敗！')
+        }
+      }
+    }
+  }
+
   return (
     <>
       <PageTitle breadcrumbs={BreadCrumbs}>{`訂單資訊`}</PageTitle>
@@ -66,6 +78,24 @@ const OrderDetail: FC<Props> = (props: Props) => {
                 <div className='card-header'>
                   <div className='card-title'>
                     <h2>訂單資訊</h2>
+                    <h5>
+                      {orderData.status === 0 && (
+                        <button
+                          className='btn btn-info btn-sm mx-8'
+                          onClick={sendOrderPayStatusAPI}
+                        >
+                          設為已付款狀態
+                        </button>
+                      )}
+                      {orderData.status === 1 && (
+                        <button
+                          className='btn btn-info btn-sm mx-8'
+                          onClick={sendOrderCompleteStatusAPI}
+                        >
+                          設為已完成狀態
+                        </button>
+                      )}
+                    </h5>
                   </div>
                 </div>
                 <div className='card-body pt-0'>
@@ -406,71 +436,6 @@ const OrderDetail: FC<Props> = (props: Props) => {
             ) : (
               <></>
             )}
-            {orderData.comment === null && orderData.status === 2 ? (
-              <div className='fade show active'>
-                <div className='d-flex flex-column gap-7 gap-lg-10'>
-                  <div className='card card-flush py-4 flex-row-fluid overflow-hidden'>
-                    <div className='card-header'>
-                      <div className='card-title'>
-                        <h2>撰寫評論</h2>
-                      </div>
-                    </div>
-                    <div className='card-body pt-0'>
-                      <table className='table align-middle table-row-dashed fs-6 gy-5 mb-0'>
-                        <thead>
-                          <tr className='text-start text-gray-400 fw-bolder fs-7 text-uppercase gs-0'>
-                            <th className='min-w-70px'></th>
-                            <th className='min-w-175px '></th>
-                          </tr>
-                        </thead>
-                        <tbody className='fw-bold text-gray-600'>
-                          <tr>
-                            <td className='fw-bolder'>評分</td>
-                            <td className='rating justify-content-start'>
-                              {[1, 2, 3, 4, 5].map((rate) => (
-                                <div
-                                  className={`rating-label ${currentRate >= rate ? 'checked' : ''}`}
-                                >
-                                  <span className='svg-icon svg-icon-2 me-2'>
-                                    <a role='tab' onClick={(e) => setCurrentRate(rate)}>
-                                      <KTSVG
-                                        path='/media/icons/duotune/general/gen029.svg'
-                                        className='svg-icon-1 me-1'
-                                      />
-                                    </a>
-                                  </span>
-                                </div>
-                              ))}
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className='fw-bolder'>評論</td>
-                            <td>
-                              <textarea
-                                rows={10}
-                                className='form-control'
-                                value={commentMessage}
-                                onChange={(e) => setCommentMessage(e.target.value)}
-                              ></textarea>
-                            </td>
-                          </tr>
-                          <tr>
-                            <td className='fw-bolder'></td>
-                            <td className='fw-bolder '>
-                              <button className='btn btn-primary float-end' onClick={postComment}>
-                                送出
-                              </button>
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            ) : (
-              <></>
-            )}
           </div>
         </div>
       </div>
@@ -478,4 +443,4 @@ const OrderDetail: FC<Props> = (props: Props) => {
   )
 }
 
-export default OrderDetail
+export default MerchantOrderDetail
