@@ -108,18 +108,7 @@ export function Login() {
       <div className='fv-row mb-10'>
         <div className='d-flex justify-content-between mt-n5'>
           <div className='d-flex flex-stack mb-2'>
-            {/* begin::Label */}
             <label className='form-label fw-bolder text-dark fs-6 mb-0'>密碼</label>
-            {/* end::Label */}
-            {/* begin::Link */}
-            <Link
-              to='/auth/forgot-password'
-              className='link-primary fs-6 fw-bolder'
-              style={{marginLeft: '5px'}}
-            >
-              忘記密碼?
-            </Link>
-            {/* end::Link */}
           </div>
         </div>
         <input
