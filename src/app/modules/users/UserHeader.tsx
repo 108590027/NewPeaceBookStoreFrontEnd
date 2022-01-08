@@ -10,6 +10,8 @@ import {CategoryState} from '../category/redux/CategoryRedux'
 import * as ChatRedux from '../chat/redux/ChatRedux'
 import {IAuthState} from '../auth/redux/AuthRedux'
 import {dispatch} from '../../../setup/redux/Store'
+import ReportModal from '../report/components/ReportModal'
+import {Modal} from 'bootstrap'
 
 interface Props {
   user: UserModel | undefined
@@ -30,6 +32,9 @@ const UserHeader: React.FC<Props> = ({user}) => {
     }
     dispatch(ChatRedux.actions.newChat(authState.auth?.user?.id as number, user?.id as number))
     history.push(`/chat#${user?.id}`)
+  }
+  const openReportModal = () => {
+    new Modal('#reportModal').show()
   }
 
   return (
@@ -78,15 +83,26 @@ const UserHeader: React.FC<Props> = ({user}) => {
                     {user?.email}
                   </a>
                   {authState.auth?.user?.id !== user?.id && (
-                    <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
-                      <button className='btn btn-info btn-sm' onClick={redirectToChat}>
-                        <KTSVG
-                          path='/media/icons/duotune/communication/com012.svg'
-                          className='svg-icon-4 me-1'
-                        />
-                        聊聊
-                      </button>
-                    </span>
+                    <>
+                      <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
+                        <button className='btn btn-info btn-sm' onClick={redirectToChat}>
+                          <KTSVG
+                            path='/media/icons/duotune/communication/com012.svg'
+                            className='svg-icon-4 me-1'
+                          />
+                          聊聊
+                        </button>
+                      </span>
+                      <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
+                        <button className='btn btn-danger btn-sm' onClick={openReportModal}>
+                          <KTSVG
+                            path='/media/icons/duotune/general/gen044.svg'
+                            className='svg-icon-4 me-1'
+                          />
+                          舉報
+                        </button>
+                      </span>
+                    </>
                   )}
                 </div>
               </div>
@@ -153,6 +169,7 @@ const UserHeader: React.FC<Props> = ({user}) => {
           </ul>
         </div>
       </div>
+      <ReportModal user={user} />
     </div>
   )
 }
