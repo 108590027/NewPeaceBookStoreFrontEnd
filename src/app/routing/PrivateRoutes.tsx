@@ -1,6 +1,7 @@
 import React, {Suspense, lazy} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {FallbackView} from '../../system/partials'
+import ItemUpdatePage from '../modules/item/components/ItemUpdatePage'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
 import {MenuTestPage} from '../pages/MenuTestPage'
 
@@ -45,6 +46,7 @@ export function PrivateRoutes() {
         <Route path='/item/newarrival' component={NewArrivalPage} />
         <Route path='/item/search' component={SearchPage} />
         <Route path='/item/:id' component={ItemPage} />
+        <Route path='/item/update/:id' component={ItemUpdatePage} />
 
         <Route path='/tag/:id' component={TagPage} />
 

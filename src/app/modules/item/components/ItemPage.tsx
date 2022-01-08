@@ -18,6 +18,8 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import '../css/swiper.css'
 import {IAuthState} from '../../auth/redux/AuthRedux'
+import {KTSVG} from '../../../../system/helpers'
+import {Modal} from 'bootstrap'
 
 // install Swiper modules
 SwiperCore.use([Navigation])
@@ -44,6 +46,7 @@ const ItemPage: FC<Props> = (props) => {
   const history = useHistory()
   const authId = userState.auth?.user?.id as number
   const userId = item?.owner.id as number
+
   const redirectToChat = () => {
     if (authId === userId) {
       return
@@ -113,14 +116,19 @@ const ItemPage: FC<Props> = (props) => {
                 tag.tag.name !== '' && (
                   <Link
                     to={`/tag/${tag.tag.id}`}
-                    className='mx-1 my-2 badge badge-light-primary'
+                    className='mb-3 mx-1 my-2 badge badge-light-primary'
                     key={`tag-${i}`}
                   >
                     #{tag.tag.name}
                   </Link>
                 )
             )}
-            {authId === userId || (
+            <br></br>
+            {authId === userId ? (
+              <button className='col-auto btn btn-lg btn-primary' onClick={() => redirectToChat()}>
+                編輯商品
+              </button>
+            ) : (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
               </button>
