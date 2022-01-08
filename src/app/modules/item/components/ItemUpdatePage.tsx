@@ -135,6 +135,7 @@ const ItemUpdatePage: FC<Props> = (props) => {
                   type='number'
                   className='form-control mb-2'
                   placeholder='價格'
+                  min='0'
                   value={createPrice}
                   onChange={(e) => setCreatePrice(parseInt(e.target.value))}
                 />
@@ -145,6 +146,7 @@ const ItemUpdatePage: FC<Props> = (props) => {
                   type='number'
                   className='form-control mb-2'
                   placeholder='數量'
+                  min='0'
                   value={createQuantity}
                   onChange={(e) => setCreateQuantity(parseInt(e.target.value))}
                 />
