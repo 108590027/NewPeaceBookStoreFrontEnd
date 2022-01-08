@@ -86,10 +86,10 @@ export const reducer = persistReducer(
       case actionTypes.setAuthComments: {
         const comments: CommentModel[] = action.payload.comments
         if (state.auth?.user) {
-          state.auth.user.comments = comments
+          state.auth.user.comments = [...comments]
           const user = state.users.find((u) => u.id === state.auth?.user?.id)
           if (user) {
-            user.comments = comments
+            user.comments = [...comments]
           }
         }
         return {...state}

@@ -1,22 +1,20 @@
-import React, {useState} from 'react'
-import {shallowEqual, useSelector} from 'react-redux'
-import {RootState} from '../../../../../setup'
+import React, {FC, useState} from 'react'
 import getMerchantCommentsAPI from '../../../auth/API/GetMerchantCommentsAPI'
-import {CommentModel} from '../../../auth/redux/AuthModel'
-import {IAuthState} from '../../../auth/redux/AuthRedux'
+import {CommentModel, UserModel} from '../../../auth/redux/AuthModel'
 
-export function Comments() {
+interface Props {
+  user: UserModel | undefined
+}
+export const Comments: FC<Props> = ({user}) => {
   const [comments, setComments] = useState<CommentModel[]>([])
-  const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
-  if (!authState.auth?.user?.comments) {
+  if (!user?.comments) {
     setTimeout(async () => {
-      const result = await getMerchantCommentsAPI(authState.auth?.user?.id || 0)
+      const result = await getMerchantCommentsAPI(user?.id || 0)
       if (!('message' in result)) {
         setComments([...result])
       }
     })
   }
-  // TODO: 列出評論
   console.log(comments)
   return (
     <div className='card mb-5 mb-xl-10'>
