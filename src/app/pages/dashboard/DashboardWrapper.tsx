@@ -1,14 +1,11 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React, {FC, useState} from 'react'
-import {useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
-import {RootState} from '../../../setup'
 import {PageTitle} from '../../../system/layout/core'
 import {Card4} from '../../../system/partials/content/cards/Card4'
 import getHotItemsAPI from '../../modules/item/API/GetHotItemsAPI'
 import getNewItemsAPI from '../../modules/item/API/GetNewItemsAPI'
 import {ItemModel} from '../../modules/item/redux/ItemModel'
-import {ItemState} from '../../modules/item/redux/ItemRedux'
 
 const DashboardWrapper: FC = () => {
   const [load, setLoad] = useState(false)
