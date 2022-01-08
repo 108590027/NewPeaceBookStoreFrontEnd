@@ -15,7 +15,7 @@ const NewArrivalPage: FC = () => {
   const history = useHistory()
   const categoryState: CategoryState = useSelector((state: RootState) => state.category)
   const onDrop = (acceptedFiles: any[]) => {
-    const preImages: string[] = []
+    const preImages: string[] = images
     let i = 0
     acceptedFiles.forEach((file: any) => {
       const reader = new FileReader()
@@ -24,7 +24,6 @@ const NewArrivalPage: FC = () => {
         const img = e.target?.result
         if (img) {
           preImages.push(img as string)
-          console.log(images)
         }
         if (i >= acceptedFiles.length) {
           setImages([...preImages])
