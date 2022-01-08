@@ -6,6 +6,8 @@ import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
 import {toSlimDateString} from '../../../utils/DateUtil'
 import getMerchantOrderAPI from '../../order/API/GetMerchantOrderAPI'
+import updateMerchantOrderCompleteAPI from '../../order/API/UpdateMerchantOrderCompleteAPI'
+import updateMerchantOrderPayCompleteAPI from '../../order/API/UpdateMerchantOrderPayCompleteAPI'
 import {OrderModel} from '../../order/redux/OrderModel'
 
 interface Props {
@@ -36,6 +38,35 @@ const MerchantOrderDetail: FC<Props> = (props: Props) => {
       }
     })()
   }
+  const sendOrderPayStatusAPI = async () => {
+    if (window.confirm('一旦修改就無法復原\n確定進行此操作嗎？')) {
+      if (orderData.id) {
+        const result = await updateMerchantOrderPayCompleteAPI(orderData.id)
+        if (result > 0) {
+          orderData.status = 1
+          setOrderData({...orderData})
+          toast.success('修改狀態成功！')
+        } else {
+          toast.error('修改狀態失敗！')
+        }
+      }
+    }
+  }
+  const sendOrderCompleteStatusAPI = async () => {
+    if (window.confirm('一旦修改就無法復原\n確定進行此操作嗎？')) {
+      if (orderData.id) {
+        const result = await updateMerchantOrderCompleteAPI(orderData.id)
+        if (result > 0) {
+          orderData.status = 2
+          setOrderData({...orderData})
+          toast.success('修改狀態成功！')
+        } else {
+          toast.error('修改狀態失敗！')
+        }
+      }
+    }
+  }
+
   return (
     <>
       <PageTitle breadcrumbs={BreadCrumbs}>{`訂單資訊`}</PageTitle>
@@ -47,6 +78,24 @@ const MerchantOrderDetail: FC<Props> = (props: Props) => {
                 <div className='card-header'>
                   <div className='card-title'>
                     <h2>訂單資訊</h2>
+                    <h5>
+                      {orderData.status === 0 && (
+                        <button
+                          className='btn btn-info btn-sm mx-8'
+                          onClick={sendOrderPayStatusAPI}
+                        >
+                          設為已付款狀態
+                        </button>
+                      )}
+                      {orderData.status === 1 && (
+                        <button
+                          className='btn btn-info btn-sm mx-8'
+                          onClick={sendOrderCompleteStatusAPI}
+                        >
+                          設為已完成狀態
+                        </button>
+                      )}
+                    </h5>
                   </div>
                 </div>
                 <div className='card-body pt-0'>
