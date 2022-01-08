@@ -312,7 +312,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                                       className='symbol-label'
                                       src={
                                         orderItem?.item?.images[0]
-                                          ? `data:image/jpeg;base64,${orderItem.item.images[0].photo}`
+                                          ? `${orderItem.item.images[0].photo}`
                                           : toAbsoluteUrl(
                                               '/media/icons/duotune/ecommerce/ecm005.svg'
                                             )
