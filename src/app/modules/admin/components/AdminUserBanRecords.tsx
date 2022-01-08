@@ -222,28 +222,28 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
             <div className='modal-body'>
               <div className='row'>
                 <div className='col-12 mt-4'>
-                  <label className='form-check-label' htmlFor={`createReason`}>
+                  <label className='form-check-label' htmlFor={`updateReason`}>
                     原因
                   </label>
                   <input
-                    id='createReason'
-                    value={createReason}
+                    id='updateReason'
+                    value={updateReason}
                     className='form-control mt-1'
-                    onChange={(e) => setCreateReason(e.target.value)}
+                    onChange={(e) => setUpdateReason(e.target.value)}
                   ></input>
                 </div>
               </div>
               <div className='row'>
                 <div className='col-12 mt-4'>
-                  <label className='form-check-label' htmlFor={`createDuration`}>
+                  <label className='form-check-label' htmlFor={`updateDuration`}>
                     到期時間
                   </label>
                   <input
-                    id='createDuration'
-                    value={createDuration}
+                    id='updateDuration'
+                    value={updateDuration}
                     type='datetime-local'
                     className='form-control mt-1'
-                    onChange={(e) => setCreateDuration(e.target.value)}
+                    onChange={(e) => setUpdateDuration(e.target.value)}
                   ></input>
                 </div>
               </div>
