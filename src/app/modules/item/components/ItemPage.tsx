@@ -120,7 +120,7 @@ const ItemPage: FC<Props> = (props) => {
                   </Link>
                 )
             )}
-            {authId === userId ?? (
+            {authId === userId || (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
               </button>
@@ -185,13 +185,15 @@ const ItemPage: FC<Props> = (props) => {
               </Link>
             </div>
           </div>
-
-          <div className='row mb-7'>
-            <label className='col-lg-4 fw-bold text-muted'>ISBN</label>
-            <div className='col-lg-8'>
-              <span className='fw-bolder fs-6 text-dark'>{item?.ISBN}</span>
+          {item?.ISBN === '' || (
+            <div className='row mb-7'>
+              <label className='col-lg-4 fw-bold text-muted'>ISBN</label>
+              <div className='col-lg-8'>
+                <span className='fw-bolder fs-6 text-dark'>{item?.ISBN}</span>
+              </div>
             </div>
-          </div>
+          )}
+
           <div className='row mb-7'>
             <label className='col-lg-4 fw-bold text-muted'>剩餘數量</label>
             <div className='col-lg-8'>
