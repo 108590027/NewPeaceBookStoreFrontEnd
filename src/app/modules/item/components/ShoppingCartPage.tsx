@@ -26,6 +26,7 @@ const ShoppingCartPage: FC = () => {
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
   var CartItems = [] as ItemModel[]
+  var searchItems = [] as ItemModel[]
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
@@ -53,6 +54,15 @@ const ShoppingCartPage: FC = () => {
     }
   }
 
+  const filterSearch = (keyWord: string) => {
+    setSearch(keyWord)
+    if (search.length > 0) {
+      searchItems = CartItems.filter((item) => item.name.includes(keyWord))
+    } else {
+      searchItems = CartItems
+    }
+  }
+
   const calculatePrice = (price: number | undefined, quantity: number) => {
     if (!price) {
       price = 0
@@ -63,7 +73,7 @@ const ShoppingCartPage: FC = () => {
 
   const getTotalPrice = () => {
     let totalPrice = 0
-    checkedItems.map((item) => {
+    checkedItems.forEach((item) => {
       let buyQuantity = getBuyQuantity(item.id)
       totalPrice += calculatePrice(item.price, buyQuantity)
     })
@@ -139,7 +149,7 @@ const ShoppingCartPage: FC = () => {
         checkedItems.forEach((item) => {
           dispatch(actions.deleteCartItem(item.id))
         })
-        history.push(`/order/${result.id}`)
+        history.push(`/account/order/${result.id}`)
       } else {
         toast.error(`建立失敗：${result.message}`)
       }
@@ -246,7 +256,7 @@ const ShoppingCartPage: FC = () => {
                   className='form-control form-control-solid w-100 ps-14'
                   placeholder='Search Products'
                   value={search}
-                  onChange={(e) => setSearch(e.target.value)}
+                  onChange={(e) => filterSearch(e.target.value)}
                 />
               </div>
               {/* <!--end::Search products--> */}
