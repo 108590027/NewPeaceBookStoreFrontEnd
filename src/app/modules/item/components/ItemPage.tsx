@@ -46,6 +46,7 @@ const ItemPage: FC<Props> = (props) => {
   const history = useHistory()
   const authId = userState.auth?.user?.id as number
   const userId = item?.owner.id as number
+  console.log(item)
 
   if (parseInt(props.match.params.id) !== currentId) {
     // 當route的分類ID變動時，必須進行更新
@@ -64,17 +65,6 @@ const ItemPage: FC<Props> = (props) => {
     }
     dispatch(ChatRedux.actions.newChat(authId, userId))
     history.push(`/chat#${userId}`)
-  }
-  const redirectToUpdate = () => {
-    if (authId === userId) {
-      return (
-        <Link to={`/item/update/${item?.id}`} className='fw-bolder fs-6 text-primary'>
-          {item?.category.name}
-        </Link>
-      )
-    } else {
-      return
-    }
   }
   const addToCart = async (quantity: number) => {
     if (itemCount === 0) {
@@ -136,11 +126,11 @@ const ItemPage: FC<Props> = (props) => {
             )}
             <br></br>
             {authId === userId ? (
-              <button className='col-auto btn btn-lg btn-primary' onClick={() => redirectToChat()}>
+              <Link to={`/item/${item?.id}/update`} className='col-auto btn btn-lg btn-primary'>
                 編輯商品
-              </button>
+              </Link>
             ) : (
-              <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToUpdate()}>
+              <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
               </button>
             )}

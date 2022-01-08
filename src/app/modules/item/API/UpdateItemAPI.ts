@@ -29,7 +29,7 @@ export default async function updateItemAPI(
       price,
       quantity,
     })
-    dispatch(ItemRedux.actions.setItem(data.data))
+    dispatch(ItemRedux.actions.updateItems([data.data]))
     return data.data
   } catch (err: any) {
     console.log(err)
