@@ -162,7 +162,7 @@ const ItemPage: FC<Props> = (props) => {
 
             <div className='col-lg-8'>
               <span className='fw-bolder fs-6 text-dark'>
-                <Link to={`/admin/user/${item?.owner.id}`}>{item?.owner.name}</Link>
+                <Link to={`/user/${item?.owner.id}`}>{item?.owner.name}</Link>
               </span>
             </div>
           </div>

@@ -2,23 +2,35 @@
 import React from 'react'
 import {KTSVG} from '../../../system/helpers'
 import {Link} from 'react-router-dom'
-import {useLocation} from 'react-router'
+import {useLocation, useHistory} from 'react-router'
 import {shallowEqual, useSelector} from 'react-redux'
 import {RootState} from '../../../setup'
 import {UserModel} from '../auth/redux/AuthModel'
 import {CategoryState} from '../category/redux/CategoryRedux'
+import * as ChatRedux from '../chat/redux/ChatRedux'
+import {IAuthState} from '../auth/redux/AuthRedux'
+import {dispatch} from '../../../setup/redux/Store'
 
 interface Props {
   user: UserModel | undefined
 }
 
 const UserHeader: React.FC<Props> = ({user}) => {
+  const history = useHistory()
   const location = useLocation()
   const categoryState: CategoryState = useSelector<RootState>(
     ({category}) => category,
     shallowEqual
   ) as CategoryState
+  const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
   const major = categoryState.categories.find((c) => c.id === user?.major)
+  const redirectToChat = () => {
+    if (authState.auth?.user?.id === user?.id) {
+      return
+    }
+    dispatch(ChatRedux.actions.newChat(authState.auth?.user?.id as number, user?.id as number))
+    history.push(`/chat#${user?.id}`)
+  }
 
   return (
     <div className='card mb-5 mb-xl-10'>
@@ -65,6 +77,17 @@ const UserHeader: React.FC<Props> = ({user}) => {
                     />
                     {user?.email}
                   </a>
+                  {authState.auth?.user?.id !== user?.id && (
+                    <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
+                      <button className='btn btn-info btn-sm' onClick={redirectToChat}>
+                        <KTSVG
+                          path='/media/icons/duotune/communication/com012.svg'
+                          className='svg-icon-4 me-1'
+                        />
+                        聊聊
+                      </button>
+                    </span>
+                  )}
                 </div>
               </div>
             </div>
