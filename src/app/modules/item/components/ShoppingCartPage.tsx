@@ -13,7 +13,6 @@ import {ItemModel} from '../redux/ItemModel'
 import {CartType} from '../redux/CartRedux'
 import getItemAPI from '../API/GetItemAPI'
 import createOrderAPI from '../../order/API/CreateOrderAPI'
-import {serialize} from 'v8'
 
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
@@ -23,26 +22,26 @@ const ShoppingCartPage: FC = () => {
   const [search, setSearch] = useState('')
   const [checkedCount, setCheckedCount] = useState(0)
   const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
+  const [allItems, setAllItems] = useState([] as ItemModel[])
+  const [searchItems, setSearchItems] = useState([] as ItemModel[])
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
-  var CartItems = [] as ItemModel[]
-  var searchItems = [] as ItemModel[]
+
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
-    setLoad(true)
-  }
-
-  const getInfo = (itemId: number) => {
-    let item = itemState.items.find((item) => item.id === itemId)
-    if (item) {
-      CartItems.push(item)
-    }
-  }
-
-  const sortCartItems = () => {
+    let CartItems = [] as ItemModel[]
+    CartState.Carts.forEach((element) => {
+      let item = itemState.items.find((item) => item.id === element.itemId)
+      if (item) {
+        CartItems.push(item)
+      }
+    })
     CartItems.sort((a: ItemModel, b: ItemModel) => {
       return a.owner.id - b.owner.id
     })
+    setAllItems(CartItems)
+    setSearchItems(CartItems)
+    setLoad(true)
   }
 
   const getBuyQuantity = (itemId: number) => {
@@ -55,11 +54,12 @@ const ShoppingCartPage: FC = () => {
   }
 
   const filterSearch = (keyWord: string) => {
+    let item = allItems
     setSearch(keyWord)
     if (search.length > 0) {
-      searchItems = CartItems.filter((item) => item.name.includes(keyWord))
+      setSearchItems([...item].filter((item) => item.name.includes(keyWord)))
     } else {
-      searchItems = CartItems
+      setSearchItems([...item])
     }
   }
 
@@ -109,8 +109,17 @@ const ShoppingCartPage: FC = () => {
     }
   }
 
-  const deleteItem = async (item: ItemModel) => {
-    await dispatch(actions.deleteCartItem(item.id))
+  const deleteItem = (item: ItemModel) => {
+    dispatch(actions.deleteCartItem(item.id))
+    let items = allItems
+    let checked = checkedItems
+    let searched = searchItems
+    items.splice(items.indexOf(item), 1)
+    checked.splice(items.indexOf(item), 1)
+    searched.splice(items.indexOf(item), 1)
+    setCheckedItems(checked)
+    setSearchItems(searched)
+    setAllItems(items)
     toast.success(`已從購物車刪除商品：${item.name}`)
   }
 
@@ -159,8 +168,8 @@ const ShoppingCartPage: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
-      {CartState.Carts.map((item) => getInfo(item.itemId))}
-      {sortCartItems()}
+      {/*CartState.Carts.map((item) => getInfo(item.itemId))*/}
+      {/*sortCartItems()*/}
       <div className='col-12'>
         <div className='card card-flush py-4'>
           <div className='card-header'>
@@ -181,7 +190,10 @@ const ShoppingCartPage: FC = () => {
                     <span className='text-muted'>已勾選之商品會顯示在此處</span>
                   ) : (
                     checkedItems.map((item) => (
-                      <div className='d-flex align-items-center border border-dashed rounded p-3 bg-white'>
+                      <div
+                        key={item.id}
+                        className='d-flex align-items-center border border-dashed rounded p-3 bg-white'
+                      >
                         <img
                           className='symbol symbol-50px '
                           src={
@@ -254,7 +266,7 @@ const ShoppingCartPage: FC = () => {
                   type='text'
                   data-kt-ecommerce-edit-order-filter='search'
                   className='form-control form-control-solid w-100 ps-14'
-                  placeholder='Search Products'
+                  placeholder='Search Products By Name'
                   value={search}
                   onChange={(e) => filterSearch(e.target.value)}
                 />
@@ -298,7 +310,7 @@ const ShoppingCartPage: FC = () => {
                         {/* <!--end::Table head--> */}
                         {/* <!--begin::Table body--> */}
                         <tbody className='fw-bold text-gray-600'>
-                          {CartItems.map((item) => (
+                          {searchItems.map((item) => (
                             <tr key={item.id}>
                               <td>
                                 <div className='form-check form-check-sm form-check-custom form-check-solid'>
