@@ -20,23 +20,25 @@ const ShoppingCartPage: FC = () => {
   const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
-  var items = [] as ItemModel[]
+  var CartItems = [] as ItemModel[]
   if (!load && CartState.Carts.length > 0) {
     getItemAPI(CartState.Carts[0].itemId)
     setLoad(true)
   }
 
-  const getUserName = (itemId: number) => {
-    let item = itemState.items.find((item) => item.id === itemId)
-    return item?.owner.name
-  }
-
   const getInfo = (itemId: number) => {
     let item = itemState.items.find((item) => item.id === itemId)
     if (item) {
-      items.push(item)
+      CartItems.push(item)
     }
   }
+
+  const sortCartItems = () => {
+    CartItems.sort((a: ItemModel, b: ItemModel) => {
+      return a.owner.id - b.owner.id
+    })
+  }
+
   const getBuyQuantity = (itemId: number) => {
     let item = CartState.Carts.find((element) => element.itemId === itemId)
     if (item) {
@@ -66,6 +68,7 @@ const ShoppingCartPage: FC = () => {
   const checkItem = (item: ItemModel, checked: boolean) => {
     let items = checkedItems
     if (item && checked) {
+      //if(checkedCount != 0 && )
       items.push(item)
       setCheckedItems(items)
       setCheckedCount(checkedCount + 1)
@@ -117,6 +120,7 @@ const ShoppingCartPage: FC = () => {
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
       {CartState.Carts.map((item) => getInfo(item.itemId))}
+      {sortCartItems()}
       <div className='col-12'>
         <div className='card card-flush py-4'>
           <div className='card-header'>
@@ -252,7 +256,7 @@ const ShoppingCartPage: FC = () => {
                         {/* <!--end::Table head--> */}
                         {/* <!--begin::Table body--> */}
                         <tbody className='fw-bold text-gray-600'>
-                          {items.map((item) => (
+                          {CartItems.map((item) => (
                             <tr key={item.id}>
                               <td>
                                 <div className='form-check form-check-sm form-check-custom form-check-solid'>
