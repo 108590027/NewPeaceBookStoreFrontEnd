@@ -28,9 +28,9 @@ const ShoppingCartPage: FC = () => {
   const [updateQuantity, setUpdateQuantity] = useState(0)
 
   if (!load && CartState.Carts.length > 0) {
-    getItemAPI(CartState.Carts[0].itemId)
     let CartItems = [] as ItemModel[]
     CartState.Carts.forEach((element) => {
+      getItemAPI(element.itemId)
       let item = itemState.items.find((item) => item.id === element.itemId)
       if (item) {
         CartItems.push(item)
@@ -57,9 +57,9 @@ const ShoppingCartPage: FC = () => {
     let item = allItems
     setSearch(keyWord)
     if (search.length > 0) {
-      setSearchItems([...item].filter((item) => item.name.includes(keyWord)))
+      setSearchItems(item.filter((item) => item.name.includes(keyWord)))
     } else {
-      setSearchItems([...item])
+      setSearchItems(item)
     }
   }
 
@@ -113,13 +113,16 @@ const ShoppingCartPage: FC = () => {
     dispatch(actions.deleteCartItem(item.id))
     let items = allItems
     let checked = checkedItems
-    let searched = searchItems
+    let searched = allItems
     items.splice(items.indexOf(item), 1)
     checked.splice(checked.indexOf(item), 1)
-    searched.splice(searched.indexOf(item), 1)
+    if (search.length > 0) {
+      searched = searchItems
+      searched.splice(searched.indexOf(item), 1)
+    }
     setCheckedItems(checked)
-    setSearchItems(searched)
     setAllItems(items)
+    setSearchItems(searched)
     toast.success(`已從購物車刪除商品：${item.name}`)
   }
 
@@ -168,8 +171,6 @@ const ShoppingCartPage: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`我的購物車`}</PageTitle>
-      {/*CartState.Carts.map((item) => getInfo(item.itemId))*/}
-      {/*sortCartItems()*/}
       <div className='col-12'>
         <div className='card card-flush py-4'>
           <div className='card-header'>
@@ -181,7 +182,6 @@ const ShoppingCartPage: FC = () => {
             <div className='d-flex flex-column gap-10'>
               <div>
                 <label className='form-label'>將商品加入至此筆訂單</label>
-                {/* <!--begin::Selected products--> */}
                 <div
                   className='d-flex flex-wrap gap-4 border border-dashed rounded p-6 mb-5'
                   id='edit_order_selected_products'
@@ -225,25 +225,18 @@ const ShoppingCartPage: FC = () => {
                     ))
                   )}
                 </div>
-                {/* <!--begin::Selected products--> */}
                 <div className='fw-bolder fs-4'>
                   訂單總金額:　$<span id='edit_order_total_price'>{getTotalPrice()}</span>
                 </div>
               </div>
-              {/* <!--end::Input group--> */}
-              {/* <!--begin::Separator--> */}
               <div className='separator'></div>
-              {/* <!--end::Separator--> */}
-              {/* <!--begin::Search products--> */}
               <div className='d-flex align-items-center position-relative mb-n7'>
-                {/* <!--begin::Svg Icon | path: icons/duotune/general/gen021.svg--> */}
                 <span className='svg-icon svg-icon-1 position-absolute ms-4'>
                   <KTSVG
                     path='/media/icons/duotune/general/gen021.svg'
                     className='svg-icon svg-icon-2x'
                   />
                 </span>
-                {/* <!--end::Svg Icon--> */}
                 <input
                   type='text'
                   data-kt-ecommerce-edit-order-filter='search'
@@ -253,7 +246,6 @@ const ShoppingCartPage: FC = () => {
                   onChange={(e) => filterSearch(e.target.value)}
                 />
               </div>
-              {/* <!--end::Search products--> */}
               {/* <!--begin::Table--> */}
               <div className='dataTables_wrapper dt-bootstrap4 no-footer'>
                 <div className='table-responsive'>
@@ -271,7 +263,6 @@ const ShoppingCartPage: FC = () => {
                         className='table align-middle table-row-dashed fs-6 gy-5'
                         id='edit_order_product_table'
                       >
-                        {/* <!--begin::Table head--> */}
                         <thead
                           style={{
                             position: 'sticky',
@@ -289,8 +280,6 @@ const ShoppingCartPage: FC = () => {
                             <th className='min-w-150px text-center'>操作</th>
                           </tr>
                         </thead>
-                        {/* <!--end::Table head--> */}
-                        {/* <!--begin::Table body--> */}
                         <tbody className='fw-bold text-gray-600'>
                           {searchItems.map((item) => (
                             <tr key={item.id}>
@@ -312,7 +301,6 @@ const ShoppingCartPage: FC = () => {
                                   data-kt-ecommerce-edit-order-filter='product'
                                   data-kt-ecommerce-edit-order-id={item.id}
                                 >
-                                  {/* <!--begin::Thumbnail--> */}
                                   <img
                                     className='symbol symbol-50px '
                                     src={
@@ -325,25 +313,18 @@ const ShoppingCartPage: FC = () => {
                                     width='50px'
                                     background-position='center'
                                   ></img>
-                                  {/* <!--end::Thumbnail--> */}
                                   <div className='ms-5'>
-                                    {/* <!--begin::Title--> */}
                                     <span className='text-gray-800 fs-5 fw-bolder'>
                                       {item.name}
                                     </span>
-                                    {/* <!--end::Title--> */}
                                     <div className='d-flex flex-wrap gap-3'>
-                                      {/* <!--begin::SKU--> */}
                                       <div className='text-muted fs-7'>{item.owner.name}</div>
-                                      {/* <!--end::SKU--> */}
-                                      {/* <!--begin::Price--> */}
                                       <div className='fw-bold fs-7'>
                                         單價: $
                                         <span data-kt-ecommerce-edit-order-filter='price'>
                                           {item.price}
                                         </span>
                                       </div>
-                                      {/* <!--end::Price--> */}
                                     </div>
                                   </div>
                                 </div>
@@ -372,9 +353,7 @@ const ShoppingCartPage: FC = () => {
                             </tr>
                           ))}
                         </tbody>
-                        {/* <!--end::Table body--> */}
                       </table>
-                      {/* <!--end::Table--> */}
                     </div>
                   </div>
                 </div>
