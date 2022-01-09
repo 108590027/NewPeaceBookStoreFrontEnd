@@ -43,21 +43,20 @@ const ShoppingCartPage: FC = () => {
   }
 
   if (!loadItems && CartState.Carts.length > 0) {
-    let CartItems = [] as ItemModel[]
+    setLoadItems(true)
     //透過購物車內itemID取得該商品的詳細資料
     CartState.Carts.forEach(async (element) => {
       const result = await getItemAPI(element.itemId)
       if ('id' in result) {
-        CartItems.push(result)
+        allItems.push(result)
+        setAllItems([...allItems])
+        setSearchItems([...allItems])
       }
     })
-    CartItems.sort((a: ItemModel, b: ItemModel) => {
-      return a.owner.id - b.owner.id
-    })
-    setAllItems(CartItems)
-    setSearchItems(CartItems)
-    setLoadItems(true)
   }
+  searchItems.sort((a: ItemModel, b: ItemModel) => {
+    return a.owner.id - b.owner.id
+  })
 
   // 取得購買數量
   const getBuyQuantity = (itemId: number) => {
