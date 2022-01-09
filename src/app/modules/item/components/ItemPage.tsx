@@ -126,9 +126,7 @@ const ItemPage: FC<Props> = (props) => {
             )}
             <br></br>
             {authId === userId ? (
-              <Link to={`/item/${item?.id}/update`} className='col-auto btn btn-lg btn-primary'>
-                編輯商品
-              </Link>
+              ''
             ) : (
               <button className='col-auto btn btn-lg btn-danger' onClick={() => redirectToChat()}>
                 聯繫賣家
@@ -152,12 +150,18 @@ const ItemPage: FC<Props> = (props) => {
               onChange={(e) => setItemCount(parseInt(e.target.value))}
             />
             <br></br>
-            <button
-              className='btn btn-lg btn-primary w-100 mb-5'
-              onClick={() => addToCart(item?.quantity as number)}
-            >
-              加入購物車
-            </button>
+            {authId === userId ? (
+              <Link to={`/item/${item?.id}/update`} className='btn btn-lg btn-primary w-100 mb-5'>
+                編輯商品
+              </Link>
+            ) : (
+              <button
+                className='btn btn-lg btn-primary w-100 mb-5'
+                onClick={() => addToCart(item?.quantity as number)}
+              >
+                加入購物車
+              </button>
+            )}
           </div>
         </div>
       </div>
