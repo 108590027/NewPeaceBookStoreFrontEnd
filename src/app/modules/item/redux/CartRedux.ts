@@ -10,12 +10,14 @@ export interface ActionWithPayload<T> extends Action {
 
 export const actionTypes = {
   resetCart: 'resetCart',
+  updateUser: 'updateUser',
   deleteCartItem: 'deleteCartItem',
   updateCartItem: 'updateCartItem',
 }
 
 const initialCartState: CartState = {
   Carts: [],
+  userId: 0,
   lastUpdate: 0,
 }
 
@@ -23,6 +25,7 @@ export type CartType = {itemId: number; quantity: number}
 
 export interface CartState {
   Carts: CartType[]
+  userId: number
   lastUpdate: number
 }
 
@@ -41,8 +44,8 @@ export const reducer = persistReducer(
           state.Carts.splice(state.Carts.indexOf(item), 1)
         }
         const lastUpdate = Date.now()
-        const Carts = state.Carts
-        return {lastUpdate, Carts: [...Carts]}
+        const Carts = [...state.Carts]
+        return {lastUpdate, Carts, userId: state.userId}
       }
 
       case actionTypes.updateCartItem: {
@@ -56,7 +59,15 @@ export const reducer = persistReducer(
         }
         const lastUpdate = Date.now()
         const Carts = state.Carts
-        return {lastUpdate, Carts: [...Carts]}
+        return {lastUpdate, Carts: [...Carts], userId: state.userId}
+      }
+
+      case actionTypes.updateUser: {
+        const userId: number = action.payload?.userId
+        if (state.userId !== userId) {
+          return initialCartState
+        }
+        return {...state}
       }
 
       default:
@@ -77,6 +88,10 @@ export const actions = {
   updateCartItem: (itemId: number, quantity: number) => ({
     type: actionTypes.updateCartItem,
     payload: {itemId, quantity},
+  }),
+  updateUser: (userId: number) => ({
+    type: actionTypes.updateUser,
+    payload: {userId},
   }),
 }
 
