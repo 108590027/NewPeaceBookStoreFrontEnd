@@ -1,6 +1,6 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
-import {useSelector} from 'react-redux'
+import {shallowEqual, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {KTSVG} from '../../../../system/helpers'
@@ -10,6 +10,8 @@ import {ItemState} from '../../item/redux/ItemRedux'
 import {CartState, actions} from '../redux/CartRedux'
 import {dispatch} from '../../../../setup/redux/Store'
 import {ItemModel} from '../redux/ItemModel'
+import {UserModel} from '../../auth/redux/AuthModel'
+import * as AuthRedux from '../../auth/redux/AuthRedux'
 import {CartType} from '../redux/CartRedux'
 import getItemAPI from '../API/GetItemAPI'
 import createOrderAPI from '../../order/API/CreateOrderAPI'
@@ -17,8 +19,15 @@ import createOrderAPI from '../../order/API/CreateOrderAPI'
 const ShoppingCartPage: FC = () => {
   const CartState: CartState = useSelector((state: RootState) => state.cart)
   const itemState: ItemState = useSelector((state: RootState) => state.item)
+  const authState: AuthRedux.IAuthState = useSelector<RootState>(
+    ({auth}) => auth,
+    shallowEqual
+  ) as AuthRedux.IAuthState
+  const user: UserModel = authState.auth?.user as UserModel
   const history = useHistory()
-  const [load, setLoad] = useState(false)
+  const [loadUser, setLoadUser] = useState(false)
+  const [userBanned, setUserBanned] = useState(false)
+  const [loadItems, setLoadItems] = useState(false)
   const [search, setSearch] = useState('')
   const [checkedCount, setCheckedCount] = useState(0)
   const [checkedItems, setCheckedItems] = useState([] as ItemModel[])
@@ -27,8 +36,15 @@ const ShoppingCartPage: FC = () => {
   const [updateItemId, setUpdateItemId] = useState(0)
   const [updateQuantity, setUpdateQuantity] = useState(0)
 
-  if (!load && CartState.Carts.length > 0) {
+  if (!loadUser) {
+    let banned = user.role === -1
+    setUserBanned(banned)
+    setLoadUser(true)
+  }
+
+  if (!loadItems && CartState.Carts.length > 0) {
     let CartItems = [] as ItemModel[]
+    //透過購物車內itemID取得該商品的詳細資料
     CartState.Carts.forEach((element) => {
       getItemAPI(element.itemId)
       let item = itemState.items.find((item) => item.id === element.itemId)
@@ -41,9 +57,10 @@ const ShoppingCartPage: FC = () => {
     })
     setAllItems(CartItems)
     setSearchItems(CartItems)
-    setLoad(true)
+    setLoadItems(true)
   }
 
+  // 取得購買數量
   const getBuyQuantity = (itemId: number) => {
     let item = CartState.Carts.find((element) => element.itemId === itemId)
     if (item) {
@@ -53,6 +70,7 @@ const ShoppingCartPage: FC = () => {
     }
   }
 
+  //顯示搜尋結果
   const filterSearch = (keyWord: string) => {
     let item = allItems
     setSearch(keyWord)
@@ -80,6 +98,7 @@ const ShoppingCartPage: FC = () => {
     return totalPrice
   }
 
+  //勾選商品時判斷是否為同一賣家和將被勾選的商品另外存一個陣列並顯示
   const checkItem = (item: ItemModel, checked: boolean) => {
     let items = checkedItems
     if (item && checked) {
@@ -146,6 +165,35 @@ const ShoppingCartPage: FC = () => {
       }
     } else {
       toast.error(item)
+    }
+  }
+
+  //根據是否被ban顯示按鈕
+  const btnOrderShow = () => {
+    if (userBanned) {
+      return (
+        <button
+          type='button'
+          className='btn btn-danger'
+          onClick={() => {
+            toast.error(
+              <span>
+                目前為封鎖狀態，因此無法建立訂單
+                <br />
+                請至帳戶資訊總覽頁面查看封鎖期限
+              </span>
+            )
+          }}
+        >
+          封鎖中
+        </button>
+      )
+    } else {
+      return (
+        <button type='button' className='btn btn-success' onClick={(e) => postOrder()}>
+          建立訂單
+        </button>
+      )
     }
   }
 
@@ -361,11 +409,7 @@ const ShoppingCartPage: FC = () => {
             </div>
           </div>
           {/* <!--end::Card header--> */}
-          <div className='text-end mt-5 me-5'>
-            <button type='button' className='btn btn-success' onClick={(e) => postOrder()}>
-              建立訂單
-            </button>
-          </div>
+          <div className='text-end mt-5 me-5'>{btnOrderShow()}</div>
         </div>
       </div>
       {/* begin::修改數量的modal */}
