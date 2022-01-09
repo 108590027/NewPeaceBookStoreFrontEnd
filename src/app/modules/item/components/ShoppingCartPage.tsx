@@ -45,11 +45,10 @@ const ShoppingCartPage: FC = () => {
   if (!loadItems && CartState.Carts.length > 0) {
     let CartItems = [] as ItemModel[]
     //透過購物車內itemID取得該商品的詳細資料
-    CartState.Carts.forEach((element) => {
-      getItemAPI(element.itemId)
-      let item = itemState.items.find((item) => item.id === element.itemId)
-      if (item) {
-        CartItems.push(item)
+    CartState.Carts.forEach(async (element) => {
+      const result = await getItemAPI(element.itemId)
+      if ('id' in result) {
+        CartItems.push(result)
       }
     })
     CartItems.sort((a: ItemModel, b: ItemModel) => {
@@ -103,7 +102,10 @@ const ShoppingCartPage: FC = () => {
     let items = checkedItems
     if (item && checked) {
       if (checkedCount !== 0 && item.owner.id !== items[0].owner.id) {
-        document.getElementById('product' + item.id).checked = false
+        const el = document.getElementById('product' + item.id) as HTMLInputElement
+        if (el) {
+          el.checked = false
+        }
         toast.warn('不可加入不同賣家的商品！')
       } else {
         items.push(item)
@@ -315,7 +317,7 @@ const ShoppingCartPage: FC = () => {
                           style={{
                             position: 'sticky',
                             backgroundColor: 'white',
-                            zIndex: '1',
+                            zIndex: 1,
                             top: '0',
                             boxShadow: 'inset 1px 1px #ffffff, 0 1px #000000',
                           }}
