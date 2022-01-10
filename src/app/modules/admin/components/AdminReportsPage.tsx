@@ -75,6 +75,8 @@ const AdminReportsPage: FC = () => {
   const getUser = (userId: number) => {
     return userState.users.find((u) => u.id === userId)
   }
+  //將類型轉換為文字
+  const reasons = ['販售違禁品', '冒充身分', '假帳號', '訂單問題']
   // 進行初始化判斷
   if (!load) {
     setLoad(true) // 初始化只會執行一次
@@ -121,7 +123,7 @@ const AdminReportsPage: FC = () => {
                         {getUser(report.reporter)?.name || `UserID:${report.reporter}`}
                       </Link>
                     </td>
-                    <td className='fw-bolder'>{report.reason}</td>
+                    <td className='fw-bolder'>{reasons[report.reason]}</td>
                     <td className='fw-bolder'>{report.detail}</td>
                     <td>
                       {/* 當舉報為未處理的狀態(status為0)，則可以進行決斷 => 顯示按鈕 */}
