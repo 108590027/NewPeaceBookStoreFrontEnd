@@ -49,13 +49,19 @@ export function Comments() {
                   </td>
                   <td>{comment.message}</td>
                   <td className='rating justify-content-center'>
-                    {[...Array(comment.rate)].map((rate) => (
-                      <span className='svg-icon svg-icon-2 me-2'>
-                        <EZSVG
-                          path='/media/icons/duotune/general/gen029.svg'
-                          className='svg-icon-1 me-1'
-                        />
-                      </span>
+                    {[1, 2, 3, 4, 5].map((rate) => (
+                      <div
+                        className={`rating-label ${
+                          comment.rate >= rate ? 'checked' : ''
+                        }`}
+                      >
+                        <span className='svg-icon svg-icon-2 me-2'>
+                          <EZSVG
+                            path='/media/icons/duotune/general/gen029.svg'
+                            className='svg-icon-1 me-1'
+                          />
+                        </span>
+                      </div>
                     ))}
                   </td>
                 </tr>
