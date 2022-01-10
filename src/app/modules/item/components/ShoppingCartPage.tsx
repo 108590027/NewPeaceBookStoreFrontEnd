@@ -339,6 +339,7 @@ const ShoppingCartPage: FC = () => {
                                     className='form-check-input'
                                     type='checkbox'
                                     value='1'
+                                    checked={checkedItems.indexOf(item) !== -1}
                                     onChange={(e) => checkItem(item, e.target.checked)}
                                   />
                                 </div>
