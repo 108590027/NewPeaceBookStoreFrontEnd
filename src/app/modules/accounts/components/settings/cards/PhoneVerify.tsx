@@ -76,7 +76,7 @@ const PhoneVerify: React.FC = () => {
                     placeholder='手機'
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    readOnly={user.phone !== ''}
+                    readOnly={user.phone !== null}
                   />
                 </div>
               </div>
