@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 import {Link} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
 import {IAuthState} from '../../auth/redux/AuthRedux'
 import {CategoryState} from '../../category/redux/CategoryRedux'
@@ -115,7 +115,7 @@ const AdminUsersPage: FC = () => {
                   data-bs-dismiss='modal'
                   aria-label='Close'
                 >
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/arrows/arr061.svg'
                     className='svg-icon svg-icon-2x'
                   />

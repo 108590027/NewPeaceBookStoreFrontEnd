@@ -18,7 +18,7 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import '../css/swiper.css'
 import {IAuthState} from '../../auth/redux/AuthRedux'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {Modal} from 'bootstrap'
 
 // install Swiper modules

@@ -4,7 +4,7 @@ import {Link} from 'react-router-dom'
 import {useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
@@ -155,7 +155,7 @@ const AdminReportsPage: FC = () => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />

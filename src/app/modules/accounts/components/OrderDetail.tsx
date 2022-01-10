@@ -2,9 +2,9 @@
 import {FC, useState} from 'react'
 import {Link, match} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {KTSVG, toAbsoluteUrl} from '../../../../system/helpers'
+import {EZSVG, toAbsoluteUrl} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
-import {toSlimDateString} from '../../../utils/DateUtil'
+import {toSlimDateString} from '../../../../system/helpers/DateUtil'
 import postCommentAPI from '../../comment/API/PostCommentAPI'
 import getAuthOrderAPI from '../../order/API/GetAuthOrderAPI'
 import {OrderModel} from '../../order/redux/OrderModel'
@@ -75,7 +75,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className=''>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/files/fil002.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -91,7 +91,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/communication/com006.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -113,7 +113,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/finance/fin008.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -140,7 +140,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/communication/com006.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -163,7 +163,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/communication/com011.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -220,7 +220,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/communication/com006.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -243,7 +243,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                         <td className='text-muted'>
                           <div className='d-flex align-items-center'>
                             <span className='svg-icon svg-icon-2 me-2'>
-                              <KTSVG
+                              <EZSVG
                                 path='/media/icons/duotune/communication/com011.svg'
                                 className='svg-icon-4 me-1'
                               />
@@ -384,7 +384,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                                   }`}
                                 >
                                   <span className='svg-icon svg-icon-2 me-2'>
-                                    <KTSVG
+                                    <EZSVG
                                       path='/media/icons/duotune/general/gen029.svg'
                                       className='svg-icon-1 me-1'
                                     />
@@ -433,7 +433,7 @@ const OrderDetail: FC<Props> = (props: Props) => {
                                 >
                                   <span className='svg-icon svg-icon-2 me-2'>
                                     <a role='tab' onClick={(e) => setCurrentRate(rate)}>
-                                      <KTSVG
+                                      <EZSVG
                                         path='/media/icons/duotune/general/gen029.svg'
                                         className='svg-icon-1 me-1'
                                       />

@@ -2,12 +2,8 @@ import React, {Suspense, lazy} from 'react'
 import {Redirect, Route, Switch} from 'react-router-dom'
 import {FallbackView} from '../../system/partials'
 import {DashboardWrapper} from '../pages/dashboard/DashboardWrapper'
-import {MenuTestPage} from '../pages/MenuTestPage'
 
 export function PrivateRoutes() {
-  const BuilderPageWrapper = lazy(() => import('../pages/layout-builder/BuilderPageWrapper'))
-  const ProfilePage = lazy(() => import('../modules/profile/ProfilePage'))
-  const WizardsPage = lazy(() => import('../modules/wizards/WizardsPage'))
   const AccountPage = lazy(() => import('../modules/accounts/AccountPage'))
   const UserPage = lazy(() => import('../modules/users/UserPage'))
   const OrderDetail = lazy(() => import('../modules/accounts/components/OrderDetail'))
@@ -15,7 +11,6 @@ export function PrivateRoutes() {
     () => import('../modules/accounts/components/MerchantOrderDetail')
   )
   const MerchantOrders = lazy(() => import('../modules/accounts/components/MerchantOrders'))
-  const WidgetsPage = lazy(() => import('../modules/widgets/WidgetsPage'))
   const ChatPage = lazy(() => import('../modules/chat/ChatPage'))
   const CategoryPage = lazy(() => import('../modules/category/components/CategoryPage'))
   const AdminTagsPage = lazy(() => import('../modules/admin/components/AdminTagsPage'))
@@ -55,13 +50,7 @@ export function PrivateRoutes() {
         <Route path='/item/:id' component={ItemPage} />
 
         <Route path='/tag/:id' component={TagPage} />
-
-        <Route path='/builder' component={BuilderPageWrapper} />
-        <Route path='/crafted/pages/profile' component={ProfilePage} />
-        <Route path='/crafted/pages/wizards' component={WizardsPage} />
-        <Route path='/crafted/widgets' component={WidgetsPage} />
         <Route path='/chat' component={ChatPage} />
-        <Route path='/menu-test' component={MenuTestPage} />
         <Redirect from='/auth' to='/dashboard' />
         <Redirect exact from='/' to='/dashboard' />
         <Redirect to='error/404' />

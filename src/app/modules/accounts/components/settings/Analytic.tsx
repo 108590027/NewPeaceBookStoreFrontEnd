@@ -1,6 +1,6 @@
 import React, {useState} from 'react'
 import ReactApexChart from 'react-apexcharts'
-import {toChartDateString} from '../../../../utils/DateUtil'
+import {toChartDateString} from '../../../../../system/helpers/DateUtil'
 import getAnalyticInformationAPI, {
   AnalyticResponse,
 } from '../../../auth/API/GetAnalyticInformationAPI'

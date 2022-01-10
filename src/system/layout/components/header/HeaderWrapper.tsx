@@ -3,10 +3,9 @@ import clsx from 'clsx'
 import React, {useEffect} from 'react'
 import {Link, useLocation} from 'react-router-dom'
 import {MenuComponent} from '../../../assets/ts/components'
-import {KTSVG, toAbsoluteUrl} from '../../../helpers'
+import {EZSVG, toAbsoluteUrl} from '../../../helpers'
 import {useLayout} from '../../core'
 import {Header} from './Header'
-import {DefaultTitle} from './page-title/DefaultTitle'
 import {Topbar} from './Topbar'
 
 export function HeaderWrapper() {
@@ -37,7 +36,7 @@ export function HeaderWrapper() {
               className='btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px'
               id='kt_aside_mobile_toggle'
             >
-              <KTSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
+              <EZSVG path='/media/icons/duotune/abstract/abs015.svg' className='svg-icon-2x mt-1' />
             </div>
           </div>
         )}
@@ -66,12 +65,6 @@ export function HeaderWrapper() {
           {header.left === 'menu' && (
             <div className='d-flex align-items-stretch w-100' id='kt_header_nav'>
               <Header />
-            </div>
-          )}
-
-          {header.left === 'page-title' && (
-            <div className='d-flex align-items-center' id='kt_header_nav'>
-              <DefaultTitle />
             </div>
           )}
 

@@ -4,10 +4,10 @@ import {Link} from 'react-router-dom'
 import {shallowEqual, useSelector} from 'react-redux'
 import {UserModel} from '../../../../app/modules/auth/redux/AuthModel'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../helpers'
-import {HeaderNotificationsMenu, HeaderUserMenu, QuickLinks} from '../../../partials'
+import {EZSVG} from '../../../helpers'
 import {CartState} from '../../../../app/modules/item/redux/CartRedux'
 import {useLayout} from '../../core'
+import {HeaderUserMenu} from '../../../partials/layout/header-menus/HeaderUserMenu'
 
 const toolbarButtonMarginClass = 'ms-1 ms-lg-3',
   toolbarButtonHeightClass = 'w-30px h-30px w-md-40px h-md-40px',
@@ -32,13 +32,12 @@ const Topbar: FC = () => {
           )}
         >
           <Link to={'/item/newarrival'}>
-            <KTSVG
+            <EZSVG
               path='/media/icons/duotune/arrows/arr013.svg'
               className={toolbarButtonIconSizeClass}
             />
           </Link>
         </div>
-        <HeaderNotificationsMenu />
       </div>
       <div className={clsx('d-flex align-items-center', toolbarButtonMarginClass)}>
         <div
@@ -49,7 +48,7 @@ const Topbar: FC = () => {
         >
           <Link to={'/item/shoppingcart'}>
             <span className='fw-bolder fs-7'>
-              <KTSVG
+              <EZSVG
                 path='/media/icons/duotune/ecommerce/ecm001.svg'
                 className={toolbarButtonIconSizeClass}
               />
@@ -83,7 +82,7 @@ const Topbar: FC = () => {
             className='btn btn-icon btn-active-light-primary w-30px h-30px w-md-40px h-md-40px'
             id='kt_header_menu_mobile_toggle'
           >
-            <KTSVG path='/media/icons/duotune/text/txt001.svg' className='svg-icon-1' />
+            <EZSVG path='/media/icons/duotune/text/txt001.svg' className='svg-icon-1' />
           </div>
         </div>
       )}

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import {useHistory} from 'react-router-dom'
-import SearchInput from '../../../../app/utils/SearchInput'
+import SearchInput from '../../../helpers/SearchInput'
 import getItemByKeyword from '../../../../app/modules/item/API/GetItemsByKeywordAPI'
 import ChatPath from '../../../../app/modules/websocket/Path/ChatPath'
 import LoginPath from '../../../../app/modules/websocket/Path/LoginPath'

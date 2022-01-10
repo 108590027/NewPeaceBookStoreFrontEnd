@@ -3,7 +3,7 @@ import React, {FC, useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
 import {RootState} from '../../../../setup'
 import {ItemState} from '../../item/redux/ItemRedux'
@@ -281,7 +281,7 @@ const ShoppingCartPage: FC = () => {
               <div className='separator'></div>
               <div className='d-flex align-items-center position-relative mb-n7'>
                 <span className='svg-icon svg-icon-1 position-absolute ms-4'>
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/general/gen021.svg'
                     className='svg-icon svg-icon-2x'
                   />
@@ -424,7 +424,7 @@ const ShoppingCartPage: FC = () => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />

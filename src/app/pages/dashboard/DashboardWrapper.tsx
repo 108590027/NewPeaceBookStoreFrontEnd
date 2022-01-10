@@ -2,7 +2,7 @@
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
 import {PageTitle} from '../../../system/layout/core'
-import {Card4} from '../../../system/partials/content/cards/Card4'
+import {ItemCard} from '../../modules/item/components/ItemCard'
 import getHotItemsAPI from '../../modules/item/API/GetHotItemsAPI'
 import getNewItemsAPI from '../../modules/item/API/GetNewItemsAPI'
 import {ItemModel} from '../../modules/item/redux/ItemModel'
@@ -46,7 +46,7 @@ const DashboardWrapper: FC = () => {
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {hotItems.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
-            <Card4
+            <ItemCard
               icon={
                 item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'
               }
@@ -68,7 +68,7 @@ const DashboardWrapper: FC = () => {
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {newItems.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
-            <Card4
+            <ItemCard
               icon={
                 item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'
               }
