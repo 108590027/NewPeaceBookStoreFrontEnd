@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import {useDropzone} from 'react-dropzone'
-import {useSelector} from 'react-redux'
+import {shallowEqual, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../setup'
@@ -8,6 +8,8 @@ import {PageTitle} from '../../../system/layout/core'
 import SearchInput from '../../../system/helpers/SearchInput'
 import getCategoriesAPI from '../category/API/GetCategoriesAPI'
 import {CategoryState} from '../category/redux/CategoryRedux'
+import {UserModel} from '../auth/redux/AuthModel'
+import * as AuthRedux from '../auth/redux/AuthRedux'
 import searchTagsAPI from '../tag/API/SearchTagsAPI'
 import createItemAPI from './API/CreateItemAPI'
 
@@ -32,8 +34,14 @@ const NewArrivalPage: FC = () => {
       reader.readAsDataURL(file)
     })
   }
+  const authState: AuthRedux.IAuthState = useSelector<RootState>(
+    ({auth}) => auth,
+    shallowEqual
+  ) as AuthRedux.IAuthState
+  const user: UserModel = authState.auth?.user as UserModel
   const {getRootProps, getInputProps} = useDropzone({onDrop})
   const [load, setLoad] = useState(false)
+  const [userBanned, setUserBanned] = useState(false)
   const [onSubmit, setOnSubmit] = useState(false)
   const [images, setImages] = useState([] as string[])
   const [createName, setCreateName] = useState('')
@@ -111,7 +119,44 @@ const NewArrivalPage: FC = () => {
     }, 500)
   }
 
+  //根據是否被ban顯示按鈕
+  const btnOrderShow = () => {
+    if (userBanned) {
+      return (
+        <button
+          type='button'
+          className='btn btn-danger'
+          onClick={() => {
+            toast.error(
+              <span>
+                目前為封鎖狀態，因此無法建立商品
+                <br />
+                請至帳戶資訊總覽頁面查看封鎖期限
+              </span>
+            )
+          }}
+        >
+          封鎖中
+        </button>
+      )
+    } else {
+      return (
+        <button className='btn btn-primary' disabled={onSubmit} onClick={createItem}>
+          {onSubmit ? (
+            <span className='indicator-label'>
+              請稍候
+              <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
+            </span>
+          ) : (
+            <span className='indicator-label'>建立商品</span>
+          )}
+        </button>
+      )
+    }
+  }
+
   if (!load) {
+    setUserBanned(user.role === -1)
     setLoad(true)
     ;(async () => {
       const categories = await getCategoriesAPI()
@@ -278,18 +323,7 @@ const NewArrivalPage: FC = () => {
               </div>
             </div>
           </div>
-          <div className='d-flex justify-content-end'>
-            <button className='btn btn-primary' disabled={onSubmit} onClick={createItem}>
-              {onSubmit ? (
-                <span className='indicator-label'>
-                  請稍候
-                  <span className='spinner-border spinner-border-sm align-middle ms-2'></span>
-                </span>
-              ) : (
-                <span className='indicator-label'>建立商品</span>
-              )}
-            </button>
-          </div>
+          <div className='d-flex justify-content-end'>{btnOrderShow()}</div>
         </div>
       </div>
     </>
