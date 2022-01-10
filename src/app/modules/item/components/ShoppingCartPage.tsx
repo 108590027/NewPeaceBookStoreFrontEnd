@@ -1,7 +1,7 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
 import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
@@ -259,7 +259,9 @@ const ShoppingCartPage: FC = () => {
                         <div className='ms-5'>
                           <span className='text-gray-800 fs-5 fw-bolder'>{item.name}</span>
                           <div className='d-flex flex-wrap gap-3'>
-                            <div className='text-muted fs-7'>{item.owner.name}</div>
+                            <Link to={`/user/${item.owner.id}`} className='fs-7'>
+                              {item.owner.name}
+                            </Link>
                             <div className='fw-bold fs-7'>
                               單價: $
                               <span data-kt-ecommerce-edit-order-filter='price'>{item.price}</span>
@@ -290,7 +292,7 @@ const ShoppingCartPage: FC = () => {
                   type='text'
                   data-kt-ecommerce-edit-order-filter='search'
                   className='form-control form-control-solid w-100 ps-14'
-                  placeholder='Search Products By Name'
+                  placeholder='搜尋商品名稱...'
                   value={search}
                   onChange={(e) => filterSearch(e.target.value)}
                 />
@@ -367,7 +369,9 @@ const ShoppingCartPage: FC = () => {
                                       {item.name}
                                     </span>
                                     <div className='d-flex flex-wrap gap-3'>
-                                      <div className='text-muted fs-7'>{item.owner.name}</div>
+                                      <Link to={`/user/${item.owner.id}`} className='fs-7'>
+                                        {item.owner.name}
+                                      </Link>
                                       <div className='fw-bold fs-7'>
                                         單價: $
                                         <span data-kt-ecommerce-edit-order-filter='price'>
