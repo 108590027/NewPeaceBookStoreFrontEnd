@@ -7,6 +7,7 @@ import {AccountHeader} from './AccountHeader'
 import {Comments} from './components/settings/Comments'
 import {Items} from './components/settings/Items'
 import {Orders} from './components/settings/Orders'
+import {Analytic} from './components/settings/Analytic'
 
 const accountBreadCrumbs: Array<PageLink> = [
   {
@@ -47,6 +48,10 @@ const AccountPage: React.FC = () => {
         <Route path='/account/orders'>
           <PageTitle breadcrumbs={accountBreadCrumbs}>訂單</PageTitle>
           <Orders />
+        </Route>
+        <Route path='/account/analytic'>
+          <PageTitle breadcrumbs={accountBreadCrumbs}>統計</PageTitle>
+          <Analytic />
         </Route>
 
         <Redirect from='/account' exact={true} to='/account/overview' />
