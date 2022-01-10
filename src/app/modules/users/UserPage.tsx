@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import {match, Route, Switch} from 'react-router-dom'
+import {match, Redirect, Route, Switch} from 'react-router-dom'
 import {PageLink, PageTitle} from '../../../system/layout/core'
 import {UserHeader} from './UserHeader'
 import {Comments} from './components/settings/Comments'
@@ -40,7 +40,7 @@ const UserPage: React.FC<Props> = ({match}) => {
     <>
       <UserHeader user={user} />
       <Switch>
-        <Route path='/user/:id/'>
+        <Route path='/user/:id/items'>
           <PageTitle breadcrumbs={accountBreadCrumbs}>商品</PageTitle>
           <Items user={user} />
         </Route>
@@ -48,6 +48,9 @@ const UserPage: React.FC<Props> = ({match}) => {
           <PageTitle breadcrumbs={accountBreadCrumbs}>評論</PageTitle>
           <Comments user={user} />
         </Route>
+
+        <Redirect from='/user/:id' exact={true} to='/user/:id/items' />
+        <Redirect to='/user/:id/items' />
       </Switch>
     </>
   )

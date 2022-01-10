@@ -6,7 +6,7 @@ import getUserAPI from '../../../auth/API/GetUserAPI'
 import {toDateString} from '../../../../../system/helpers/DateUtil'
 import {CommentModel} from '../../../auth/redux/AuthModel'
 import {IAuthState} from '../../../auth/redux/AuthRedux'
-import { Link } from 'react-router-dom'
+import {Link} from 'react-router-dom'
 import {EZSVG} from '../../../../../system/helpers'
 
 export function Comments() {
