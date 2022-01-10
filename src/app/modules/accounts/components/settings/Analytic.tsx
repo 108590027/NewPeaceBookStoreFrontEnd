@@ -16,7 +16,30 @@ export function Analytic() {
     })
   }
 
-  const dateArr = [new Date(), new Date(), new Date(), new Date(), new Date()]
+  const dayValue: number[] = new Array(30).fill(0)
+  const dateTemp: number[] = []
+  for (let k = 0; k < 30; k++) {
+    dateTemp[k] = k + 1
+  }
+
+  data?.data.buyOrders.forEach((element, i) => {
+    const date = new Date(element.created_at.replace('T', ' ')).getDate()
+    dayValue[date - 1] += 1
+  })
+  const dateArr = [
+    '一月',
+    '二月',
+    '三月',
+    '四月',
+    '五月',
+    '六月',
+    '七月',
+    '八月',
+    '九月',
+    '十月',
+    '十一月',
+    '十二月',
+  ]
   const chartOptions = {
     chart: {
       height: 350,
@@ -33,26 +56,26 @@ export function Analytic() {
       align: 'left' as 'left',
     },
     xaxis: {
-      labels: {
-        formatter: (value: string, timestamp: number): string => {
-          return toChartDateString(new Date(value))
-        },
-      },
-      categories: dateArr,
+      categories: dateTemp,
     },
     tooltip: {
       x: {
-        format: 'yy/MM/dd HH:mm',
+        format: 'YY/MM/dd HH:mm',
       },
     },
   }
   const lines = [
     {
       name: `lines title`,
-      data: [1, 2, 3, 4, 5],
+      data: [] as number[],
     },
   ]
+  if (data) {
+    lines[0].data = dayValue
+  }
   console.log(data)
+  console.log(dateTemp)
+  console.log(dayValue)
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body border-top p-9'>
