@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useState } from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
-import {Link} from 'react-router-dom'
 import {RootState} from '../../../../setup'
 import {BanRecordModel, UserModel} from '../../auth/redux/AuthModel'
 import * as AuthRedux from '../../auth/redux/AuthRedux'

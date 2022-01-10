@@ -23,11 +23,11 @@ export interface UserModel {
 export type CommentModel = {
   id: number
   user_id: number
-  item_id: number
+  merchant_id: number
   rate: number
   message: string
-  // created_at: string,
-  // updated_at: string
+  created_at: string,
+  updated_at: string
 }
 
 export type PhoneVerifyModel = {
