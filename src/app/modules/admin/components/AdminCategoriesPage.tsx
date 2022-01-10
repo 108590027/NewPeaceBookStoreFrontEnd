@@ -3,7 +3,7 @@ import React, {FC, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {toast} from 'react-toastify'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
 import createCategoryAPI from '../../category/API/CreateCategoryAPI'
 import deleteCategoryAPI from '../../category/API/DeleteCategoryAPI'
@@ -122,7 +122,7 @@ const AdminCategoriesPage: FC = () => {
                   data-bs-dismiss='modal'
                   aria-label='Close'
                 >
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/arrows/arr061.svg'
                     className='svg-icon svg-icon-2x'
                   />
@@ -182,7 +182,7 @@ const AdminCategoriesPage: FC = () => {
                   data-bs-dismiss='modal'
                   aria-label='Close'
                 >
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/arrows/arr061.svg'
                     className='svg-icon svg-icon-2x'
                   />

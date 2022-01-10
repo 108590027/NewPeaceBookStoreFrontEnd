@@ -4,7 +4,7 @@ import {useSelector} from 'react-redux'
 import {match} from 'react-router'
 import {RootState} from '../../../../setup'
 import {PageTitle} from '../../../../system/layout/core'
-import {Card4} from '../../../../system/partials/content/cards/Card4'
+import {ItemCard} from '../../item/components/ItemCard'
 import {ItemState} from '../../item/redux/ItemRedux'
 import {TagModel} from '../redux/TagModel'
 import getTagAPI from '../API/GetTagAPI'
@@ -49,7 +49,7 @@ const TagPage: FC<Props> = (props) => {
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {items.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
-            <Card4
+            <ItemCard
               icon={
                 item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'
               }

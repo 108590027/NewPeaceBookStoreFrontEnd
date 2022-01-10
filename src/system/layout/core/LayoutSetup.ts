@@ -12,7 +12,8 @@ import {
 } from './LayoutModels'
 import {DefaultLayoutConfig} from './DefaultLayoutConfig'
 
-const LAYOUT_CONFIG_KEY = import.meta.env.VITE_BASE_LAYOUT_CONFIG_KEY || 'LayoutConfig'
+const LAYOUT_CONFIG_KEY: string =
+  (import.meta.env.VITE_BASE_LAYOUT_CONFIG_KEY as string) || 'LayoutConfig'
 
 export function getLayout(): ILayout {
   const ls = localStorage.getItem(LAYOUT_CONFIG_KEY)
@@ -101,11 +102,6 @@ export class LayoutSetup {
     if (config.main?.body?.class) {
       document.body.classList.add(config.main.body.class)
     }
-
-    // if (config.loader.display) {
-    //   document.body.classList.add('page-loading')
-    //   document.body.classList.add('page-loading-enabled')
-    // }
   }
 
   private static initHeader(config: IHeader): void {

@@ -8,7 +8,7 @@ import {
   ToggleComponent,
   StickyComponent,
 } from '../../assets/ts/components'
-import {KTSVG} from '../../helpers'
+import {EZSVG} from '../../helpers'
 
 export function ScrollTop() {
   const {pathname} = useLocation()
@@ -55,8 +55,8 @@ export function ScrollTop() {
   }, [pathname])
 
   return (
-    <div id='kt_scrolltop' className='scrolltop' data-kt-scrolltop='true'>
-      <KTSVG path='/media/icons/duotune/arrows/arr066.svg' />
+    <div id='scrolltop' className='scrolltop' data-kt-scrolltop='true'>
+      <EZSVG path='/media/icons/duotune/arrows/arr066.svg' />
     </div>
   )
 }

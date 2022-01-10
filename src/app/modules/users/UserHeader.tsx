@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG} from '../../../system/helpers'
+import {EZSVG} from '../../../system/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation, useHistory} from 'react-router'
 import {shallowEqual, useSelector} from 'react-redux'
@@ -66,7 +66,7 @@ const UserHeader: React.FC<Props> = ({user}) => {
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
-                    <KTSVG
+                    <EZSVG
                       path='/media/icons/duotune/communication/com006.svg'
                       className='svg-icon-4 me-1'
                     />
@@ -76,7 +76,7 @@ const UserHeader: React.FC<Props> = ({user}) => {
                     href='#'
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
-                    <KTSVG
+                    <EZSVG
                       path='/media/icons/duotune/communication/com011.svg'
                       className='svg-icon-4 me-1'
                     />
@@ -86,7 +86,7 @@ const UserHeader: React.FC<Props> = ({user}) => {
                     <>
                       <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
                         <button className='btn btn-info btn-sm' onClick={redirectToChat}>
-                          <KTSVG
+                          <EZSVG
                             path='/media/icons/duotune/communication/com012.svg'
                             className='svg-icon-4 me-1'
                           />
@@ -95,7 +95,7 @@ const UserHeader: React.FC<Props> = ({user}) => {
                       </span>
                       <span className='d-flex align-items-center text-gray-400 text-hover-primary mb-2 mx-10'>
                         <button className='btn btn-danger btn-sm' onClick={openReportModal}>
-                          <KTSVG
+                          <EZSVG
                             path='/media/icons/duotune/general/gen044.svg'
                             className='svg-icon-4 me-1'
                           />

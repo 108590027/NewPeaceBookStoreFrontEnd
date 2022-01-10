@@ -1,7 +1,7 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
 import createTagAPI from '../../tag/API/CreateTagAPI'
@@ -165,7 +165,7 @@ const AdminTagsPage: FC = () => {
                   data-bs-dismiss='modal'
                   aria-label='Close'
                 >
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/arrows/arr061.svg'
                     className='svg-icon svg-icon-2x'
                   />
@@ -213,7 +213,7 @@ const AdminTagsPage: FC = () => {
                   data-bs-dismiss='modal'
                   aria-label='Close'
                 >
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/arrows/arr061.svg'
                     className='svg-icon svg-icon-2x'
                   />

@@ -1,7 +1,7 @@
 import React, {FC, useState} from 'react'
 import {useLocation} from 'react-router-dom'
 import {PageTitle} from '../../../../system/layout/core'
-import {Card4} from '../../../../system/partials/content/cards/Card4'
+import {ItemCard} from './ItemCard'
 import {ItemModel} from '../redux/ItemModel'
 import getItemsByKeywordAPI from '../API/GetItemsByKeywordAPI'
 
@@ -33,7 +33,7 @@ const SearchPage: FC = () => {
       <div className='row g-6 g-xl-9 mb-6 mb-xl-9'>
         {items.map((item) => (
           <div className='col-12 col-sm-6 col-lg-4 col-xl-3' key={item.id}>
-            <Card4
+            <ItemCard
               icon={
                 item.images[0] ? item.images[0].photo : '/media/icons/duotune/ecommerce/ecm005.svg'
               }

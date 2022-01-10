@@ -1,7 +1,7 @@
 import React from 'react'
 import clsx from 'clsx'
 import {useLocation} from 'react-router'
-import {checkIsActive, KTSVG} from '../../../helpers'
+import {checkIsActive, EZSVG} from '../../../helpers'
 import {useLayout} from '../../core'
 
 type Props = {
@@ -38,7 +38,7 @@ const AsideMenuItemWithSub: React.FC<Props> = ({
         )}
         {icon && aside.menuIcon === 'svg' && (
           <span className='menu-icon'>
-            <KTSVG path={icon} className='svg-icon-2' />
+            <EZSVG path={icon} className='svg-icon-2' />
           </span>
         )}
         {fontIcon && aside.menuIcon === 'font' && <i className={clsx('bi fs-3', fontIcon)}></i>}

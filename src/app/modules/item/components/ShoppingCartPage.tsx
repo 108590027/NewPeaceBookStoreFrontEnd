@@ -1,9 +1,9 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {shallowEqual, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
+import {Link, useHistory} from 'react-router-dom'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageTitle} from '../../../../system/layout/core'
 import {RootState} from '../../../../setup'
 import {ItemState} from '../../item/redux/ItemRedux'
@@ -259,7 +259,9 @@ const ShoppingCartPage: FC = () => {
                         <div className='ms-5'>
                           <span className='text-gray-800 fs-5 fw-bolder'>{item.name}</span>
                           <div className='d-flex flex-wrap gap-3'>
-                            <div className='text-muted fs-7'>{item.owner.name}</div>
+                            <Link to={`/user/${item.owner.id}`} className='fs-7'>
+                              {item.owner.name}
+                            </Link>
                             <div className='fw-bold fs-7'>
                               單價: $
                               <span data-kt-ecommerce-edit-order-filter='price'>{item.price}</span>
@@ -281,7 +283,7 @@ const ShoppingCartPage: FC = () => {
               <div className='separator'></div>
               <div className='d-flex align-items-center position-relative mb-n7'>
                 <span className='svg-icon svg-icon-1 position-absolute ms-4'>
-                  <KTSVG
+                  <EZSVG
                     path='/media/icons/duotune/general/gen021.svg'
                     className='svg-icon svg-icon-2x'
                   />
@@ -290,7 +292,7 @@ const ShoppingCartPage: FC = () => {
                   type='text'
                   data-kt-ecommerce-edit-order-filter='search'
                   className='form-control form-control-solid w-100 ps-14'
-                  placeholder='Search Products By Name'
+                  placeholder='搜尋商品名稱...'
                   value={search}
                   onChange={(e) => filterSearch(e.target.value)}
                 />
@@ -339,6 +341,7 @@ const ShoppingCartPage: FC = () => {
                                     className='form-check-input'
                                     type='checkbox'
                                     value='1'
+                                    checked={checkedItems.indexOf(item) !== -1}
                                     onChange={(e) => checkItem(item, e.target.checked)}
                                   />
                                 </div>
@@ -367,7 +370,9 @@ const ShoppingCartPage: FC = () => {
                                       {item.name}
                                     </span>
                                     <div className='d-flex flex-wrap gap-3'>
-                                      <div className='text-muted fs-7'>{item.owner.name}</div>
+                                      <Link to={`/user/${item.owner.id}`} className='fs-7'>
+                                        {item.owner.name}
+                                      </Link>
                                       <div className='fw-bold fs-7'>
                                         單價: $
                                         <span data-kt-ecommerce-edit-order-filter='price'>
@@ -424,7 +429,7 @@ const ShoppingCartPage: FC = () => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />

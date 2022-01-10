@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react'
-import {KTSVG} from '../../../system/helpers'
+import {EZSVG} from '../../../system/helpers'
 import {Link} from 'react-router-dom'
 import {useLocation} from 'react-router'
 import {shallowEqual, useSelector} from 'react-redux'
@@ -55,7 +55,7 @@ const AccountHeader: React.FC = () => {
                     href={`/category/${major?.id}`}
                     className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                   >
-                    <KTSVG
+                    <EZSVG
                       path='/media/icons/duotune/communication/com006.svg'
                       className='svg-icon-4 me-1'
                     />
@@ -65,7 +65,7 @@ const AccountHeader: React.FC = () => {
                     href={`mailto:${user.email}`}
                     className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                   >
-                    <KTSVG
+                    <EZSVG
                       path='/media/icons/duotune/communication/com011.svg'
                       className='svg-icon-4 me-1'
                     />

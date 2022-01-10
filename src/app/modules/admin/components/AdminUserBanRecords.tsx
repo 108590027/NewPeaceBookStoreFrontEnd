@@ -1,8 +1,8 @@
 import {Modal} from 'bootstrap'
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../system/helpers'
-import {toInputDate} from '../../../utils/DateUtil'
+import {EZSVG} from '../../../../system/helpers'
+import {toInputDate} from '../../../../system/helpers/DateUtil'
 import {BanRecordModel, UserModel} from '../../auth/redux/AuthModel'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
 import createBanRecordAPI from '../API/CreateBanRecordAPI'
@@ -151,7 +151,7 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />
@@ -213,7 +213,7 @@ const AdminUserBanRecords: FC<Props> = ({user}) => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />

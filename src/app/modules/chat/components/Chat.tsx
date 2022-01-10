@@ -3,8 +3,8 @@ import React, {FC, Fragment, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {useLocation} from 'react-router-dom'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../system/helpers'
-import {ChatInner} from '../../../../system/partials'
+import {EZSVG} from '../../../../system/helpers'
+import {ChatInner} from './ChatInner'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {UserModel} from '../../auth/redux/AuthModel'
 import {IAuthState} from '../../auth/redux/AuthRedux'
@@ -37,7 +37,7 @@ const Chat: FC = () => {
         <div className='card card-flush'>
           <div className='card-header pt-7' id='kt_chat_contacts_header'>
             <form className='w-100 position-relative' autoComplete='off'>
-              <KTSVG
+              <EZSVG
                 path='/media/icons/duotune/general/gen021.svg'
                 className='svg-icon-2 svg-icon-lg-1 svg-icon-gray-500 position-absolute top-50 ms-5 translate-middle-y'
               />

@@ -1,6 +1,6 @@
 import React, {FC, useState} from 'react'
 import {toast} from 'react-toastify'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {UserModel} from '../../auth/redux/AuthModel'
 import createReportAPI from '../API/CreateReportAPI'
 import {ErrorResponse} from '../../errors/ErrorDataTypes'
@@ -49,7 +49,7 @@ const ReportModal: FC<Props> = ({user}) => {
                 data-bs-dismiss='modal'
                 aria-label='Close'
               >
-                <KTSVG
+                <EZSVG
                   path='/media/icons/duotune/arrows/arr061.svg'
                   className='svg-icon svg-icon-2x'
                 />

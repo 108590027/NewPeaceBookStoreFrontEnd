@@ -3,7 +3,7 @@ import React, {FC, useState} from 'react'
 import {useSelector} from 'react-redux'
 import {Link, match, Redirect, Route, Switch, useLocation} from 'react-router-dom'
 import {RootState} from '../../../../setup'
-import {KTSVG} from '../../../../system/helpers'
+import {EZSVG} from '../../../../system/helpers'
 import {PageLink, PageTitle} from '../../../../system/layout/core'
 import getUserAPI from '../../auth/API/GetUserAPI'
 import {IAuthState} from '../../auth/redux/AuthRedux'
@@ -67,7 +67,7 @@ const AdminUserPage: FC<Props> = (props) => {
                     </a>
                     {user?.phone_verify !== null ? (
                       <a href='#'>
-                        <KTSVG
+                        <EZSVG
                           path='/media/icons/duotune/general/gen026.svg'
                           className='svg-icon-1 svg-icon-primary'
                         />
@@ -82,7 +82,7 @@ const AdminUserPage: FC<Props> = (props) => {
                       href='#'
                       className='d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2'
                     >
-                      <KTSVG
+                      <EZSVG
                         path='/media/icons/duotune/communication/com006.svg'
                         className='svg-icon-4 me-1'
                       />
@@ -92,7 +92,7 @@ const AdminUserPage: FC<Props> = (props) => {
                       href='#'
                       className='d-flex align-items-center text-gray-400 text-hover-primary mb-2'
                     >
-                      <KTSVG
+                      <EZSVG
                         path='/media/icons/duotune/communication/com011.svg'
                         className='svg-icon-4 me-1'
                       />
