@@ -18,7 +18,7 @@ const initialValues = {
   changepassword: '',
   acceptTerms: false,
   sid: '',
-  major: 0,
+  major: 1,
 }
 
 const registrationSchema = Yup.object().shape({
@@ -85,33 +85,22 @@ export function Registration() {
       id='kt_login_signup_form'
       onSubmit={formik.handleSubmit}
     >
-      {/* begin::Heading */}
       <div className='mb-10 text-center'>
-        {/* begin::Title */}
         <h1 className='text-dark mb-3'>會員註冊</h1>
-        {/* end::Title */}
-
-        {/* begin::Link */}
         <div className='text-gray-400 fw-bold fs-4'>
           <Link to='/auth/login' className='link-primary fw-bolder' style={{marginLeft: '5px'}}>
             有帳號了嗎?
           </Link>
         </div>
-        {/* end::Link */}
       </div>
-      {/* end::Heading */}
-      {/* end::Action */}
 
       {formik.status && (
         <div className='mb-lg-15 alert alert-danger'>
           <div className='alert-text font-weight-bold'>{formik.status}</div>
         </div>
       )}
-
-      {/* begin::Form group Firstname */}
       <div className='row fv-row mb-7'>
         <div className='col-xl-12'>
-          {/* begin::Form group Lastname */}
           <div className='fv-row mb-5'>
             <label className='form-label fw-bolder text-dark fs-6'>名稱</label>
             <input
@@ -166,9 +155,6 @@ export function Registration() {
           </div>
         )}
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group Password */}
       <div className='mb-10 fv-row' data-kt-password-meter='true'>
         <div className='mb-1'>
           <label className='form-label fw-bolder text-dark fs-6'>密碼</label>
@@ -198,9 +184,6 @@ export function Registration() {
           </div>
         </div>
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group Confirm password */}
       <div className='fv-row mb-5'>
         <label className='form-label fw-bolder text-dark fs-6'>確認密碼</label>
         <input
@@ -272,9 +255,6 @@ export function Registration() {
           </div>
         )}
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group */}
       <div className='fv-row mb-10'>
         <div className='form-check form-check-custom form-check-solid'>
           <input
@@ -301,9 +281,6 @@ export function Registration() {
           )}
         </div>
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group */}
       <div className='text-center'>
         <button
           type='submit'
@@ -329,7 +306,6 @@ export function Registration() {
           </button>
         </Link>
       </div>
-      {/* end::Form group */}
     </form>
   )
 }
