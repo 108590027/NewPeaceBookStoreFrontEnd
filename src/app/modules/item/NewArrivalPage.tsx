@@ -288,15 +288,11 @@ const NewArrivalPage: FC = () => {
                   value={createDepartment}
                   onChange={(e) => setCreateDepartment(parseInt(e.target.value))}
                 >
-                  {categoryState.categories.map((category, i) =>
-                    category.is_department ? (
-                      <option key={`category${i}`} value={category.id}>
-                        {category.name}
-                      </option>
-                    ) : (
-                      <></>
-                    )
-                  )}
+                  {categoryState.categories.map((category, i) => (
+                    <option key={`category${i}`} value={category.id}>
+                      {category.name}
+                    </option>
+                  ))}
                 </select>
               </div>
               <div className='mb-10 fv-row'>
