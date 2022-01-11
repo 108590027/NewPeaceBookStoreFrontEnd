@@ -40,44 +40,30 @@ class StepperComponent {
     this.element = _element
     this.options = Object.assign(defaultStepperOptions, options)
     this.instanceUid = getUniqueIdWithPrefix('stepper')
-
-    // Elements
     this.steps = this.element.querySelectorAll('[data-kt-stepper-element="nav"]')
     this.btnNext = this.element.querySelector('[data-kt-stepper-action="next"]')
     this.btnPrev = this.element.querySelector('[data-kt-stepper-action="previous"]')
     this.btnSubmit = this.element.querySelector('[data-kt-stepper-action="submit"]')
-
-    // Variables
     this.totatStepsNumber = this.steps?.length | 0
     this.passedStepIndex = 0
     this.currentStepIndex = 1
-
-    // Set Current Step
     if (this.options.startIndex > 1) {
       this._goTo(this.options.startIndex)
     }
-
-    // Event Handlers
     this.initHandlers()
-
-    // Bind Instance
     DataUtil.set(this.element, 'stepper', this)
   }
 
   private _goTo = (index: number) => {
     EventHandlerUtil.trigger(this.element, 'kt.stepper.change')
-    // Skip if this step is already shown
     if (index === this.currentStepIndex || index > this.totatStepsNumber || index < 0) {
       return
     }
 
-    // Validate step number
     index = parseInt(index.toString())
-    // Set current step
     this.passedStepIndex = this.currentStepIndex
     this.currentStepIndex = index
 
-    // Refresh elements
     this.refreshUI()
 
     EventHandlerUtil.trigger(this.element, 'kt.stepper.changed')
@@ -149,14 +135,12 @@ class StepperComponent {
       state = 'between'
     }
 
-    // Set state class
     this.element.classList.remove('last')
     this.element.classList.remove('first')
     this.element.classList.remove('between')
 
     this.element.classList.add(state)
 
-    // Step Items
     const elements = this.element.querySelectorAll(
       '[data-kt-stepper-element="nav"], [data-kt-stepper-element="content"], [data-kt-stepper-element="info"]'
     )
@@ -210,11 +194,6 @@ class StepperComponent {
     return this.isLastStep() === false && this.isFirstStep() === false
   }
 
-  //   ///////////////////////
-  //   // ** Public API  ** //
-  //   ///////////////////////
-
-  //   // Plugin API
   public goto = (index: number) => {
     return this._goTo(index)
   }
@@ -263,7 +242,6 @@ class StepperComponent {
     return this.element
   }
 
-  // Event API
   public on = (name: string, handler: Function) => {
     return EventHandlerUtil.on(this.element, name, handler)
   }
@@ -283,8 +261,6 @@ class StepperComponent {
   public trigger = (name: string, event: Event) => {
     return EventHandlerUtil.trigger(this.element, name, event)
   }
-
-  // Static methods
   public static hasInstace(element: HTMLElement): boolean {
     return DataUtil.has(element, 'stepper')
   }
@@ -295,8 +271,6 @@ class StepperComponent {
     }
     return null
   }
-
-  // Create Instances
   public static createInstances(selector: string): void {
     const elements = document.body.querySelectorAll(selector)
     elements.forEach((element) => {

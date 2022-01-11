@@ -14,13 +14,9 @@ const AuthInit: FC<PropsFromRedux> = (props) => {
   const [showSplashScreen, setShowSplashScreen] = useState(true)
   const accessToken = useSelector<RootState>(({auth}) => auth.auth?.accessToken, shallowEqual)
 
-  // We should request user by authToken before rendering the application
   useEffect(() => {
     const requestUser = async () => {
       try {
-        if (!didRequest.current) {
-          // TODO: 更新權杖
-        }
       } catch (error) {
         console.error(error)
         if (!didRequest.current) {

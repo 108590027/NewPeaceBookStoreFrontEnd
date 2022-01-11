@@ -113,7 +113,6 @@ const ItemUpdatePage: FC<Props> = (props) => {
             data-kt-swapper-parent="{default: '#kt_content_container'}"
             className='page-title d-flex align-items-center flex-wrap me-3 mb-5 mb-lg-0'
           ></div>
-          {/* begin::Product */}
           <div className='card card-flush py-4'>
             <div className='card-header'>
               <div className='card-title'>

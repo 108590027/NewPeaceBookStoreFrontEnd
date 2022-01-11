@@ -17,7 +17,6 @@ const SplashScreenProvider: FC = ({children}) => {
   useEffect(() => {
     const splashScreen = document.getElementById('splash-screen')
 
-    // Show SplashScreen
     if (splashScreen && visible) {
       splashScreen.classList.remove('hidden')
 
@@ -26,7 +25,6 @@ const SplashScreenProvider: FC = ({children}) => {
       }
     }
 
-    // Hide SplashScreen
     let timeout: number
     if (splashScreen && !visible) {
       timeout = window.setTimeout(() => {
@@ -43,7 +41,6 @@ const SplashScreenProvider: FC = ({children}) => {
 }
 
 const LayoutSplashScreen: FC<{visible?: boolean}> = ({visible = true}) => {
-  // Everything are ready - remove splashscreen
   const setCount = useContext(SplashScreenContext)
 
   useEffect(() => {

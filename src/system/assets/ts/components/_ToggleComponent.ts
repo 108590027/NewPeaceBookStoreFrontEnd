@@ -1,5 +1,4 @@
 import {DataUtil, getUniqueIdWithPrefix, EventHandlerUtil} from '../_utils/index'
-// Helpers
 import {CookieComponent} from './_CookieComponent'
 
 export interface ToggleOptions {
@@ -33,12 +32,7 @@ class ToggleComponent {
     const elementToggleAttr = this.element.getAttribute('data-kt-toggle-state')
     this.state = elementToggleAttr || ''
     this.attribute = 'data-kt-' + this.element.getAttribute('data-kt-toggle-name')
-
-    // Event Handlers
     this._handlers()
-
-    // Update Instance
-    // Bind Instance
     DataUtil.set(this.element, 'toggle', this)
   }
 
@@ -49,9 +43,7 @@ class ToggleComponent {
     })
   }
 
-  // Event handlers
   private _toggle = () => {
-    // Trigger "after.toggle" event
     EventHandlerUtil.trigger(this.element, 'kt.toggle.change')
 
     if (this._isEnabled()) {
@@ -59,8 +51,6 @@ class ToggleComponent {
     } else {
       this._enable()
     }
-
-    // Trigger "before.toggle" event
     EventHandlerUtil.trigger(this.element, 'kt.toggle.changed')
     return this
   }
@@ -112,12 +102,6 @@ class ToggleComponent {
     return String(this.target.getAttribute(this.attribute)).toLowerCase() === 'on'
   }
 
-  ///////////////////////
-  // ** Public API  ** //
-  ///////////////////////
-
-  // Plugin API
-  // Plugin API
   public toggle = () => {
     return this._toggle()
   }
@@ -138,7 +122,6 @@ class ToggleComponent {
     return this.element
   }
 
-  // Event API
   public on = (name: string, handler: Function) => {
     return EventHandlerUtil.on(this.element, name, handler)
   }
@@ -155,7 +138,6 @@ class ToggleComponent {
     return EventHandlerUtil.trigger(this.element, name, event)
   }
 
-  // Static methods
   public static getInstance = (el: HTMLElement) => {
     const toggleElement = DataUtil.get(el, 'toggle')
     if (toggleElement) {

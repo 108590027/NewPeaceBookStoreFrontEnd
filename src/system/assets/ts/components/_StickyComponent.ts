@@ -45,13 +45,8 @@ class StickyComponent {
     this.attributeName = 'data-kt-sticky-' + this.instanceName
     this.eventTriggerState = true
     this.lastScrollTop = 0
-
-    // Event Handlers
     window.addEventListener('scroll', this.scroll)
-
-    // Initial Launch
     this.scroll()
-
     DataUtil.set(this.element, 'sticky', this)
   }
 
@@ -59,7 +54,6 @@ class StickyComponent {
     let offset = this.getOption('offset')
     let reverse = this.getOption('reverse')
 
-    // Exit if false
     if (offset === false) {
       return
     }
@@ -71,9 +65,7 @@ class StickyComponent {
 
     const st = getScrollTop()
 
-    // Reverse scroll mode
     if (reverse === true) {
-      // Release on reverse scroll mode
       if (st > offsetNum && this.lastScrollTop < st) {
         if (document.body.hasAttribute(this.attributeName) === false) {
           this.enable()
@@ -87,7 +79,6 @@ class StickyComponent {
           this.eventTriggerState = false
         }
       } else {
-        // Back scroll mode
         if (document.body.hasAttribute(this.attributeName)) {
           this.disable()
           document.body.removeAttribute(this.attributeName)
@@ -105,7 +96,6 @@ class StickyComponent {
       return
     }
 
-    // Classic scroll mode
     if (st > offsetNum) {
       if (document.body.hasAttribute(this.attributeName) === false) {
         this.enable()
@@ -118,7 +108,6 @@ class StickyComponent {
         this.eventTriggerState = false
       }
     } else {
-      // back scroll mode
       if (document.body.hasAttribute(this.attributeName) === true) {
         this.disable()
         document.body.removeAttribute(this.attributeName)
@@ -165,7 +154,6 @@ class StickyComponent {
   private enable = (update: boolean = false) => {
     const top = this.getOption('top')
     const left = this.getOption('left')
-    // const right = this.getOption("right");
     let width = this.getOption('width')
     const zindex = this.getOption('zindex')
 
@@ -213,8 +201,6 @@ class StickyComponent {
       document.body.setAttribute(this.attributeName, 'on')
     }
   }
-
-  // Event API
   public on = (name: string, callBack: Function) => {
     return EventHandlerUtil.on(this.element, name, callBack)
   }
@@ -230,8 +216,6 @@ class StickyComponent {
   public trigger = (name: string) => {
     return EventHandlerUtil.trigger(this.element, name)
   }
-
-  // Static methods
   public static hasInstace(element: HTMLElement) {
     return DataUtil.has(element, 'sticky')
   }
@@ -241,8 +225,6 @@ class StickyComponent {
       return DataUtil.get(element, 'sticky')
     }
   }
-
-  // Create Instances
   public static createInstances(selector: string) {
     const elements = document.body.querySelectorAll(selector)
     elements.forEach((element) => {

@@ -8,23 +8,23 @@ export const DefaultLayoutConfig: ILayout = {
   },
   loader: {
     display: true,
-    type: 'default', // Set default|spinner-message|spinner-logo to hide or show page loader
+    type: 'default',
   },
   scrolltop: {
     display: true,
   },
   header: {
-    display: true, // Set true|false to show or hide Header
-    width: 'fluid', // Set fixed|fluid to change width type
+    display: true,
+    width: 'fluid',
     left: 'menu',
     fixed: {
-      desktop: true, // Set true|false to set fixed Header for desktop mode
-      tabletAndMobile: true, // Set true|false to set fixed Header for tablet and mobile modes
+      desktop: true,
+      tabletAndMobile: true,
     },
     menuIcon: 'svg',
   },
   megaMenu: {
-    display: true, // Set true|false to show or hide Mega Menu
+    display: true,
   },
   aside: {
     display: true,
@@ -37,12 +37,12 @@ export const DefaultLayoutConfig: ILayout = {
     menuIcon: 'svg',
   },
   content: {
-    width: 'fixed', // Set fixed|fluid to change width
+    width: 'fixed',
     layout: 'default',
   },
   toolbar: {
-    display: true, // Display toolbar
-    width: 'fluid', // Set fixed|fluid to change width type,
+    display: true,
+    width: 'fluid',
     fixed: {
       desktop: true,
       tabletAndMobileMode: true,
@@ -72,7 +72,7 @@ export const DefaultLayoutConfig: ILayout = {
     },
   },
   footer: {
-    width: 'fluid', // Set fixed|fluid to change width type
+    width: 'fluid',
   },
   pageTitle: {
     display: true,

@@ -19,16 +19,10 @@ export class ElementAnimateUtil {
         return (c * t) / d + b
       },
     }
-
-    // Create mock done() function if necessary
     if (!complete) {
       complete = function () {}
     }
-
-    // Animation loop
-    // let canceled = false;
     const change = to - from
-
     function loop(timestamp: number) {
       var time = (timestamp || +new Date()) - start
 
@@ -46,8 +40,6 @@ export class ElementAnimateUtil {
     }
 
     update(from)
-
-    // Start animation loop
     const start =
       window.performance && window.performance.now ? window.performance.now() : +new Date()
 
@@ -101,9 +93,8 @@ export class ElementAnimateUtil {
 
     ElementAnimateUtil.animate(from, to, duration, function (value: number) {
       document.documentElement.scrollTop = value
-      // document.body.parentNode.scrollTop = value;
       document.body.scrollTop = value
-    }) //, easing, done
+    })
   }
   public static scrollTop(offset: number, duration: number) {
     ElementAnimateUtil.scrollTo(null, offset, duration)

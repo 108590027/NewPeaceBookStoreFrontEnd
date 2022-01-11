@@ -56,13 +56,9 @@ class PasswordMeterComponent {
     this.queries = _queries
     this.score = 0
     this.checkSteps = 5
-
-    // Elements
     this.inputElement = this.element.querySelector(this.queries.inputQuery)
     this.visibilityElement = this.element.querySelector(this.queries.visibilityQuery)
     this.highlightElement = this.element.querySelector(this.queries.highlightQuery)
-
-    // Event Handlers
     this.handlers()
 
     DataUtil.set(this.element, this.queries.componentName, this)

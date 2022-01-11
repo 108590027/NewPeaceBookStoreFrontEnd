@@ -1,17 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-// Redux
-// https://github.com/rt2zz/redux-persist
+
 import {PersistGate} from 'redux-persist/integration/react'
 import {Provider} from 'react-redux'
 import * as _redux from './setup'
 import store, {persistor} from './setup/redux/Store'
 import {ToastContainer} from 'react-toastify'
-// Axios
+
 import axios from 'axios'
 import {Chart, registerables} from 'chart.js'
 
-// Apps
 import {App} from './app/App'
 import './system/assets/sass/style.scss'
 import './system/assets/sass/style.react.scss'

@@ -23,9 +23,7 @@ const AsideDefault: FC = () => {
       data-kt-drawer-direction='start'
       data-kt-drawer-toggle='#kt_aside_mobile_toggle'
     >
-      {/* begin::Brand */}
       <div className='aside-logo flex-column-auto' id='kt_aside_logo'>
-        {/* begin::Logo */}
         {aside.theme === 'dark' && (
           <Link to='/dashboard'>
             <img
@@ -44,9 +42,6 @@ const AsideDefault: FC = () => {
             />
           </Link>
         )}
-        {/* end::Logo */}
-
-        {/* begin::Aside toggler */}
         {aside.minimize && (
           <div
             id='kt_aside_toggle'
@@ -62,17 +57,10 @@ const AsideDefault: FC = () => {
             />
           </div>
         )}
-        {/* end::Aside toggler */}
       </div>
-      {/* end::Brand */}
-
-      {/* begin::Aside menu */}
       <div className='aside-menu flex-column-fluid'>
         <AsideMenu asideMenuCSSClasses={classes.asideMenu} />
       </div>
-      {/* end::Aside menu */}
-
-      {/* end::Footer */}
     </div>
   )
 }

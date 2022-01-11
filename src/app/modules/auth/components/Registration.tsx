@@ -126,12 +126,8 @@ export function Registration() {
               </div>
             )}
           </div>
-          {/* end::Form group */}
         </div>
       </div>
-      {/* end::Form group */}
-
-      {/* begin::Form group Email */}
       <div className='fv-row mb-7'>
         <label className='form-label fw-bolder text-dark fs-6'>北科信箱</label>
         <input

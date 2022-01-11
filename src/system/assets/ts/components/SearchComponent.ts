@@ -13,12 +13,12 @@ import {
 import {MenuComponent, defaultMenuOptions} from './MenuComponent'
 
 export interface ISearchOptions {
-  minLength: number // Miniam text lenght to query search
-  keypress: boolean // Enable search on keypress
-  enter: boolean // Enable search on enter key press
-  layout: 'menu' | 'inline' // Use 'menu' or 'inline' layout options to display search results
-  responsive?: number // Pass integer value or bootstrap compatible breakpoint key(sm,md,lg,xl,xxl) to enable reponsive form mode for device width below the breakpoint value
-  showOnFocus: boolean // Always show menu on input focus
+  minLength: number
+  keypress: boolean
+  enter: boolean
+  layout: 'menu' | 'inline'
+  responsive?: number
+  showOnFocus: boolean
 }
 
 export interface ISearchQueries {
@@ -28,11 +28,11 @@ export interface ISearchQueries {
 }
 
 const defaultSearchOptions: ISearchOptions = {
-  minLength: 2, // Miniam text lenght to query search
-  keypress: true, // Enable search on keypress
-  enter: true, // Enable search on enter key press
-  layout: 'menu', // Use 'menu' or 'inline' layout options to display search results
-  showOnFocus: true, // Always show menu on input focus
+  minLength: 2,
+  keypress: true,
+  enter: true,
+  layout: 'menu',
+  showOnFocus: true,
 }
 
 const defaultSearchQueires: ISearchQueries = {
@@ -63,11 +63,9 @@ class SearchComponent {
   menuObject: MenuComponent | undefined
 
   constructor(_element: HTMLElement, _options: ISearchOptions, _queries: ISearchQueries) {
-    // Variables
     this.options = Object.assign(defaultSearchOptions, _options)
     this.queries = _queries
 
-    // Elements
     this.element = _element
     this.contentElement = this._getElement('content') as HTMLElement
     this.formElement = this._getElement('form') as HTMLFormElement
@@ -82,16 +80,13 @@ class SearchComponent {
     this.suggestionElement = this._getElement('suggestion') as HTMLElement
     this.emptyElement = this._getElement('empty') as HTMLElement
 
-    // Layout
     this.layout = this.getOption('layout')
     if (this.layout === 'menu') {
       this.menuObject = new MenuComponent(this.contentElement, defaultMenuOptions)
     }
 
-    // Update
     this.update()
 
-    // Event Handlers
     this.handlers()
 
     DataUtil.set(this.element, this.queries.componentName, this)
@@ -101,7 +96,6 @@ class SearchComponent {
     return this.element.querySelector('[data-kt-search-element="' + name + '"]')
   }
 
-  // Get option
   private getOption = (name: string) => {
     const attr = this.element.getAttribute(`${this.queries.attrQuery}${name}`)
     if (attr) {
@@ -126,7 +120,6 @@ class SearchComponent {
     }
   }
 
-  // Check if responsive form mode is enabled
   private getResponsiveFormMode = () => {
     const responsive = this.getOption('responsive') as string
     const width = getViewPort().width
@@ -150,7 +143,6 @@ class SearchComponent {
     }
   }
 
-  // Focus
   private focus = () => {
     this.element.classList.add('focus')
 
@@ -162,12 +154,10 @@ class SearchComponent {
     }
   }
 
-  // Blur
   private blur = () => {
     this.element.classList.remove('focus')
   }
 
-  // Enter
   private enter = (e: KeyboardEvent) => {
     const key = e.charCode || e.keyCode || 0
 
@@ -178,7 +168,6 @@ class SearchComponent {
     }
   }
 
-  // Input
   private input = () => {
     if (this.getOption('min-length')) {
       const minLength = parseInt(this.getOption('min-length') as string)
@@ -192,35 +181,27 @@ class SearchComponent {
   }
 
   private handlers(): void {
-    // Focus
     this.inputElement.addEventListener('focus', this.focus)
 
-    // Blur
     this.inputElement.addEventListener('blur', this.blur)
 
-    // Keypress
     if (this.getOption('keypress') === true) {
       this.inputElement.addEventListener('input', this.input)
     }
 
-    // Submit
     if (this.submitElement) {
       this.submitElement.addEventListener('click', this.search)
     }
 
-    // Enter
     if (this.getOption('enter') === true) {
       this.inputElement.addEventListener('keypress', this.enter)
     }
 
-    // Clear
     if (this.clearElement) {
       this.clearElement.addEventListener('click', this.clear)
     }
 
-    // Menu
     if (this.menuObject) {
-      // Toggle menu
       if (this.toggleElement) {
         this.toggleElement.addEventListener('click', this.show)
 
@@ -251,7 +232,6 @@ class SearchComponent {
       })
     }
 
-    // Window resize handling
     window.addEventListener('resize', () => {
       let timer
 
@@ -265,12 +245,7 @@ class SearchComponent {
     })
   }
 
-  ///////////////////////
-  // ** Public API  ** //
-  ///////////////////////
-  // Update
   public update = () => {
-    // Handle responsive form
     if (this.layout === 'menu') {
       let responsiveFormMode = this.getResponsiveFormMode()
 
@@ -287,43 +262,34 @@ class SearchComponent {
     }
   }
 
-  // Show menu
   public show = () => {
     if (this.menuObject) {
       this.update()
-
       this.menuObject.show(this.element)
     }
   }
 
-  // Hide menu
   public hide = () => {
     if (this.menuObject) {
       this.update()
-
       this.menuObject.hide(this.element)
     }
   }
 
-  // Search
   public search = () => {
     if (this.processing === false) {
-      // Show search spinner
       if (this.spinnerElement) {
         this.spinnerElement.classList.remove('d-none')
       }
 
-      // Hide search clear button
       if (this.clearElement) {
         this.clearElement.classList.add('d-none')
       }
 
-      // Hide search toolbar
       if (this.toolbarElement) {
         this.toolbarElement.classList.add('d-none')
       }
 
-      // Focus input
       this.inputElement.focus()
 
       this.processing = true
@@ -331,13 +297,11 @@ class SearchComponent {
     }
   }
 
-  // Complete
   public complete = () => {
     if (this.spinnerElement) {
       this.spinnerElement.classList.add('d-none')
     }
 
-    // Show search toolbar
     if (this.clearElement) {
       this.clearElement.classList.remove('d-none')
     }
@@ -346,7 +310,6 @@ class SearchComponent {
       this.clear()
     }
 
-    // Focus input
     this.inputElement.focus()
 
     this.show()
@@ -354,27 +317,22 @@ class SearchComponent {
     this.processing = false
   }
 
-  // Clear
   public clear = () => {
     if (EventHandlerUtil.trigger(this.element, 'kt.search.clear') === false) {
       return
     }
 
-    // Clear and focus input
     this.inputElement.value = ''
     this.inputElement.focus()
 
-    // Hide clear icon
     if (this.clearElement) {
       this.clearElement.classList.add('d-none')
     }
 
-    // Show search toolbar
     if (this.toolbarElement) {
       this.toolbarElement.classList.remove('d-none')
     }
 
-    // Hide menu
     if (this.getOption('show-on-focus') === false) {
       this.hide()
     }
@@ -410,7 +368,6 @@ class SearchComponent {
     return this.element
   }
 
-  // Event API
   public on = (name: string, handler: Function) => {
     return EventHandlerUtil.on(this.element, name, handler)
   }
@@ -423,7 +380,6 @@ class SearchComponent {
     return EventHandlerUtil.off(this.element, name)
   }
 
-  // Static methods
   public static getInstance = (
     el: HTMLElement,
     componentName: string = defaultSearchQueires.componentName

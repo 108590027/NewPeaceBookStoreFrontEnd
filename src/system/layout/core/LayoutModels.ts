@@ -23,14 +23,14 @@ export interface IMegaMenu {
 }
 
 export interface IAside {
-  display: boolean // Display aside
-  theme: 'dark' | 'light' // Set aside theme(dark|light)
-  menu: 'main' | 'documentation' // Set aside menu(main|documentation)
-  fixed: boolean // Enable aside fixed mode
-  minimized: boolean // Set aside minimized by default
-  minimize: boolean // Allow aside minimize toggle
-  hoverable: boolean // Allow aside hovering when minimized
-  menuIcon: 'svg' | 'font' // Menu icon type(svg|font)
+  display: boolean
+  theme: 'dark' | 'light'
+  menu: 'main' | 'documentation'
+  fixed: boolean
+  minimized: boolean
+  minimize: boolean
+  hoverable: boolean
+  menuIcon: 'svg' | 'font'
 }
 
 export interface IContent {
@@ -56,8 +56,8 @@ export interface IToolbar {
   display: boolean
   width: 'fixed' | 'fluid'
   fixed: {
-    desktop: boolean // Set fixed header for desktop
-    tabletAndMobileMode: boolean // Set fixed header for talet & mobile
+    desktop: boolean
+    tabletAndMobileMode: boolean
   }
   layout: 'toolbar1' | 'toolbar2' | 'toolbar3' | 'toolbar4' | 'toolbar5'
   layouts: {

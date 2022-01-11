@@ -219,8 +219,6 @@ const NewArrivalPage: FC = () => {
               </div>
             </div>
           </div>
-          {/* end::Media */}
-          {/* begin::Product */}
           <div className='card card-flush py-4'>
             <div className='card-header'>
               <div className='card-title'>

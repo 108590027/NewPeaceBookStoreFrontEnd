@@ -297,7 +297,6 @@ const ShoppingCartPage: FC = () => {
                   onChange={(e) => filterSearch(e.target.value)}
                 />
               </div>
-              {/* <!--begin::Table--> */}
               <div className='dataTables_wrapper dt-bootstrap4 no-footer'>
                 <div className='table-responsive'>
                   <div className='dataTables_scroll'>
@@ -346,7 +345,6 @@ const ShoppingCartPage: FC = () => {
                                   />
                                 </div>
                               </td>
-                              {/* <!--begin::Product=--> */}
                               <td>
                                 <div
                                   className='d-flex align-items-center'
@@ -383,7 +381,6 @@ const ShoppingCartPage: FC = () => {
                                   </div>
                                 </div>
                               </td>
-                              {/* <!--end::Product=--> */}
                               <td className='text-center' data-order='19'>
                                 <span className='fw-bolder '>{getBuyQuantity(item.id)}</span>
                               </td>
@@ -414,7 +411,6 @@ const ShoppingCartPage: FC = () => {
               </div>
             </div>
           </div>
-          {/* <!--end::Card header--> */}
           <div className='text-end mt-5 me-5'>{btnOrderShow()}</div>
         </div>
       </div>
