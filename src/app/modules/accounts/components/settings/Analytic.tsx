@@ -35,8 +35,9 @@ export function Analytic() {
   data?.data.rates.forEach((element, i) => {
     if (i === 0) {
       return
+    } else {
+      starNumber[i - 1] = element
     }
-    starNumber[i] = element
   })
   const chartOptions = {
     chart: {
@@ -99,23 +100,24 @@ export function Analytic() {
       data: [] as number[],
     },
   ]
-  const bar = [
+  const barNumber = [
     {
+      name: '數量',
       data: [] as number[],
     },
   ]
   if (data) {
     lines[0].data = dayBuyPrice
     lines[1].data = daySellPrice
-    bar[0].data = starNumber
+    barNumber[0].data = starNumber
   }
-  console.log(data)
+
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body border-top p-9'>
         <div className='row mb-6'>
           <ReactApexChart options={chartOptions} series={lines} type='area' height={600} />
-          <ReactApexChart options={chartOptions1} series={bar} type='bar' height={600} />
+          <ReactApexChart options={chartOptions1} series={barNumber} type='bar' height={600} />
           <div className='col-lg-8'>
             <div className='row'>
               <div className='col-lg-6 fv-row'></div>
