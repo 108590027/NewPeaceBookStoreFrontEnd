@@ -26,20 +26,7 @@ export function Analytic() {
     const date = new Date(element.created_at.replace('T', ' ')).getDate()
     dayValue[date - 1] += 1
   })
-  const dateArr = [
-    '一月',
-    '二月',
-    '三月',
-    '四月',
-    '五月',
-    '六月',
-    '七月',
-    '八月',
-    '九月',
-    '十月',
-    '十一月',
-    '十二月',
-  ]
+
   const chartOptions = {
     chart: {
       height: 350,
