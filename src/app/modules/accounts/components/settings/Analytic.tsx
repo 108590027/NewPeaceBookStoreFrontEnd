@@ -24,7 +24,7 @@ export function Analytic() {
 
   data?.data.buyOrders.forEach((element, i) => {
     const date = new Date(element.created_at.replace('T', ' ')).getDate()
-    dayValue[date - 1] += 1
+    dayValue[date - 1] += element.total_price
   })
 
   const chartOptions = {
@@ -60,9 +60,7 @@ export function Analytic() {
   if (data) {
     lines[0].data = dayValue
   }
-  console.log(data)
-  console.log(dateTemp)
-  console.log(dayValue)
+
   return (
     <div className='card mb-5 mb-xl-10'>
       <div className='card-body border-top p-9'>
