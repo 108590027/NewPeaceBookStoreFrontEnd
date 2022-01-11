@@ -45,7 +45,7 @@ const ItemUpdatePage: FC<Props> = (props) => {
       const result = await getItemAPI(parseInt(props.match.params.id))
       if ('id' in result) {
         setCreateName(result.name)
-        setCreateDescription(result.name)
+        setCreateDescription(result.description)
         setCreatePrice(result.price)
         setCreateQuantity(result.quantity)
         setCreateISBN(result.ISBN)
