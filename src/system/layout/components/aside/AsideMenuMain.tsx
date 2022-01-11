@@ -24,7 +24,7 @@ export function AsideMenuMain() {
       />
       <AsideMenuItem
         to={`/chat`}
-        icon='/media/icons/duotune/art/art002.svg'
+        icon='/media/icons/duotune/communication/com007.svg'
         title={'聊天室'}
         fontIcon='bi-app-indicator'
       />
@@ -37,25 +37,25 @@ export function AsideMenuMain() {
           </div>
           <AsideMenuItem
             to={`/admin/categories`}
-            icon='/media/icons/duotune/art/art002.svg'
+            icon='/media/icons/duotune/files/fil012.svg'
             title={'管理分類'}
             fontIcon='bi-app-indicator'
           />
           <AsideMenuItem
             to={`/admin/users`}
-            icon='/media/icons/duotune/art/art002.svg'
+            icon='/media/icons/duotune/communication/com005.svg'
             title={'管理會員'}
             fontIcon='bi-app-indicator'
           />
           <AsideMenuItem
             to={`/admin/tags`}
-            icon='/media/icons/duotune/art/art002.svg'
+            icon='/media/icons/duotune/communication/com009.svg'
             title={'管理標籤'}
             fontIcon='bi-app-indicator'
           />
           <AsideMenuItem
             to={`/admin/reports`}
-            icon='/media/icons/duotune/art/art002.svg'
+            icon='/media/icons/duotune/general/gen007.svg'
             title={'管理舉報'}
             fontIcon='bi-app-indicator'
           />
@@ -72,7 +72,7 @@ export function AsideMenuMain() {
             <AsideMenuItem
               key={`category-${category.id}`}
               to={`/category/${category.id}`}
-              icon='/media/icons/duotune/art/art002.svg'
+              icon='/media/icons/duotune/coding/cod009.svg'
               title={category.name}
               fontIcon='bi-app-indicator'
             />
