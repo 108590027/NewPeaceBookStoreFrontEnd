@@ -14,16 +14,20 @@ interface Props {
 }
 
 export const Comments: FC<Props> = ({user}) => {
+  const [load, setLoad] = useState(false)
   const [comments, setComments] = useState<CommentModel[]>([])
   const authState: IAuthState = useSelector<RootState>(({auth}) => auth, shallowEqual) as IAuthState
-  if (!authState.auth?.user?.comments) {
+  if (!load) {
+    setLoad(true)
     ;(async () => {
       const result = await getMerchantCommentsAPI(user?.id || 0)
       if (!('message' in result)) {
         setComments([...result])
         result.forEach((comment) => {
-          getUserAPI(comment.user_id)
-        }) 
+          if (!authState.users.find((u) => u.id === comment.user_id)) {
+            getUserAPI(comment.user_id)
+          }
+        })
       }
     })()
   }
@@ -54,11 +58,7 @@ export const Comments: FC<Props> = ({user}) => {
                   <td>{comment.message}</td>
                   <td className='rating justify-content-center'>
                     {[1, 2, 3, 4, 5].map((rate) => (
-                      <div
-                        className={`rating-label ${
-                          comment.rate >= rate ? 'checked' : ''
-                        }`}
-                      >
+                      <div className={`rating-label ${comment.rate >= rate ? 'checked' : ''}`}>
                         <span className='svg-icon svg-icon-2 me-2'>
                           <EZSVG
                             path='/media/icons/duotune/general/gen029.svg'
