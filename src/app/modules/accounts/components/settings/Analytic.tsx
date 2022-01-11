@@ -16,17 +16,21 @@ export function Analytic() {
     })
   }
 
-  const dayValue: number[] = new Array(30).fill(0)
+  const dayBuyPrice: number[] = new Array(31).fill(0)
+  const daySellPrice: number[] = new Array(31).fill(0)
   const dateTemp: number[] = []
-  for (let k = 0; k < 30; k++) {
+  for (let k = 0; k < 31; k++) {
     dateTemp[k] = k + 1
   }
 
-  data?.data.buyOrders.forEach((element, i) => {
+  data?.data.buyOrders.forEach((element) => {
     const date = new Date(element.created_at.replace('T', ' ')).getDate()
-    dayValue[date - 1] += element.total_price
+    dayBuyPrice[date - 1] += element.total_price
   })
-
+  data?.data.sellOrders.forEach((element) => {
+    const date = new Date(element.created_at.replace('T', ' ')).getDate()
+    daySellPrice[date - 1] += element.total_price
+  })
   const chartOptions = {
     chart: {
       height: 350,
@@ -39,7 +43,7 @@ export function Analytic() {
       curve: 'smooth' as 'smooth',
     },
     title: {
-      text: `${'標題'}`,
+      text: `${'本月營收'}`,
       align: 'left' as 'left',
     },
     xaxis: {
@@ -53,12 +57,17 @@ export function Analytic() {
   }
   const lines = [
     {
-      name: `lines title`,
+      name: '買入',
       data: [] as number[],
+    },
+    {
+      name: '賣出',
+      data: [11, 32, 45, 32, 34, 52, 41],
     },
   ]
   if (data) {
-    lines[0].data = dayValue
+    lines[0].data = dayBuyPrice
+    lines[1].data = daySellPrice
   }
 
   return (
