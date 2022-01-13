@@ -6,6 +6,11 @@ import {ItemCard} from '../../modules/item/components/ItemCard'
 import getHotItemsAPI from '../../modules/item/API/GetHotItemsAPI'
 import getNewItemsAPI from '../../modules/item/API/GetNewItemsAPI'
 import {ItemModel} from '../../modules/item/redux/ItemModel'
+import {Swiper, SwiperSlide} from 'swiper/react'
+import 'swiper/css/bundle'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import '../../modules/item/css/swiper.css'
 
 const DashboardWrapper: FC = () => {
   const [load, setLoad] = useState(false)
@@ -36,6 +41,24 @@ const DashboardWrapper: FC = () => {
   return (
     <>
       <PageTitle breadcrumbs={[]}>{`首頁`}</PageTitle>
+
+      <div className='row'>
+        <div className='w-100'>
+          <div className='card  mb-5 mb-xl-10 text-center mw-100'>
+            <Swiper loop={true} navigation={true}>
+              <SwiperSlide>
+                <img src={'/media/logos/banner.jpg'} alt='' />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={'/media/logos/banner.jpg'} alt='' />
+              </SwiperSlide>
+              <SwiperSlide>
+                <img src={'/media/logos/banner.jpg'} alt='' />
+              </SwiperSlide>
+            </Swiper>
+          </div>
+        </div>
+      </div>
       <div className='card mb-5 mb-xl-10'>
         <div className='card-header cursor-pointer'>
           <div className='card-title m-0'>
