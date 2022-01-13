@@ -63,7 +63,7 @@ const ItemUpdatePage: FC<Props> = (props) => {
       toast.warn('輸入的價格異常')
       return
     }
-    if (createQuantity <= 0) {
+    if (createQuantity < 0) {
       toast.warn('輸入的數量異常')
       return
     }
