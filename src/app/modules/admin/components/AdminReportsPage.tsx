@@ -41,6 +41,7 @@ const AdminReportsPage: FC = () => {
     // 成功的回傳，理論上data就會有`id`這個屬性，藉此做判斷是否成功
     if ('id' in data) {
       toast.success('回報成功') // 右下角顯示提示訊息
+      document.getElementById('createModalCancel')?.click()
     } else {
       toast.error(`回報失敗${data.message}`) // 右下角顯示錯誤訊息
     }
